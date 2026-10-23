@@ -13,7 +13,7 @@ from pathlib import Path    # pathlib: libreria de Python para manejar rutas de
 
 # --- Rango de fechas a extraer --------------------------------------------
 # Para la clase usamos 2026 (rapido). Para el proyecto, amplien a 2023-01-01.
-FECHA_INICIO = date(2026, 1, 1)     # primer dia que se descarga
+FECHA_INICIO = date(2024, 1, 1)     # primer dia que se descarga
 FECHA_FIN = date(2026, 9, 30)       # ultimo dia que se descarga
 
 # --- Rutas (relativas a la raiz del proyecto) ------------------------------
