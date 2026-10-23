@@ -23,6 +23,14 @@ Integrar datos del mercado eléctrico (XM), del clima (IDEAM y NOAA) y de ventas
 | IDEAM – datos.gov.co | API Socrata (SoQL) | `ideam_precipitacion_diaria` |
 | NOAA – índice ONI | Archivo de texto | `noaa_oni` |
 | EnerAndes | Excel interno | `enerandes_ventas_2023` … `enerandes_ventas_2026` |
+| TRM – Banco de la República | API Socrata (GET, JSON) | `trm_colombia` |
+
+## Fuente Adicional Propia
+
+* **Nombre:** Tasa Representativa del Mercado (TRM).
+* **Origen:** Banco de la República vía Portal de Datos Abiertos de Colombia (`https://www.datos.gov.co/d/32sa-8pi3`).
+* **Uso y Propósito:**
+Nos permite convertir los precios spot del mercado eléctrico (COP/MWh) y las ventas de energía a USD, facilitando el análisis de correlación entre la Tasa de Cambio y las variaciones en los precios de energía durante el periodo estudiado.
 
 ## ⚙️ Cómo ejecutar
 
