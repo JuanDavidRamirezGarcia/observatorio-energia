@@ -8,7 +8,7 @@
 |---|---|---|
 | | | Líder técnico / Data Engineer |
 | | | Data Quality Analyst |
-| | | Analytics Engineer |
+| Juan Fernando Cataño Higuita|juancatano-col | Analytics Engineer |
 | | | BI Analyst / Storyteller |
 
 ## 🎯 Objetivo
@@ -41,6 +41,7 @@ python -m pip install -r requirements.txt
 # copiar ventas_enerandes_2023_2026.xlsx en data/insumos/
 python -m src.pipeline          # descarga las 4 fuentes a data/bronze/ (unos 3 minutos)
 python -m src.consultar         # consultas SQL de BI con DuckDB
+python -m pytest                # ejecuta las pruebas automatizadas
 ```
 
 Para volver a descargar todo: `python -m src.pipeline --forzar`. El rango de fechas se cambia en `src/config.py`.
