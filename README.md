@@ -8,7 +8,7 @@
 |---|---|---|
 | | | Líder técnico / Data Engineer |
 | | | Data Quality Analyst |
-| | | Analytics Engineer |
+| Juan Fernando Cataño Higuita|juancatano-col | Analytics Engineer |
 | | | BI Analyst / Storyteller |
 
 ## 🎯 Objetivo
