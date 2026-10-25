@@ -108,13 +108,6 @@ def _extraer_dataset_ideam(
     df = pd.DataFrame(filas)
     guardar_bronce(df, nombre, fuente="IDEAM", origen=url)
 
-    # [AGREGADO POR OSCAR]: Generacion automatica de muestra de 50 filas en formato CSV
-    if not df.empty and hasattr(config, "DIR_SAMPLE"):
-        config.DIR_SAMPLE.mkdir(parents=True, exist_ok=True)
-        df.head(50).to_csv(
-            config.DIR_SAMPLE / f"{nombre}_sample.csv", index=False
-        )
-
 
 def extraer(forzar: bool = False) -> None:
     """Descarga la lluvia y temperatura diaria por estacion, semana por semana, y la guarda en bronce."""

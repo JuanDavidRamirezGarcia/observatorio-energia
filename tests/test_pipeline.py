@@ -1,7 +1,10 @@
 from datetime import date
 
+import pandas as pd
+
 from src import config
 from src.extract import xm
+from src.pipeline import generar_muestras
 from src.utils import ventanas
 
 
@@ -84,3 +87,20 @@ def test_extraer_metrica_omite_archivo_existente(tmp_path, monkeypatch):
         nombre="xm_demanda",
         forzar=False,
     )
+
+
+def test_generar_muestras_exporta_las_primeras_200_filas(tmp_path, monkeypatch):
+    dir_bronze = tmp_path / "bronze"
+    dir_sample = tmp_path / "sample"
+    dir_bronze.mkdir()
+    monkeypatch.setattr(config, "DIR_BRONZE", dir_bronze)
+    monkeypatch.setattr(config, "DIR_SAMPLE", dir_sample)
+
+    datos = pd.DataFrame({"valor": range(250)})
+    datos.to_parquet(dir_bronze / "fuente.parquet", index=False)
+
+    generar_muestras()
+
+    muestra = pd.read_csv(dir_sample / "fuente_sample.csv")
+    assert len(muestra) == 200
+    assert muestra["valor"].tolist() == list(range(200))
