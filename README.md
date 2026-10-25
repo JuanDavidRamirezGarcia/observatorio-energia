@@ -6,10 +6,10 @@
 
 | Nombre | Usuario GitHub | Rol |
 |---|---|---|
-| juan david ramirez | Líder técnico / Data Engineer |
-| rober castillo| Data Quality Analyst |
+| juan david ramirez | Líder técnico | Data Engineer |
+| rober castillo| Data Quality | Analyst |
 | Juan Fernando Cataño Higuita|juancatano-col | Analytics Engineer |
-| oscar garcia garcia| BI Analyst / Storyteller |
+| oscar garcia garcia| BI Analyst | Storyteller |
 
 ## 🎯 Objetivo
 
