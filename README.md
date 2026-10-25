@@ -6,10 +6,10 @@
 
 | Nombre | Usuario GitHub | Rol |
 |---|---|---|
-| | | Líder técnico / Data Engineer |
-| | | Data Quality Analyst |
+| juan david ramirez | Líder técnico / Data Engineer |
+| rober castillo| Data Quality Analyst |
 | Juan Fernando Cataño Higuita|juancatano-col | Analytics Engineer |
-| | | BI Analyst / Storyteller |
+| oscar garcia garcia| BI Analyst / Storyteller |
 
 ## 🎯 Objetivo
 
@@ -17,13 +17,17 @@ Integrar datos del mercado eléctrico (XM), del clima (IDEAM y NOAA) y de ventas
 
 ## 📦 Fuentes de datos (capa bronce)
 
-| Fuente | Tipo | Archivo en `data/bronze/` |
-|---|---|---|
-| XM – API Sinergox | API REST (POST, JSON) | `xm_precio_bolsa`, `xm_demanda`, `xm_embalses` |
-| IDEAM – datos.gov.co | API Socrata (SoQL) | `ideam_precipitacion_diaria` |
-| NOAA – índice ONI | Archivo de texto | `noaa_oni` |
-| EnerAndes | Excel interno | `enerandes_ventas_2023` … `enerandes_ventas_2026` |
-| TRM – Banco de la República | API Socrata (GET, JSON) | `trm_colombia` |
+El pipeline conserva los datos extraídos en formato Parquet e incluye columnas
+de linaje (`_fuente`, `_origen` y `_extraido_en`). Las fuentes y sus archivos
+de salida son:
+
+| Fuente | Origen y método de extracción | Datos | Archivos Parquet en `data/bronze/` |
+|---|---|---|---|
+| XM – API Sinergox | API REST, respuestas JSON | Precio de bolsa, demanda real y porcentaje de volumen útil diario de embalses | `xm_precio_bolsa.parquet`, `xm_demanda.parquet`, `xm_embalses.parquet` |
+| IDEAM – datos.gov.co | API Socrata, consultas SoQL | Precipitación diaria y temperatura diaria por estación en Antioquia | `ideam_precipitacion_diaria.parquet`, `ideam_temperatura_diaria.parquet` |
+| NOAA – índice ONI | Archivo de texto descargado y tabulado | Índice Oceanic Niño (ONI) | `noaa_oni.parquet` |
+| EnerAndes | Excel interno (`data/insumos/ventas_enerandes_2023_2026.xlsx`) | Ventas anuales 2023–2026, una hoja por año | `enerandes_ventas_2023.parquet`, `enerandes_ventas_2024.parquet`, `enerandes_ventas_2025.parquet`, `enerandes_ventas_2026.parquet` |
+| TRM – Banco de la República, Datos Abiertos Colombia | API Socrata, solicitud GET con respuesta JSON | Tasa Representativa del Mercado para el rango configurado | `trm_colombia.parquet` |
 
 ## Fuente Adicional Propia
 
@@ -54,4 +58,12 @@ Fuentes -> BRONCE (dato tal cual + linaje) -> PLATA (limpio) -> ORO (modelo estr
 
 ## 🤖 Uso de IA
 
-(Declarar aquí qué herramientas de IA se usaron y para qué.)
+Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia
+artificial como apoyo:
+
+- **Gemini:** apoyo para consultar conceptos y comprender las fuentes de datos
+  utilizadas en el proyecto.
+- **GitHub Copilot:** apoyo para organizar y estructurar el código.
+
+Las respuestas y sugerencias se revisaron y validaron por el equipo antes de
+incorporarlas al proyecto.
