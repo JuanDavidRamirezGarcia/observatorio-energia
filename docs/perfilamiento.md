@@ -1,17 +1,113 @@
 # Perfilamiento de la capa bronce
 
-Este documento describe los archivos Parquet que estaban disponibles en
-`data/bronze/` al momento de realizar el perfilamiento. La carpeta se genera
-localmente al ejecutar el pipeline y está excluida de Git, por lo que los
-resultados pueden cambiar cuando se vuelvan a descargar los datos.
+Este documento describe los archivos Parquet disponibles en `data/bronze/` al
+25 de octubre de 2026. La carpeta se genera localmente al ejecutar el pipeline
+y está excluida de Git, por lo que los resultados pueden cambiar cuando se
+vuelvan a descargar los datos.
 
 ## Resumen por archivo
 
-| Archivo | Filas | Columnas | Filas duplicadas exactas | Rango de fechas (`Date`) |
+| Archivo | Filas | Columnas | Filas duplicadas exactas | Cobertura temporal |
 |---|---:|---:|---:|---|
-| `xm_demanda.parquet` | 1.004 | 30 | 0 | 2024-01-01 a 2026-09-30 |
-| `xm_embalses.parquet` | 1.004 | 6 | 0 | 2024-01-01 a 2026-09-30 |
-| `xm_precio_bolsa.parquet` | 1.004 | 30 | 0 | 2024-01-01 a 2026-09-30 |
+| `enerandes_ventas_2023.parquet` | 1.114 | 10 | 32 | Sin rango normalizable (`col_0` contiene formatos heterogéneos) |
+| `enerandes_ventas_2024.parquet` | 1.114 | 11 | 32 | Sin rango normalizable (`col_0` contiene formatos heterogéneos) |
+| `enerandes_ventas_2025.parquet` | 1.117 | 10 | 32 | Sin rango normalizable (`col_0` contiene títulos, encabezados y datos) |
+| `enerandes_ventas_2026.parquet` | 839 | 10 | 24 | Sin rango normalizable (`col_0` contiene títulos, encabezados y datos) |
+| `ideam_precipitacion_diaria.parquet` | 2.784 | 11 | 0 | `fecha`: 2026-06-01 a 2026-07-24 |
+| `noaa_oni.parquet` | 920 | 7 | 0 | `YR`: 1950 a 2026 |
+| `xm_demanda.parquet` | 273 | 30 | 0 | `Date`: 2026-01-01 a 2026-09-30 |
+| `xm_embalses.parquet` | 273 | 6 | 0 | `Date`: 2026-01-01 a 2026-09-30 |
+| `xm_precio_bolsa.parquet` | 273 | 30 | 0 | `Date`: 2026-01-01 a 2026-09-30 |
+
+## `enerandes_ventas_2023.parquet`
+
+Todas las columnas son de tipo `string`. Las columnas genéricas `col_0` a
+`col_6` corresponden a los datos de origen; las tres columnas restantes son
+metadatos de linaje.
+
+| Columna | Nulos |
+|---|---:|
+| `col_0` | 0,00 % |
+| `col_1` | 0,09 % |
+| `col_2` | 1,44 % |
+| `col_3` | 0,09 % |
+| `col_4` | 0,90 % |
+| `col_5` | 0,72 % |
+| `col_6` | 0,09 % |
+| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
+
+## `enerandes_ventas_2024.parquet`
+
+Todas las columnas son de tipo `string`. Las columnas genéricas `col_0` a
+`col_7` corresponden a los datos de origen; las tres columnas restantes son
+metadatos de linaje.
+
+| Columna | Nulos |
+|---|---:|
+| `col_0` | 0,00 % |
+| `col_1` | 0,09 % |
+| `col_2` | 0,36 % |
+| `col_3` | 0,09 % |
+| `col_4` | 0,72 % |
+| `col_5` | 0,09 % |
+| `col_6` | 1,08 % |
+| `col_7` | 0,09 % |
+| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
+
+## `enerandes_ventas_2025.parquet`
+
+Todas las columnas son de tipo `string`. Las columnas genéricas `col_0` a
+`col_6` corresponden a los datos de origen; las tres columnas restantes son
+metadatos de linaje.
+
+| Columna | Nulos |
+|---|---:|
+| `col_0` | 0,09 % |
+| `col_1` | 0,36 % |
+| `col_2` | 0,90 % |
+| `col_3` | 0,36 % |
+| `col_4` | 0,90 % |
+| `col_5` | 0,72 % |
+| `col_6` | 0,36 % |
+| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
+
+## `enerandes_ventas_2026.parquet`
+
+Todas las columnas son de tipo `string`. Las columnas genéricas `col_0` a
+`col_6` corresponden a los datos de origen; las tres columnas restantes son
+metadatos de linaje.
+
+| Columna | Nulos |
+|---|---:|
+| `col_0` | 0,12 % |
+| `col_1` | 0,48 % |
+| `col_2` | 1,07 % |
+| `col_3` | 0,48 % |
+| `col_4` | 1,07 % |
+| `col_5` | 1,31 % |
+| `col_6` | 0,48 % |
+| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
+
+## `ideam_precipitacion_diaria.parquet`
+
+Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
+duplicadas exactas.
+
+| Columna | Nulos |
+|---|---:|
+| `codigoestacion`, `nombreestacion`, `municipio`, `latitud`, `longitud` | 0,00 % |
+| `fecha`, `precipitacion_mm`, `n_obs` | 0,00 % |
+| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
+
+## `noaa_oni.parquet`
+
+Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
+duplicadas exactas. La cobertura anual se toma de `YR`.
+
+| Columna | Nulos |
+|---|---:|
+| `SEAS`, `YR`, `TOTAL`, `ANOM` | 0,00 % |
+| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
 
 ## `xm_demanda.parquet`
 
@@ -105,8 +201,11 @@ pandas. El porcentaje de nulos se calcula con `isna()` sobre cada columna.
 3. Calcula filas y columnas con `df.shape`, los tipos con `df.dtypes`, y los
    nulos por columna con `df.isna().mean() * 100`.
 4. Cuenta filas completamente duplicadas con `df.duplicated().sum()`.
-5. Convierte `Date` a fecha y calcula su mínimo y máximo para informar el rango.
-6. Actualiza este documento con los resultados del conjunto descargado.
+5. Calcula el rango para `Date` o `fecha`; para fuentes anuales como NOAA,
+   utiliza `YR`. No interpretes como fechas los campos heterogéneos de
+   EnerAndes antes de normalizar sus encabezados y valores.
+6. Actualiza este documento con los resultados de todos los archivos del
+   conjunto descargado.
 
 Este perfilamiento incluye los archivos presentes durante la medición. Si el
 pipeline descarga otras fuentes o archivos, agrégalos con el mismo formato.
