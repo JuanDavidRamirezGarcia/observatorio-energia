@@ -56,6 +56,24 @@ Para volver a descargar todo: `python -m src.pipeline --forzar`. El rango de fec
 Fuentes -> BRONCE (dato tal cual + linaje) -> PLATA (limpio) -> ORO (modelo estrella) -> Dashboard
 ```
 
+## 🎥 **Videos Explicativos del Equipo**
+
+Enlace a los videos: [Ver Videos](https://drive.google.com/drive/folders/1zofZjFRxsIK27Ge3yDA0Vbg2BPMILYhW?usp=drive_link)
+
+## Evidencias de ejecución de consola
+
+**Ejecución del Pipeline Bronce**
+
+<img width="876" height="500" alt="image" src="https://github.com/user-attachments/assets/3d4df93a-8883-4e32-8f28-9401c37f3e7e" />
+<img width="876" height="500" alt="image" src="https://github.com/user-attachments/assets/8037d274-0bf6-4341-beea-1f8c463decb3" />
+
+**Pruebas Automatizadas (Pytest)**
+
+<img width="857" height="381" alt="image" src="https://github.com/user-attachments/assets/c4316a7a-a6f0-495b-9001-34bd56e0c8e6" />
+
+
+
+
 ## 🤖 Uso de IA
 
 Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia
@@ -67,3 +85,4 @@ artificial como apoyo:
 
 Las respuestas y sugerencias se revisaron y validaron por el equipo antes de
 incorporarlas al proyecto.
+
