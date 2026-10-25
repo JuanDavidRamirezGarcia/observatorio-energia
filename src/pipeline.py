@@ -18,6 +18,17 @@ from src.extract import enerandes, ideam, noaa, xm, trm # los 4 extractores plus
 from src.utils import log                           # mensajes con hora
 
 
+def generar_muestras() -> None:
+    """Guarda las primeras 200 filas de cada archivo bronce como CSV."""
+    archivos = sorted(config.DIR_BRONZE.glob("*.parquet"))
+    config.DIR_SAMPLE.mkdir(parents=True, exist_ok=True)
+    for archivo in archivos:
+        df = pd.read_parquet(archivo)
+        ruta_muestra = config.DIR_SAMPLE / f"{archivo.stem}_sample.csv"
+        df.head(200).to_csv(ruta_muestra, index=False)
+        log(f"   + {ruta_muestra.name} guardado: {min(len(df), 200):,} filas")
+
+
 def resumen() -> None:
     """Muestra una tabla con los archivos de la capa bronce."""
     log("Resumen de la capa bronce:")
@@ -35,6 +46,8 @@ def main() -> None:
     log(f"Pipeline bronce | rango {config.FECHA_INICIO} a {config.FECHA_FIN} | forzar={forzar}")
     for extractor in (xm, ideam, noaa, enerandes, trm):   # los 4 extractores, EN ORDEN
         extractor.extraer(forzar)                    # todos tienen la funcion extraer()
+    log("Generando muestras CSV de la capa bronce:")
+    generar_muestras()
     resumen()
     log(f"Listo en {time.time() - inicio:.0f} s")    # :.0f = sin decimales
 
