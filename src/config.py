@@ -23,7 +23,7 @@ FECHA_FIN = date(2026, 9, 30)       # ultimo dia que se descarga
 RAIZ = Path(__file__).resolve().parent.parent
 DIR_INSUMOS = RAIZ / "data" / "insumos"     # el operador / une partes de una ruta
 DIR_BRONZE = RAIZ / "data" / "bronze"       # aqui se guardan los datos descargados
-
+DIR_SILVER = RAIZ / "data" / "silver"       # aqui se guardan los datos limpios en parquet
 # [NUEVO - EA1 Requisito 6]: Carpeta para muestras de las primeras 200 filas en CSV
 DIR_SAMPLE = RAIZ / "data" / "sample"
 
