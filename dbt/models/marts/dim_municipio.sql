@@ -1,11 +1,15 @@
--- Dimension MUNICIPIO: una fila por municipio, con su codigo DIVIPOLA.
--- Grano: un municipio.
+{{ config(materialized='table') }}
 
--- select distinct = sin repetir: cada municipio aparece una sola vez (15 filas)
-select distinct
-    -- La llave: el codigo DANE de 5 digitos ('05001'), con el nombre municipio_id
-    divipola    as municipio_id,
-    -- El nombre oficial del municipio
-    municipio
--- De donde: el modelo stg_ventas
-from {{ ref('stg_ventas') }}
+with municipios_unicos as (
+    select distinct
+        divipola,
+        municipio
+    from {{ source('silver', 'enerandes_ventas') }}
+    where divipola is not null
+)
+select
+    row_number() over (order by divipola) as municipio_id,
+    divipola,
+    municipio,
+    'Antioquia' as departamento
+from municipios_unicos

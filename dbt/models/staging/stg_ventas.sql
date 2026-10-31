@@ -7,4 +7,4 @@
 -- select * = traer todas las columnas
 select *
 -- from = de donde: la tabla de ventas de la capa plata
-from {{ source('plata', 'enerandes_ventas') }}
+from {{ source('silver', 'enerandes_ventas') }}
