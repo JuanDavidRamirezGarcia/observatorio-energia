@@ -48,3 +48,47 @@
 **Actualización del `README.md`:** Incorporación de la tabla de fuentes de la Capa Bronce, actualizando las métricas de XM y agregando el registro de la TRM, junto con la justificación de negocio (análisis de precios en USD y variaciones macroeconómicas).
 
 **Pruebas de integración:** Verificación completa del pipeline mediante la ejecución del comando `python -m src.pipeline --forzar`, confirmando la creación e integridad de los archivos `.parquet`.
+
+# Bitácora de desarrollo y cambios — Capa Oro (dbt)
+
+**Autor:** Juan David Ramírez García  
+**Rama de trabajo:** `juandavid-dbt-capa-oro`  
+**Fase:** Modelado estrella, pruebas de calidad y linaje en la Capa Oro (dbt + DuckDB)
+
+---
+
+## 5. Implementación del Modelo Dimensional (Capa Oro con dbt)
+
+### Configuración del entorno dbt y fuentes
+- **Integración con DuckDB:** Configuración del adaptador `dbt-duckdb` en `profiles.yml` para conectarse a la base de datos `observatorio.duckdb` operando sobre los datos Parquet de la Capa Plata (`data/silver/`).
+- **Estandarización de fuentes (`sources.yml`):** Mapeo de la fuente `silver` conectando la totalidad de los archivos Parquet procesados (`enerandes_ventas`, `enerandes_cuarentena`, `xm_precio_bolsa`, `xm_demanda`, `xm_embalses`, `noaa_oni`, `ideam_precipitacion`, `ideam_temperatura`).
+
+### Construcción del Esquema Estrella (8 Tablas)
+Se implementó un modelo estrella compuesto por 5 tablas de dimensión y 3 tablas de hechos:
+
+- **Dimensiones:**
+  - `dim_fecha`: Dimensión temporal diaria (2023–2026) con llaves numéricas en formato `YYYYMMDD`.
+  - `dim_mes`: Dimensión agrupada a nivel mensual (`YYYY-MM`).
+  - `dim_municipio`: Dimensión geográfica de municipios de Antioquia extraída de la fuente de ventas, asignando llaves primarias sustitutas (`municipio_id`).
+  - `dim_segmento`: Dimensión de segmento de mercado y tipo de compra (`segmento_id`).
+  - `dim_recurso`: Dimensión de recursos de generación energética a partir de las fuentes de embalses y demanda (`recurso_key`).
+
+- **Tablas de Hechos:**
+  - `fact_ventas_mensual`: Consolidado mensual de consumo en kWh, facturación en COP y total de clientes por municipio y segmento.
+  - `fact_mercado_horario`: Registro horario del mercado mayorista integrando el precio de bolsa y la demanda total del sistema.
+  - `fact_generacion_recurso`: Registro horario de generación energética por recurso vinculando la dimensión de fechas y recursos.
+
+---
+
+## 6. Depuración, Refactorización y Pruebas de Calidad
+
+### Corrección de errores de compilación y referencias
+- **Resolución de prefijos de fuentes:** Corrección global de llamadas `{{ source('plata', ...) }}` a `{{ source('silver', ...) }}` para asegurar el mapeo correcto en dbt.
+- **Alineación de llaves primarias e interfaces:** Refactorización de joins entre tablas de hechos y dimensiones (reemplazo de uniones por campos textuales como `divipola` por llaves primarias numéricas `municipio_id`, `segmento_id` y `mes_id`).
+- **Depuración de esquemas:** Limpieza de modelos en desarrollo (`fact_clima_diario` y `fact_operacion_diaria`) y unificación de nombres de columnas en la fuente (`temperatura_celsius` vs `temperatura_c`).
+
+### Validación con `dbt build`
+- **Definición de pruebas en `schema.yml`:** Configuración de pruebas automatizadas de integridad de datos:
+  - Pruebas de unicitad (`unique`) y valores no nulos (`not_null`) en todas las llaves primarias de las dimensiones.
+  - Pruebas de integridad referencial (`relationships`) entre las llaves foráneas de las tablas de hechos y sus respectivas dimensiones.
+- **Resultado final:** Ejecución exitosa del comando `dbt build --project-dir dbt --profiles-dir dbt`, logrando un pase total de **35/35 nodos** (modelos de tablas, vistas y pruebas de calidad en verde sin errores ni advertencias).

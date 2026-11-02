@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  # --- DIMENSIONES ---
+  - name: dim_fecha
+    description: "Dimensión de fechas a nivel diario (2023 a 2026) enriquecida con la fase ENSO de NOAA."
+    columns:
+      - name: fecha_key
+        data_tests: [unique, not_null]
+
+  - name: dim_municipio
+    description: "Dimensión de municipios de Antioquia con su código DIVIPOLA."
+    columns:
+      - name: municipio_id
+        data_tests: [unique, not_null]
+
+  - name: dim_segmento
+    description: "Dimensión de segmentos de mercado."
+    columns:
+      - name: segmento_id
+        data_tests: [unique, not_null]
+
+  - name: dim_mes
+    description: "Dimensión temporal agrupada a nivel mensual."
+    columns:
+      - name: mes_id
+        data_tests: [unique, not_null]
+
+  - name: dim_recurso
+    description: "Dimensión de recursos y plantas de generación del mercado energético."
+    columns:
+      - name: recurso_key
+        data_tests: [unique, not_null]
+
+  # --- TABLAS DE HECHOS ---
+  - name: fact_ventas_mensual
+    description: "Grano: Un registro por periodo (YYYY-MM), municipio, segmento y tipo de compra."
+    columns:
+      - name: mes_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_mes')
+                field: mes_id
+      - name: municipio_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_municipio')
+                field: municipio_id
+      - name: segmento_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_segmento')
+                field: segmento_id
+      - name: tipo_compra
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Bolsa", "Contrato"]
+
+  - name: fact_mercado_horario
+    description: "Grano: Un registro por cada hora de cada día (precio de bolsa y demanda total horaria)."
+    columns:
+      - name: fecha_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_fecha')
+                field: fecha_key
+
+  - name: fact_generacion_recurso
+    description: "Grano: Un registro por fecha, hora y recurso de generación."
+    columns:
+      - name: fecha_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_fecha')
+                field: fecha_key
+      - name: recurso_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_recurso')
+                field: recurso_key

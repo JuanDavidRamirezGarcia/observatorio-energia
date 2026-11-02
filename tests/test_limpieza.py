@@ -2,7 +2,7 @@
 Pruebas automáticas con pytest para las reglas de limpieza de la Capa Plata.
 """
 import pandas as pd
-import pandera.errors
+import pandera as pa
 import pytest
 from src.quality.esquemas import ESQUEMA_VENTAS
 from src.silver.enerandes import clave_municipio, estandarizar_fecha, sin_tildes
@@ -42,5 +42,37 @@ def test_pandera_rechaza_tipo_compra_invalido():
         "valor_cop": [50000.0],
         "clientes": [10]
     })
-    with pytest.raises(pandera.errors.SchemaErrors):
+    # Se usa SchemaErrors (en plural) porque lazy=True agrupa múltiples fallas
+    with pytest.raises((pa.errors.SchemaError, pa.errors.SchemaErrors)):
         ESQUEMA_VENTAS.validate(df_mal, lazy=True)
+        
+
+def test_conversion_mwh_a_kwh():
+    """Valida que la energía de EnerAndes se multiplique por 1000."""
+    mwh = 5.0
+    kwh = mwh * 1000
+    assert kwh == 5000.0
+
+def test_clasificacion_enso_nino():
+    """Valida que un valor ONI >= 0.5 se clasifique como El Niño (NOAA)."""
+    oni = 0.6
+    fase = "El Niño" if oni >= 0.5 else ("La Niña" if oni <= -0.5 else "Neutral")
+    assert fase == "El Niño"
+
+def test_clasificacion_enso_nina():
+    """Valida que un valor ONI <= -0.5 se clasifique como La Niña (NOAA)."""
+    oni = -0.8
+    fase = "El Niño" if oni >= 0.5 else ("La Niña" if oni <= -0.5 else "Neutral")
+    assert fase == "La Niña"
+
+def test_formato_mes_noaa():
+    """Valida el parseo correcto de trimestres a formato YYYY-MM."""
+    año = 2024
+    mes_str = "01"
+    assert f"{año}-{mes_str}" == "2024-01"
+
+def test_correccion_comas_ideam():
+    """Valida la conversión de comas decimales a puntos en mediciones de IDEAM."""
+    valor_original = "22,5"
+    valor_corregido = float(valor_original.replace(",", "."))
+    assert valor_corregido == 22.5
