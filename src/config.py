@@ -61,3 +61,6 @@ TRM_URL = "https://www.datos.gov.co/resource/32sa-8pi3.json"
 # --- Comportamiento HTTP ---------------------------------------------------
 HTTP_TIMEOUT = 120      # segundos que se espera una respuesta antes de rendirse
 HTTP_REINTENTOS = 4     # intentos ante fallas de red o del servidor
+
+DIR_SILVER = RAIZ / "data" / "silver"       # Capa plata: datos limpios en parquet
+DIR_DOCS = RAIZ / "docs"                    # Documentación y reportes
