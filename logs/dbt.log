@@ -1,0 +1,14 @@
+[0m01:43:23.910032 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b25b4fc9d30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b25b38bdf90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b25b38bf750>]}
+
+
+============================== 01:43:23.917183 | e28b5838-dc51-4943-9aca-1c5d5ee66b2a ==============================
+[0m01:43:23.917183 [info ] [MainThread]: Running with dbt=1.12.6
+[0m01:43:23.918214 [debug] [MainThread]: running dbt with arguments {'invocation_command': 'dbt build --project-dir dbt --profiles-dir dbt', 'log_format': 'default', 'version_check': 'True', 'profiles_dir': 'dbt', 'indirect_selection': 'eager', 'cache_selected_only': 'False', 'target_path': 'None', 'warn_error': 'None', 'use_experimental_parser': 'False', 'static_parser': 'True', 'write_json': 'True', 'use_colors': 'True', 'quiet': 'False', 'printer_width': '80', 'partial_parse': 'True', 'no_print': 'None', 'introspect': 'True', 'maximum_seed_size_mib': '1', 'fail_fast': 'False', 'log_path': 'logs', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'hints_enabled': 'True', 'empty': 'False', 'send_anonymous_usage_stats': 'True', 'log_cache_events': 'False', 'debug': 'False'}
+[0m01:43:23.919723 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  dbt_project.yml does not parse to a dictionary
+[0m01:43:23.923157 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 0.020319518, "process_in_blocks": "33616", "process_kernel_time": 0.437192, "process_mem_max_rss": "116908", "process_out_blocks": "16", "process_user_time": 2.026981}
+[0m01:43:23.923999 [debug] [MainThread]: Command `dbt build` failed at 01:43:23.923870 after 0.02 seconds
+[0m01:43:23.924541 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b25b39b2fd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b25b38ff410>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7b25b39629c0>]}
+[0m01:43:23.925194 [debug] [MainThread]: Flushing usage events
+[0m01:43:24.024889 [debug] [MainThread]: An error was encountered while trying to flush usage events
