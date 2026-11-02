@@ -15,3 +15,10 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+data/silver/
+*.duckdb
+dbt/target/
+dbt/logs/
+dbt/.user.yml
+.pytest_cache/

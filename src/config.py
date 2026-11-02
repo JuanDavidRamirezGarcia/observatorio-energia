@@ -23,7 +23,7 @@ FECHA_FIN = date(2026, 9, 30)       # ultimo dia que se descarga
 RAIZ = Path(__file__).resolve().parent.parent
 DIR_INSUMOS = RAIZ / "data" / "insumos"     # el operador / une partes de una ruta
 DIR_BRONZE = RAIZ / "data" / "bronze"       # aqui se guardan los datos descargados
-
+DIR_SILVER = RAIZ / "data" / "silver"       # aqui se guardan los datos limpios en parquet
 # [NUEVO - EA1 Requisito 6]: Carpeta para muestras de las primeras 200 filas en CSV
 DIR_SAMPLE = RAIZ / "data" / "sample"
 
@@ -61,3 +61,6 @@ TRM_URL = "https://www.datos.gov.co/resource/32sa-8pi3.json"
 # --- Comportamiento HTTP ---------------------------------------------------
 HTTP_TIMEOUT = 120      # segundos que se espera una respuesta antes de rendirse
 HTTP_REINTENTOS = 4     # intentos ante fallas de red o del servidor
+
+DIR_SILVER = RAIZ / "data" / "silver"       # Capa plata: datos limpios en parquet
+DIR_DOCS = RAIZ / "docs"                    # Documentación y reportes
