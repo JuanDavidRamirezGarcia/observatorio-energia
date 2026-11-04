@@ -35,7 +35,10 @@ XM_METRICAS = [
     # (MetricId, Entity, periodo, nombre del archivo en bronce)
     ("PrecBolsNaci", "Sistema", "hourly", "xm_precio_bolsa"),   # precio de bolsa por hora
     ("DemaReal", "Sistema", "hourly", "xm_demanda"),            # demanda real por hora
+    ("Gene", "Recurso", "hourly", "xm_generacion"),            # generación por planta
+    ("AporEner", "Sistema", "daily", "xm_aportes"),             # aportes hídricos diarios
     ("PorcVoluUtilDiar", "Sistema", "daily", "xm_embalses"),    # % de embalses por dia
+    ("ListadoRecursos", "", "lists", "xm_listado_recursos"),    # catálogo de plantas
 ]
 
 # --- Fuente 2: IDEAM en datos.gov.co (API Socrata / SoQL) ------------------
