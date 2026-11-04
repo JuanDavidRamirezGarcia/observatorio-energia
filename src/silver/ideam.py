@@ -22,21 +22,23 @@ def limpiar_ideam_variable(nombre_archivo: str, nombre_col_valor: str) -> pd.Dat
     cols_fecha = [c for c in df.columns if any(x in c for x in ["fecha", "time", "date"])]
     col_fecha = cols_fecha[0] if cols_fecha else df.columns[0]
     
-    # Identificar columna de valor numérico
-    cols_valor = [c for c in df.columns if any(x in c for x in ["valor", "val", "precipitacion", "temperatura", "medida", "dato"])]
-    if cols_valor:
-        col_valor = cols_valor[0]
-    else:
-        candidatas = [c for c in df.columns if c != col_fecha]
-        col_valor = candidatas[0] if candidatas else df.columns[0]
-    
     df["fecha"] = pd.to_datetime(df[col_fecha], errors="coerce")
-    
-    # Reemplazar comas decimales por puntos antes de convertir a número
-    serie_val = df[col_valor].astype(str).str.replace(",", ".", regex=False)
-    df[nombre_col_valor] = pd.to_numeric(serie_val, errors="coerce")
-    
-    df_limpio = df.dropna(subset=["fecha", nombre_col_valor]).drop_duplicates().reset_index(drop=True)
+    if nombre_archivo == "precipitacion":
+        columnas_valor = ["precipitacion_mm"]
+    else:
+        columnas_valor = ["temp_media", "temp_min", "temp_max"]
+    for columna in columnas_valor:
+        if columna in df.columns:
+            serie_val = df[columna].astype(str).str.replace(",", ".", regex=False)
+            df[columna] = pd.to_numeric(serie_val, errors="coerce")
+
+    columnas_obligatorias = ["fecha", "codigoestacion", "municipio", *columnas_valor]
+    columnas_obligatorias = [c for c in columnas_obligatorias if c in df.columns]
+    df_limpio = (
+        df.dropna(subset=columnas_obligatorias)
+        .drop_duplicates(subset=["codigoestacion", "fecha"])
+        .reset_index(drop=True)
+    )
     return df_limpio
 
 def main():
