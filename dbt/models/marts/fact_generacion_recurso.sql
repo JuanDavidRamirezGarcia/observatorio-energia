@@ -1,9 +1,12 @@
 {{ config(materialized='table') }}
 
 select
-    cast(strftime(d.fecha, '%Y%m%d') as integer) as fecha_key,
-    1 as recurso_key,
-    d.fecha,
-    d.hora,
-    d.demanda_kwh as generacion_kwh
-from {{ source('silver', 'xm_demanda') }} d
+    cast(strftime(g.fecha, '%Y%m%d') as integer) as fecha_key,
+    r.recurso_key,
+    g.fecha,
+    g.hora,
+    r.codigo_recurso,
+    g.generacion_mwh
+from {{ source('silver', 'xm_generacion') }} g
+left join {{ ref('dim_recurso') }} r
+    on trim(cast(g.code as varchar)) = r.codigo_recurso

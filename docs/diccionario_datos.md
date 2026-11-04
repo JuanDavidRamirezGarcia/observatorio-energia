@@ -20,7 +20,8 @@ Esto permite responder preguntas como:
 - ¿Qué segmento comercial lidera la venta en cada periodo?
 
 ### `fact_mercado_horario`
-Un registro por fecha y hora, consolidando el precio de bolsa y la demanda total horaria del sistema.
+Un registro por fecha y hora, consolidando el precio de bolsa y la demanda
+total horaria del sistema.
 
 Esto permite responder preguntas como:
 - ¿Cuál fue el precio promedio del mercado en cada hora?
@@ -28,7 +29,8 @@ Esto permite responder preguntas como:
 - ¿Existe relación entre demanda y precio por franja horaria?
 
 ### `fact_generacion_recurso`
-Un registro por fecha, hora y recurso de generación energética.
+Un registro por fecha, hora y planta (código de recurso), con generación medida
+en MWh.
 
 Esto permite responder preguntas como:
 - ¿Qué recurso genera más energía en cada hora?
@@ -81,10 +83,13 @@ Esto permite responder preguntas como:
 | Columna | Tipo de Dato | Descripción | Origen / Fuente |
 | :--- | :--- | :--- | :--- |
 | `recurso_key` | BIGINT / INT | Llave primaria del recurso | Derived (`dim_recurso`) |
-| `recurso` | VARCHAR | Nombre del recurso energético | `silver.xm_generacion` o `silver.generacion_*` |
-| `tipo_recurso` | VARCHAR | Tipo: hidráulico, térmico, solar, eólico, etc. | `silver.xm_generacion` o `silver.generacion_*` |
-| `categoria` | VARCHAR | Agrupación funcional del recurso | `silver.xm_generacion` o `silver.generacion_*` |
-| `descripcion` | VARCHAR | Contexto o detalle del recurso | `silver.xm_generacion` o `silver.generacion_*` |
+| `codigo_recurso` | VARCHAR | Código XM de la planta | `silver.xm_listado_recursos` |
+| `nombre_recurso` | VARCHAR | Nombre del recurso | `silver.xm_listado_recursos` |
+| `tipo_generacion` | VARCHAR | Tipo de generación reportado por XM | `silver.xm_listado_recursos` |
+| `fuente_energia` | VARCHAR | Fuente de energía reportada por XM | `silver.xm_listado_recursos` |
+| `empresa` | VARCHAR | Código de empresa reportado por XM | `silver.xm_listado_recursos` |
+| `disponibilidad` | VARCHAR | Clasificación de despacho reportada por XM | `silver.xm_listado_recursos` |
+| `estado` | VARCHAR | Estado operativo reportado por XM | `silver.xm_listado_recursos` |
 
 ### Tabla: `fact_ventas_mensual`
 | Columna | Tipo de Dato | Descripción | Origen / Fuente |
@@ -103,28 +108,20 @@ Esto permite responder preguntas como:
 | Columna | Tipo de Dato | Descripción | Origen / Fuente |
 | :--- | :--- | :--- | :--- |
 | `fecha_key` | BIGINT / INT | Llave foránea a `dim_fecha` | Derived (`dim_fecha`) |
-| `hora_key` | BIGINT / INT | Llave foránea a `dim_hora` (si se materializa) | Derived (`dim_hora`) |
-| `mercado_key` | BIGINT / INT | Llave foránea a `dim_mercado` | Derived (`dim_mercado`) |
 | `fecha` | DATE | Fecha del dato horario | `silver.xm_precio_bolsa`, `silver.xm_demanda` |
-| `hora` | INT | Hora del día (0-23) | `silver.xm_precio_bolsa`, `silver.xm_demanda` |
-| `precio_bolsa_cop_kwh` | DOUBLE | Precio horario del mercado en COP/kWh | `silver.xm_precio_bolsa` |
-| `demanda_total_mwh` | DOUBLE | Demanda total horaria del sistema en MWh | `silver.xm_demanda` |
-| `volumen_util_embalses_pct` | DOUBLE | Porcentaje de volumen útil de embalses | `silver.xm_embalses` |
-| `fuente` | VARCHAR | Indicador de origen del dato | `silver.xm_*` |
+| `hora` | INT | Hora del día (1-24, como reporta XM) | `silver.xm_precio_bolsa`, `silver.xm_demanda` |
+| `precio_bolsa_kwh` | DOUBLE | Precio horario del mercado en COP/kWh | `silver.xm_precio_bolsa` |
+| `demanda_kwh` | DOUBLE | Demanda total horaria del sistema | `silver.xm_demanda` |
 
 ### Tabla: `fact_generacion_recurso`
 | Columna | Tipo de Dato | Descripción | Origen / Fuente |
 | :--- | :--- | :--- | :--- |
 | `fecha_key` | BIGINT / INT | Llave foránea a `dim_fecha` | Derived (`dim_fecha`) |
-| `hora_key` | BIGINT / INT | Llave foránea a la dimensión horaria | Derived (`dim_hora`) |
 | `recurso_key` | BIGINT / INT | Llave foránea a `dim_recurso` | Derived (`dim_recurso`) |
-| `fecha` | DATE | Fecha de generación | `silver.generacion_*` |
-| `hora` | INT | Hora de generación (0-23) | `silver.generacion_*` |
-| `recurso` | VARCHAR | Nombre del recurso | `silver.generacion_*` |
-| `generacion_mwh` | DOUBLE | Energía generada en MWh | `silver.generacion_*` |
-| `capacidad_instalada_mw` | DOUBLE | Capacidad instalada asociada al recurso | `silver.generacion_*` |
-| `factor_carga` | DOUBLE | Relación entre generación real y capacidad instalada | `silver.generacion_*` |
-| `fuente` | VARCHAR | Fuente de origen del dato | `silver.generacion_*` |
+| `fecha` | DATE | Fecha de generación | `silver.xm_generacion` |
+| `hora` | INT | Hora de generación (1-24, como reporta XM) | `silver.xm_generacion` |
+| `codigo_recurso` | VARCHAR | Código XM de la planta | `silver.xm_listado_recursos` |
+| `generacion_mwh` | DOUBLE | Energía generada en MWh | `silver.xm_generacion` |
 
 ## 4. Observaciones de diseño
 
