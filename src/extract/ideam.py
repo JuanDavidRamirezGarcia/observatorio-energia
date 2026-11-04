@@ -85,15 +85,11 @@ def _extraer_dataset_ideam(
         return
 
     filas = []
-    # Utiliza config.IDEAM_FECHA_INICIO (actualizada a 2025-01-01 por Oscar)
-    for i, (inicio, fin) in enumerate(
-        ventanas(
-            config.IDEAM_FECHA_INICIO, config.FECHA_FIN, config.IDEAM_DIAS_VENTANA
-        )
+    for inicio, fin in ventanas(
+        config.IDEAM_FECHA_INICIO,
+        config.IDEAM_FECHA_FIN,
+        config.IDEAM_DIAS_VENTANA,
     ):
-        if i >= 10:  # [CONTADOR AGREGADO]: Detener el bucle al procesar 10 ventanas
-            break
-
         offset = 0
         while True:
             lote = http_json(

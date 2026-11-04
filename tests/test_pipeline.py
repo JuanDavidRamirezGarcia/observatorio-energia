@@ -3,6 +3,7 @@ from datetime import date
 import pandas as pd
 
 from src import config
+from src.extract import ideam
 from src.extract import xm
 from src.pipeline import generar_muestras
 from src.utils import ventanas
@@ -104,3 +105,28 @@ def test_generar_muestras_exporta_las_primeras_200_filas(tmp_path, monkeypatch):
     muestra = pd.read_csv(dir_sample / "fuente_sample.csv")
     assert len(muestra) == 200
     assert muestra["valor"].tolist() == list(range(200))
+
+
+def test_ideam_recorre_todo_el_ano_2025(monkeypatch):
+    ventanas_procesadas = []
+
+    monkeypatch.setattr(ideam, "ya_existe", lambda nombre, forzar: False)
+    monkeypatch.setattr(
+        ideam,
+        "http_json",
+        lambda metodo, url, params: ventanas_procesadas.append(params) or [],
+    )
+    monkeypatch.setattr(ideam, "guardar_bronce", lambda *args, **kwargs: None)
+    monkeypatch.setattr(config, "IDEAM_FECHA_INICIO", date(2025, 1, 1))
+    monkeypatch.setattr(config, "IDEAM_FECHA_FIN", date(2025, 12, 31))
+    monkeypatch.setattr(config, "IDEAM_DIAS_VENTANA", 7)
+
+    ideam._extraer_dataset_ideam(
+        "ideam_prueba",
+        "https://example.test/ideam",
+        ideam.consulta_soql_precipitacion,
+    )
+
+    assert len(ventanas_procesadas) == 53
+    assert "2025-01-01T00:00:00" in ventanas_procesadas[0]["$where"]
+    assert "2025-12-31T23:59:59" in ventanas_procesadas[-1]["$where"]
