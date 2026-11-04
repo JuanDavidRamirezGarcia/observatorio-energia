@@ -177,3 +177,131 @@ validación de formato del README se completó sin errores. En la revisión
 actual, el entorno utilizado no tenía instalados `pytest` ni el comando
 `dbt`, por lo que esas dos verificaciones deben repetirse después de instalar
 las dependencias declaradas.
+
+## 5. Cierre de los puntos 1 y 2 de la Capa Plata — 2026-11-04
+
+Se completó la limpieza de EnerAndes y de las demás fuentes solicitadas en los
+puntos 1 y 2. El trabajo se concentró en `src/extract/`, `src/silver/`,
+`src/config.py` y `src/transformar.py`. No se modificó el modelo dbt de la
+Capa Oro.
+
+### 5.1 EnerAndes: cuatro hojas en una tabla plata
+
+El archivo de bronce contiene una hoja por año, pero cada año tiene una
+estructura diferente. La función `normalizar_encabezados()` busca la fila que
+realmente contiene los nombres de negocio (`Fecha`, `Periodo`, `Mes`,
+`Municipio` o `Ciudad`) y descarta automáticamente títulos y notas anteriores.
+Esto permite procesar también las hojas 2025 y 2026, cuyo encabezado no está
+en la primera fila.
+
+Las reglas aplicadas son:
+
+1. Se estandarizan los nombres de columnas a periodo, municipio, segmento,
+   tipo de compra, energía, valor y clientes.
+2. Se interpretan `YYYY-MM`, `mar-24`, `03/2024` y `01/03/2026`. La última
+   fecha se procesa como día/mes/año, por lo que queda como `2026-03`.
+3. Se reconocen abreviaturas de meses en español e inglés.
+4. Se eliminan filas de totales del resultado analítico.
+5. La energía se convierte por unidad: MWh se multiplica por 1.000 y kWh no
+   se modifica.
+6. Se normalizan municipios y alias como `Rio Negro`, `Rionegro (Ant)` y
+   `Medellín D.E.` a su municipio y código DIVIPOLA.
+7. Se normalizan segmentos y modalidades de compra.
+8. Se convierten energía, valor y clientes a tipos numéricos.
+9. Se eliminan duplicados corregibles después de normalizar las columnas.
+10. Las filas que siguen siendo inválidas no se borran: se guardan en
+    `data/silver/enerandes_cuarentena.parquet` con `motivo_cuarentena`.
+
+Resultados verificados:
+
+- `enerandes_ventas.parquet`: 4.007 filas limpias.
+- `enerandes_cuarentena.parquet`: 45 filas con energía vacía/negativa,
+  clientes inválidos u otros problemas no corregibles.
+
+### 5.2 XM: métricas horarias, diarias y catálogo
+
+En `src/config.py` se configuraron las métricas `PrecBolsNaci`, `DemaReal`,
+`Gene`, `AporEner`, `PorcVoluUtilDiar` y `ListadoRecursos`. Las métricas
+temporales se descargan en ventanas de máximo 30 días porque ese es el límite
+operativo de la API. El catálogo se consulta una sola vez mediante el endpoint
+`lists`.
+
+En `src/silver/xm.py`, `unpivot_24_horas()` convierte `Hour01` a `Hour24` en
+filas con fecha, hora y valor numérico. Para generación la deduplicación usa
+`code`, que identifica la planta; no se usa `Id` porque la API devuelve el
+texto genérico `Recurso` para todas las plantas.
+
+La generación fue procesada por bloques y escrita mediante PyArrow para evitar
+cargar simultáneamente todas las filas horarias en memoria. Además, el
+extractor guarda `Gene` de forma incremental después de cada ventana, de modo
+que una interrupción no pierda todo el avance ya descargado.
+
+Salidas verificadas:
+
+- `xm_precio_bolsa.parquet`: 24.096 filas horarias.
+- `xm_demanda.parquet`: 24.096 filas horarias.
+- `xm_generacion.parquet`: 5.935.449 filas horarias, 633 códigos de planta,
+  desde 2024-01-01 hasta 2026-09-30.
+- `xm_embalses.parquet`: 1.004 registros diarios numéricos.
+- `xm_aportes.parquet`: 1.004 registros diarios numéricos.
+- `xm_listado_recursos.parquet`: 2.500 recursos normalizados.
+
+### 5.3 IDEAM
+
+`src/silver/ideam.py` convierte la fecha a tipo fecha, transforma a número la
+precipitación y las temperaturas media, mínima y máxima, conserva el código y
+nombre de estación junto con el municipio y elimina duplicados por estación y
+fecha.
+
+También se corrigió la extracción para que el año 2025 se recorra completo:
+`IDEAM_FECHA_INICIO` es `2025-01-01`, `IDEAM_FECHA_FIN` es `2025-12-31` y no
+existe un límite artificial de diez ventanas.
+
+Resultados: 2.374 registros de precipitación y 1.477 de temperatura.
+
+### 5.4 NOAA
+
+`src/silver/noaa.py` asigna cada trimestre móvil a su mes central: `DJF` a
+enero, `JFM` a febrero, y así sucesivamente hasta `NDJ` a diciembre. El ONI se
+convierte a número y se clasifica así:
+
+- `ONI >= 0.5`: `El Niño`.
+- `ONI <= -0.5`: `La Niña`.
+- En los demás casos: `Neutral`.
+
+El resultado es `data/silver/noaa_oni.parquet`, con 920 registros mensuales.
+
+### 5.5 Fuente propia TRM
+
+Se creó `src/silver/trm.py`. La fecha `vigenciadesde` se convierte a fecha, el
+valor TRM se convierte a número, se eliminan duplicados por día y se ordena
+cronológicamente. El resultado es `data/silver/trm_colombia.parquet`, con 649
+registros.
+
+### 5.6 Cómo reproducir el trabajo
+
+Desde la raíz del repositorio:
+
+```bash
+python -m src.pipeline --forzar       # solo si se necesitan descargar datos nuevos
+python -m src.transformar            # construye las salidas de Capa Plata
+python -m pytest -q                  # valida las pruebas existentes
+```
+
+La extracción XM puede tardar por la cantidad de plantas y ventanas. Si solo
+se necesita reconstruir plata con los archivos ya descargados, se ejecuta
+únicamente `python -m src.transformar`.
+
+La verificación final registró 19 pruebas aprobadas. Los datos Parquet de
+`data/silver/` no se versionan; cada integrante debe generarlos localmente
+cuando los necesite.
+
+### 5.7 Trabajo que continúa
+
+Los siguientes pasos corresponden a los demás puntos de la actividad:
+
+- completar y aplicar esquemas Pandera para cada tabla plata;
+- ampliar las pruebas específicas de las nuevas reglas;
+- completar el reporte con métricas antes/después;
+- revisar la integración de las nuevas fuentes en dbt y el modelo estrella;
+- actualizar consultas y documentación de la Capa Oro.
