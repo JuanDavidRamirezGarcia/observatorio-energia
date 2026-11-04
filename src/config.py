@@ -46,8 +46,9 @@ IDEAM_TEMPERATURA_URL = "https://www.datos.gov.co/resource/sbwg-7ju4.json"     #
 IDEAM_DEPARTAMENTO = "ANTIOQUIA"
 IDEAM_DIAS_VENTANA = 7          # pedir de a una semana evita timeouts del servidor
 
-# [MODIFICADO]: Fecha cambiada de date(2026, 6, 1) a date(2025, 1, 1) para cubrir 1 año completo de datos
+# Rango independiente de IDEAM para cargar el año 2025 completo.
 IDEAM_FECHA_INICIO = date(2025, 1, 1)
+IDEAM_FECHA_FIN = date(2025, 12, 31)
 
 # --- Fuente 3: NOAA, indice de El Nino (archivo de texto) ------------------
 NOAA_ONI_URL = "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt"
