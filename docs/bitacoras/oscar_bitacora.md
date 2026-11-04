@@ -98,94 +98,13 @@ directamente en el servidor.
 - Conteo de registros: confirmado mediante inspección en Python
   (`len(df) == 50`) y comandos de terminal.
 
-## Capa Plata
-
-### Objetivo
-
-Construir y documentar la entrega de la Capa Plata (Evidencia 2), aplicando
-limpieza, tipado, deduplicación y validación de calidad a los datos de
-EnerAndes, XM, NOAA e IDEAM, y dejando los resultados listos para la Capa
-Oro.
-
-### Tareas realizadas
-
-- Implementación de los módulos de limpieza en `src/silver/`:
-  `enerandes.py`, `xm.py`, `noaa.py` e `ideam.py`.
-- Normalización de ventas de EnerAndes de 2023 a 2026, conversión de MWh a
-  kWh, eliminación de duplicados y separación de registros inválidos en
-  cuarentena.
-- Transformación de las columnas horarias de XM a formato vertical para
-  precios y demanda, además de la limpieza de embalses.
-- Transformación del índice ONI de NOAA a meses, cálculo de anomalías y
-  clasificación de las fases ENSO.
-- Limpieza de fechas y valores numéricos de IDEAM, incluida la conversión de
-  comas decimales en las temperaturas.
-- Definición de contratos de calidad con Pandera en
-  `src/quality/esquemas.py`, validando tipos, llaves, rangos y valores nulos.
-- Creación del orquestador `src/transformar.py` para ejecutar la limpieza de
-  las cuatro fuentes y generar archivos Parquet en `data/silver/`.
-- Generación de los archivos `data/silver/enerandes_ventas.parquet`,
-  `enerandes_cuarentena.parquet`, `xm_precio_bolsa.parquet`,
-  `xm_demanda.parquet`, `xm_embalses.parquet`, `noaa_oni.parquet`,
-  `ideam_precipitacion.parquet` e `ideam_temperatura.parquet`.
-- Adición de pruebas automatizadas en `tests/test_limpieza.py`; la suite
-  documentada para esta entrega registró 13 pruebas aprobadas.
-- Incorporación de una sección independiente de Capa Plata después de la
-  sección “Uso de IA” en `README.md`.
-- Documentación de la rama `feature/plata-oro`, el alcance de los puntos 1 al
-  4 y el entorno de ejecución con Python 3.10+, Pandas, Pandera y Pytest en
-  `README.md`.
-- Registro de los archivos Parquet generados en `data/silver/`, sus cantidades
-  de registros y las reglas aplicadas a EnerAndes, XM, NOAA e IDEAM.
-- Documentación del comando de transformación:
-
-  ```bash
-  python -m src.transformar
-  ```
-
-- Inclusión de los archivos de salida disponibles para la integración con la
-  Capa Oro mediante dbt y DuckDB.
-
-### Cambios adicionales relacionados con la integración
-
-- Adición de `pandera` y `dbt-duckdb` en `requirements.txt`.
-- Incorporación de `DIR_SILVER` y `DIR_DOCS` en `src/config.py`.
-- Actualización de `.gitignore` para excluir los Parquet de Plata, archivos
-  DuckDB, artefactos de dbt y la caché de Pytest.
-- Regeneración de muestras CSV en `data/sample/`.
-- Creación de una estructura preliminar de dbt en `dbt/`, con archivos para
-  staging, dimensiones, hechos, fuentes y perfiles.
-- Creación de `logs/dbt.log` como evidencia de ejecución.
-
-La estructura de dbt todavía no constituye una Capa Oro funcional: los
-archivos `dbt_project.yml`, `profiles.yml`, los modelos SQL y `schema.yml`
-están vacíos. El intento registrado en el log terminó con el error
-`dbt_project.yml does not parse to a dictionary`; por ello, queda pendiente
-completar la configuración, los modelos y las pruebas de dbt antes de afirmar
-que la Capa Oro está terminada.
-
-### Verificación de la Capa Plata
-
-```bash
-python -m src.transformar
-python -m pytest -v
-git diff --check
-```
-
-La ejecución histórica documentada registró 13 pruebas aprobadas y la
-validación de formato del README se completó sin errores. En la revisión
-actual, el entorno utilizado no tenía instalados `pytest` ni el comando
-`dbt`, por lo que esas dos verificaciones deben repetirse después de instalar
-las dependencias declaradas.
-
-## 5. Cierre de los puntos 1 y 2 de la Capa Plata — 2026-11-04
+## Capa Plata: puntos 1 y 2 — 2026-11-04
 
 Se completó la limpieza de EnerAndes y de las demás fuentes solicitadas en los
 puntos 1 y 2. El trabajo se concentró en `src/extract/`, `src/silver/`,
-`src/config.py` y `src/transformar.py`. No se modificó el modelo dbt de la
-Capa Oro.
+`src/config.py` y `src/transformar.py`.
 
-### 5.1 EnerAndes: cuatro hojas en una tabla plata
+### Punto 1: EnerAndes — cuatro hojas en una tabla plata
 
 El archivo de bronce contiene una hoja por año, pero cada año tiene una
 estructura diferente. La función `normalizar_encabezados()` busca la fila que
@@ -218,7 +137,7 @@ Resultados verificados:
 - `enerandes_cuarentena.parquet`: 45 filas con energía vacía/negativa,
   clientes inválidos u otros problemas no corregibles.
 
-### 5.2 XM: métricas horarias, diarias y catálogo
+### Punto 2: XM — métricas horarias, diarias y catálogo
 
 En `src/config.py` se configuraron las métricas `PrecBolsNaci`, `DemaReal`,
 `Gene`, `AporEner`, `PorcVoluUtilDiar` y `ListadoRecursos`. Las métricas
@@ -246,7 +165,7 @@ Salidas verificadas:
 - `xm_aportes.parquet`: 1.004 registros diarios numéricos.
 - `xm_listado_recursos.parquet`: 2.500 recursos normalizados.
 
-### 5.3 IDEAM
+### Punto 2: IDEAM
 
 `src/silver/ideam.py` convierte la fecha a tipo fecha, transforma a número la
 precipitación y las temperaturas media, mínima y máxima, conserva el código y
@@ -259,7 +178,7 @@ existe un límite artificial de diez ventanas.
 
 Resultados: 2.374 registros de precipitación y 1.477 de temperatura.
 
-### 5.4 NOAA
+### Punto 2: NOAA
 
 `src/silver/noaa.py` asigna cada trimestre móvil a su mes central: `DJF` a
 enero, `JFM` a febrero, y así sucesivamente hasta `NDJ` a diciembre. El ONI se
@@ -271,14 +190,14 @@ convierte a número y se clasifica así:
 
 El resultado es `data/silver/noaa_oni.parquet`, con 920 registros mensuales.
 
-### 5.5 Fuente propia TRM
+### Punto 2: fuente propia TRM
 
 Se creó `src/silver/trm.py`. La fecha `vigenciadesde` se convierte a fecha, el
 valor TRM se convierte a número, se eliminan duplicados por día y se ordena
 cronológicamente. El resultado es `data/silver/trm_colombia.parquet`, con 649
 registros.
 
-### 5.6 Cómo reproducir el trabajo
+### Reproducción de los puntos 1 y 2
 
 Desde la raíz del repositorio:
 
@@ -292,16 +211,6 @@ La extracción XM puede tardar por la cantidad de plantas y ventanas. Si solo
 se necesita reconstruir plata con los archivos ya descargados, se ejecuta
 únicamente `python -m src.transformar`.
 
-La verificación final registró 19 pruebas aprobadas. Los datos Parquet de
+La verificación final registró 19 pruebas aprobadas. Los archivos Parquet de
 `data/silver/` no se versionan; cada integrante debe generarlos localmente
-cuando los necesite.
-
-### 5.7 Trabajo que continúa
-
-Los siguientes pasos corresponden a los demás puntos de la actividad:
-
-- completar y aplicar esquemas Pandera para cada tabla plata;
-- ampliar las pruebas específicas de las nuevas reglas;
-- completar el reporte con métricas antes/después;
-- revisar la integración de las nuevas fuentes en dbt y el modelo estrella;
-- actualizar consultas y documentación de la Capa Oro.
+cuando los necesite. Esta bitácora documenta únicamente los puntos 1 y 2.

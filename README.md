@@ -139,11 +139,10 @@ incorporarlas al proyecto.
 
 **Rama de trabajo:** `silver-oscar`
 
-**Alcance de la entrega:** puntos 1 al 4 (Capa Plata, Pandera, Pytest,
-reporte de calidad y orquestación de limpieza).
+**Alcance de esta documentación:** puntos 1 y 2 de la Capa Plata:
+limpieza de EnerAndes y limpieza de las fuentes XM, IDEAM, NOAA y TRM.
 
-**Entorno de ejecución:** Codespaces con Python 3.10+, Pandas, Pandera y
-Pytest.
+**Entorno de ejecución:** Codespaces con Python 3.10+ y Pandas.
 
 La Capa Plata recibe los datos crudos de `data/bronze/`, aplica reglas de
 limpieza, deduplicación, tipado y validación de calidad, y genera archivos
@@ -167,7 +166,7 @@ inconsistentes o defectuosos se aíslan automáticamente en cuarentena.
 | IDEAM | `ideam_temperatura.parquet` | 1.477 | Conversión de comas decimales (`"22,5"` → `22.5`) y filtrado de lecturas válidas. |
 | TRM | `trm_colombia.parquet` | 649 | Fecha como fecha, valor como número, eliminación de duplicados por día y orden cronológico. |
 
-### Módulos de limpieza y transformación
+### Archivos modificados para los puntos 1 y 2
 
 - [`src/silver/enerandes.py`](src/silver/enerandes.py) unifica las ventas de
   2023–2026, convierte MWh a kWh y envía a cuarentena las filas inválidas.
@@ -182,42 +181,6 @@ inconsistentes o defectuosos se aíslan automáticamente en cuarentena.
   comas decimales.
 - [`src/silver/trm.py`](src/silver/trm.py) limpia la fuente propia TRM y la
   guarda como una fila por fecha.
-
-### Esquemas, calidad y orquestación
-
-- [`src/quality/esquemas.py`](src/quality/esquemas.py) define los contratos de
-  datos con Pandera y valida llaves, rangos, nulos y tipos antes de guardar
-  los Parquet.
-- [`src/transformar.py`](src/transformar.py) ejecuta secuencialmente la
-  limpieza de EnerAndes, NOAA, XM, IDEAM y TRM:
-
-  ```bash
-  python -m src.transformar
-  ```
-
-- Las pruebas automatizadas se ejecutan con:
-
-  ```bash
-  python -m pytest -v
-  ```
-
-  La suite actual contiene 19 pruebas aprobadas.
-
-### Insumos para la Capa Oro
-
-Los archivos Parquet disponibles para dbt y DuckDB son:
-
-- `data/silver/enerandes_ventas.parquet`
-- `data/silver/xm_precio_bolsa.parquet`
-- `data/silver/xm_demanda.parquet`
-- `data/silver/xm_generacion.parquet`
-- `data/silver/xm_aportes.parquet`
-- `data/silver/xm_embalses.parquet`
-- `data/silver/xm_listado_recursos.parquet`
-- `data/silver/noaa_oni.parquet`
-- `data/silver/ideam_precipitacion.parquet`
-- `data/silver/ideam_temperatura.parquet`
-- `data/silver/trm_colombia.parquet`
 
 ### Cambios de capa Plata — 2026-11-04
 
@@ -240,8 +203,8 @@ Los archivos Parquet disponibles para dbt y DuckDB son:
 
 ## Guía de trabajo para los puntos 1 y 2
 
-Esta sección resume exactamente qué se hizo en la Capa Plata y sirve como guía
-para continuar con los puntos 3 a 7. El flujo parte de `data/bronze/` y escribe
+Esta sección resume exactamente qué se hizo en los puntos 1 y 2. El flujo parte
+de `data/bronze/` y escribe
 los resultados en `data/silver/`; los archivos de datos no se suben al
 repositorio porque están excluidos en `.gitignore`.
 
@@ -354,14 +317,11 @@ La descarga completa de XM puede tardar debido a las ventanas y al número de
 plantas. No es necesario repetirla para reconstruir plata si los archivos
 bronce ya están presentes.
 
-Para validar el estado actual:
+Para comprobar que el código de limpieza sigue funcionando:
 
 ```bash
 python -m pytest -q
 ```
 
-La verificación realizada terminó con 19 pruebas aprobadas. El trabajo
-pendiente para los compañeros es completar los esquemas Pandera de todas las
-tablas, ampliar las pruebas específicas, completar las métricas
-antes/después del reporte de calidad y continuar con la integración dbt de la
-Capa Oro.
+La verificación realizada terminó con 19 pruebas aprobadas. Esta sección no
+documenta los puntos posteriores de la actividad.
