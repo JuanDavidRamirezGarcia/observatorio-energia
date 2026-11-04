@@ -3,10 +3,21 @@ from datetime import date
 import pandas as pd
 
 from src import config
+from src import pipeline
 from src.extract import ideam
 from src.extract import xm
 from src.pipeline import generar_muestras
 from src.utils import ventanas
+
+
+def test_configura_metricas_xm_nuevas():
+    metricas = set(config.XM_METRICAS)
+
+    assert {
+        ("Gene", "Recurso", "hourly", "xm_generacion"),
+        ("AporEner", "Sistema", "daily", "xm_aportes"),
+        ("ListadoRecursos", "", "lists", "xm_listado_recursos"),
+    } <= metricas
 
 
 def test_ventanas_parte_rango_en_bloques_inclusivos():
@@ -99,12 +110,56 @@ def test_generar_muestras_exporta_las_primeras_200_filas(tmp_path, monkeypatch):
 
     datos = pd.DataFrame({"valor": range(250)})
     datos.to_parquet(dir_bronze / "fuente.parquet", index=False)
+    pocos_datos = pd.DataFrame({"valor": range(50)})
+    pocos_datos.to_parquet(dir_bronze / "fuente_corta.parquet", index=False)
 
     generar_muestras()
 
     muestra = pd.read_csv(dir_sample / "fuente_sample.csv")
     assert len(muestra) == 200
     assert muestra["valor"].tolist() == list(range(200))
+    muestra_corta = pd.read_csv(dir_sample / "fuente_corta_sample.csv")
+    assert muestra_corta["valor"].tolist() == list(range(50))
+
+
+def test_pipeline_desde_carpetas_vacias_genera_muestras_de_todas_las_fuentes(
+    tmp_path, monkeypatch
+):
+    dir_bronze = tmp_path / "bronze"
+    dir_sample = tmp_path / "sample"
+    monkeypatch.setattr(config, "DIR_BRONZE", dir_bronze)
+    monkeypatch.setattr(config, "DIR_SAMPLE", dir_sample)
+    monkeypatch.setattr(pipeline.sys, "argv", ["python", "-m", "src.pipeline"])
+
+    extractores = (
+        pipeline.xm,
+        pipeline.ideam,
+        pipeline.noaa,
+        pipeline.enerandes,
+        pipeline.trm,
+    )
+    nombres = ("xm", "ideam", "noaa", "enerandes", "trm")
+    llamadas = []
+
+    def crear_stub(nombre):
+        def extraer(forzar=False):
+            llamadas.append((nombre, forzar))
+            dir_bronze.mkdir(parents=True, exist_ok=True)
+            pd.DataFrame({"valor": range(205)}).to_parquet(
+                dir_bronze / f"{nombre}.parquet", index=False
+            )
+
+        return extraer
+
+    for extractor, nombre in zip(extractores, nombres):
+        monkeypatch.setattr(extractor, "extraer", crear_stub(nombre))
+
+    pipeline.main()
+
+    assert llamadas == [(nombre, False) for nombre in nombres]
+    for nombre in nombres:
+        muestra = pd.read_csv(dir_sample / f"{nombre}_sample.csv")
+        assert muestra["valor"].tolist() == list(range(200))
 
 
 def test_ideam_recorre_todo_el_ano_2025(monkeypatch):

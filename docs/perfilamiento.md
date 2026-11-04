@@ -1,9 +1,9 @@
 # Perfilamiento de la capa bronce
 
-Este documento describe los archivos Parquet disponibles en `data/bronze/` al
-25 de octubre de 2026. La carpeta se genera localmente al ejecutar el pipeline
-y está excluida de Git, por lo que los resultados pueden cambiar cuando se
-vuelvan a descargar los datos.
+Este documento describe los Parquet disponibles en `data/bronze/` en el
+entorno de clase, perfilados el 4 de noviembre de 2026. Las cifras corresponden
+a ese conjunto de datos y pueden cambiar al volver a ejecutar el pipeline.
+La carpeta `data/bronze/` se genera localmente y está excluida de Git.
 
 ## Resumen por archivo
 
@@ -13,11 +13,13 @@ vuelvan a descargar los datos.
 | `enerandes_ventas_2024.parquet` | 1.114 | 11 | 32 | Sin rango normalizable (`col_0` contiene formatos heterogéneos) |
 | `enerandes_ventas_2025.parquet` | 1.117 | 10 | 32 | Sin rango normalizable (`col_0` contiene títulos, encabezados y datos) |
 | `enerandes_ventas_2026.parquet` | 839 | 10 | 24 | Sin rango normalizable (`col_0` contiene títulos, encabezados y datos) |
-| `ideam_precipitacion_diaria.parquet` | 2.784 | 11 | 0 | `fecha`: 2026-06-01 a 2026-07-24 |
+| `ideam_precipitacion_diaria.parquet` | 2.374 | 11 | 0 | `fecha`: 2025-01-01 a 2025-03-11 |
+| `ideam_temperatura_diaria.parquet` | 1.477 | 13 | 0 | `fecha`: 2025-01-01 a 2025-03-11 |
 | `noaa_oni.parquet` | 920 | 7 | 0 | `YR`: 1950 a 2026 |
-| `xm_demanda.parquet` | 273 | 30 | 0 | `Date`: 2026-01-01 a 2026-09-30 |
-| `xm_embalses.parquet` | 273 | 6 | 0 | `Date`: 2026-01-01 a 2026-09-30 |
-| `xm_precio_bolsa.parquet` | 273 | 30 | 0 | `Date`: 2026-01-01 a 2026-09-30 |
+| `trm_colombia.parquet` | 649 | 7 | 0 | `vigenciadesde`: 2024-01-03 a 2026-09-30 |
+| `xm_demanda.parquet` | 1.004 | 30 | 0 | `Date`: 2024-01-01 a 2026-09-30 |
+| `xm_embalses.parquet` | 1.004 | 6 | 0 | `Date`: 2024-01-01 a 2026-09-30 |
+| `xm_precio_bolsa.parquet` | 1.004 | 30 | 0 | `Date`: 2024-01-01 a 2026-09-30 |
 
 ## `enerandes_ventas_2023.parquet`
 
@@ -99,6 +101,18 @@ duplicadas exactas.
 | `fecha`, `precipitacion_mm`, `n_obs` | 0,00 % |
 | `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
 
+## `ideam_temperatura_diaria.parquet`
+
+Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
+duplicadas exactas. Contiene temperatura media, mínima y máxima diaria por
+estación.
+
+| Columna | Nulos |
+|---|---:|
+| `codigoestacion`, `nombreestacion`, `municipio`, `latitud`, `longitud` | 0,00 % |
+| `fecha`, `temp_media`, `temp_min`, `temp_max`, `n_obs` | 0,00 % |
+| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
+
 ## `noaa_oni.parquet`
 
 Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
@@ -146,6 +160,16 @@ pandas. El porcentaje de nulos se calcula con `isna()` sobre cada columna.
 | `_fuente` | `string` | 0,0 % |
 | `_origen` | `string` | 0,0 % |
 | `_extraido_en` | `string` | 0,0 % |
+
+## `trm_colombia.parquet`
+
+Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
+duplicadas exactas. Hay 649 fechas distintas, una por registro.
+
+| Columna | Nulos |
+|---|---:|
+| `valor`, `unidad`, `vigenciadesde`, `vigenciahasta` | 0,00 % |
+| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
 
 ## `xm_embalses.parquet`
 
@@ -212,8 +236,10 @@ pipeline descarga otras fuentes o archivos, agrégalos con el mismo formato.
 
 ## Hallazgos de calidad
 
-Estos hallazgos se calcularon sobre los Parquet locales disponibles el
-2026-10-24. La capa bronce conserva los datos sin limpiar; las correcciones y
+Estos hallazgos se calcularon sobre los Parquet del entorno de clase disponibles
+el 2026-11-04. Aunque el perfil se hizo en 2026, las fechas de los datos varían
+por fuente; en particular, IDEAM cubre 2025 y XM/TRM llegan hasta 2026-09-30.
+La capa bronce conserva los datos sin limpiar; las correcciones y
 normalizaciones deben realizarse en la capa plata.
 
 | # | Hallazgo | Evidencia numérica | Recomendación |
@@ -221,8 +247,8 @@ normalizaciones deben realizarse en la capa plata.
 | 1 | Filas duplicadas en las ventas de EnerAndes. | Se detectaron **120 filas duplicadas exactas** en **4.184 filas**: 32 en 2023, 32 en 2024, 32 en 2025 y 24 en 2026 (**2,87 %** del total). | Revisar la clave de negocio y deduplicar en plata, conservando el registro válido. |
 | 2 | Valores faltantes en campos de ventas de EnerAndes. | Los cuatro archivos suman **148 celdas nulas** en sus columnas de datos: 37 (2023), 28 (2024), 41 (2025) y 42 (2026). Los campos de linaje no presentan nulos. | Cuantificar nulos por campo y definir si se imputan, se excluyen o se conservan como desconocidos. |
 | 3 | Esquema y filas de encabezado inconsistentes en EnerAndes. | Los **4 archivos anuales** exponen columnas genéricas `col_0`…; tres tienen 7 columnas de origen y uno 8. En 2023 y 2024 la primera fila contiene encabezados dentro de los datos; en 2025 y 2026 las primeras filas incluyen título y nota de fuente. | Normalizar nombres, unidades y formatos por año en plata; separar encabezados y metadatos antes de combinar. |
-| 4 | Cobertura temporal incompleta en IDEAM. | Para el intervalo solicitado **2026-06-01 a 2026-09-30** hay **122 días**; el archivo contiene **52 fechas (42,62 %)** y faltan **70 (57,38 %)**. La fecha máxima es 2026-07-24; también faltan 2026-07-05 y 2026-07-06 dentro del tramo observado. | Revisar la extracción/paginación y la disponibilidad de la fuente; registrar explícitamente las fechas ausentes. |
-| 5 | Conteos de observaciones IDEAM atípicamente altos. | De **2.784 registros estación-día**, **149 (5,35 %)** tienen `n_obs > 144`; dos registros del 2026-07-24 alcanzan **16.302** y **16.245**, mientras la mediana es **144**. | Validar la frecuencia esperada por estación y el agregado SoQL para descartar duplicación o diferencias de frecuencia. |
+| 4 | Cobertura temporal incompleta en IDEAM. | Para el año solicitado **2025** (365 días), precipitación y temperatura tienen datos en **48 fechas**, del 2025-01-01 al 2025-03-11; faltan **317 días (86,85 %)** del año. | Revisar la extracción/paginación y la disponibilidad de ambas fuentes; registrar explícitamente las fechas ausentes. |
+| 5 | Conteos `n_obs` que requieren validación en IDEAM. | En precipitación, **1.692 de 2.374 registros (71,27 %)** tienen `n_obs > 144` (máximo **1.738**, mediana **282**). En temperatura, **96 de 1.477 (6,50 %)** superan 144 (máximo **1.460**, mediana **46**). | Validar la frecuencia de medición por estación y los agregados SoQL; estos conteos son una alerta y no prueban por sí solos que los datos sean inválidos. |
 
 Los hallazgos 1–3 describen datos crudos de EnerAndes que requieren
 estandarización; no implican que la capa bronce deba modificarse. El hallazgo 5
