@@ -38,15 +38,37 @@ Nos permite convertir los precios spot del mercado eléctrico (COP/MWh) y las ve
 
 ## ⚙️ Cómo ejecutar
 
+Requisitos: Python 3.10 o posterior y acceso a Internet para consultar las
+fuentes públicas. El archivo interno
+`data/insumos/ventas_enerandes_2023_2026.xlsx` está incluido en el repositorio;
+no es necesario copiarlo aparte.
+
+Desde la raíz del proyecto, crea el entorno e instala las dependencias:
+
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-# copiar ventas_enerandes_2023_2026.xlsx en data/insumos/
-python -m src.pipeline          # descarga las 4 fuentes a data/bronze/ (unos 3 minutos)
-python -m src.consultar         # consultas SQL de BI con DuckDB
-python -m pytest                # muestra el resultado de cada prueba (configurado en pytest.ini)
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m src.pipeline
+.\.venv\Scripts\python.exe -m src.consultar
+.\.venv\Scripts\python.exe -m pytest
 ```
+
+En macOS o Linux, usa el intérprete del entorno virtual con estos comandos:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m src.pipeline
+.venv/bin/python -m src.consultar
+.venv/bin/python -m pytest
+```
+
+El pipeline descarga XM, IDEAM, NOAA y TRM, y lee el Excel de EnerAndes.
+Necesita conexión a Internet y el tiempo total depende de la disponibilidad
+de las API; la generación horaria de XM puede tardar varios minutos. Al
+terminar, genera en `data/sample/` un CSV por cada Parquet de bronce encontrado,
+con sus primeras 200 filas (o todas si contiene menos). Los CSV de muestra se
+versionan; `data/bronze/` contiene datos descargados y está excluida de Git.
 
 Para volver a descargar todo: `python -m src.pipeline --forzar`. El rango de fechas se cambia en `src/config.py`.
 
