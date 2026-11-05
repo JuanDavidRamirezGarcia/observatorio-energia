@@ -1,256 +1,372 @@
 # Perfilamiento de la capa bronce
 
-Este documento describe los Parquet disponibles en `data/bronze/` en el
-entorno de clase, perfilados el 4 de noviembre de 2026. Las cifras corresponden
-a ese conjunto de datos y pueden cambiar al volver a ejecutar el pipeline.
-La carpeta `data/bronze/` se genera localmente y está excluida de Git.
+Este documento fue generado automáticamente desde todos los archivos Parquet en `data/bronze/`.
 
-## Resumen por archivo
+## Resumen ejecutivo
 
-| Archivo | Filas | Columnas | Filas duplicadas exactas | Cobertura temporal |
-|---|---:|---:|---:|---|
-| `enerandes_ventas_2023.parquet` | 1.114 | 10 | 32 | Sin rango normalizable (`col_0` contiene formatos heterogéneos) |
-| `enerandes_ventas_2024.parquet` | 1.114 | 11 | 32 | Sin rango normalizable (`col_0` contiene formatos heterogéneos) |
-| `enerandes_ventas_2025.parquet` | 1.117 | 10 | 32 | Sin rango normalizable (`col_0` contiene títulos, encabezados y datos) |
-| `enerandes_ventas_2026.parquet` | 839 | 10 | 24 | Sin rango normalizable (`col_0` contiene títulos, encabezados y datos) |
-| `ideam_precipitacion_diaria.parquet` | 2.374 | 11 | 0 | `fecha`: 2025-01-01 a 2025-03-11 |
-| `ideam_temperatura_diaria.parquet` | 1.477 | 13 | 0 | `fecha`: 2025-01-01 a 2025-03-11 |
-| `noaa_oni.parquet` | 920 | 7 | 0 | `YR`: 1950 a 2026 |
-| `trm_colombia.parquet` | 649 | 7 | 0 | `vigenciadesde`: 2024-01-03 a 2026-09-30 |
-| `xm_demanda.parquet` | 1.004 | 30 | 0 | `Date`: 2024-01-01 a 2026-09-30 |
-| `xm_embalses.parquet` | 1.004 | 6 | 0 | `Date`: 2024-01-01 a 2026-09-30 |
-| `xm_precio_bolsa.parquet` | 1.004 | 30 | 0 | `Date`: 2024-01-01 a 2026-09-30 |
+| Archivo | Filas | Columnas | Duplicadas exactas | Cobertura temporal | Tamaño estimado |
+|---|---:|---:|---:|---|---:|
+| `enerandes_ventas_2023.parquet` | 1,114 | 10 | 32 | Sin rango normalizable | 32.8 KB |
+| `enerandes_ventas_2024.parquet` | 1,114 | 11 | 32 | Sin rango normalizable | 34.6 KB |
+| `enerandes_ventas_2025.parquet` | 1,117 | 10 | 32 | Sin rango normalizable | 33.1 KB |
+| `enerandes_ventas_2026.parquet` | 839 | 10 | 24 | Sin rango normalizable | 26.6 KB |
+| `ideam_precipitacion_diaria.parquet` | 18,221 | 11 | 0 | 2025-01-01 a 2025-12-31 | 66.8 KB |
+| `ideam_temperatura_diaria.parquet` | 10,772 | 13 | 0 | 2025-01-01 a 2025-12-31 | 113.6 KB |
+| `noaa_oni.parquet` | 921 | 7 | 0 | 1950-01-01 a 2026-01-01 | 9.6 KB |
+| `trm_colombia.parquet` | 649 | 7 | 0 | 2024-01-03 a 2026-09-30 | 17.1 KB |
+| `xm_aportes.parquet` | 1,004 | 6 | 0 | 2024-01-01 a 2026-09-30 | 20.1 KB |
+| `xm_demanda.parquet` | 1,004 | 30 | 0 | 2024-01-01 a 2026-09-30 | 282.6 KB |
+| `xm_embalses.parquet` | 1,004 | 6 | 0 | 2024-01-01 a 2026-09-30 | 15.9 KB |
+| `xm_generacion.parquet` | 350,361 | 30 | 0 | 2024-01-01 a 2026-09-30 | 43127.0 KB |
+| `xm_listado_recursos.parquet` | 2,502 | 5 | 2 | Sin rango normalizable | 71.9 KB |
+| `xm_precio_bolsa.parquet` | 1,004 | 30 | 0 | 2024-01-01 a 2026-09-30 | 261.0 KB |
 
-## `enerandes_ventas_2023.parquet`
+## Detalle por archivo
 
-Todas las columnas son de tipo `string`. Las columnas genéricas `col_0` a
-`col_6` corresponden a los datos de origen; las tres columnas restantes son
-metadatos de linaje.
+### `enerandes_ventas_2023.parquet`
 
-| Columna | Nulos |
-|---|---:|
-| `col_0` | 0,00 % |
-| `col_1` | 0,09 % |
-| `col_2` | 1,44 % |
-| `col_3` | 0,09 % |
-| `col_4` | 0,90 % |
-| `col_5` | 0,72 % |
-| `col_6` | 0,09 % |
-| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
+- Filas: 1,114
+- Columnas: 10
+- Filas duplicadas exactas: 32
+- Cobertura temporal: Sin rango normalizable
 
-## `enerandes_ventas_2024.parquet`
-
-Todas las columnas son de tipo `string`. Las columnas genéricas `col_0` a
-`col_7` corresponden a los datos de origen; las tres columnas restantes son
-metadatos de linaje.
-
-| Columna | Nulos |
-|---|---:|
-| `col_0` | 0,00 % |
-| `col_1` | 0,09 % |
-| `col_2` | 0,36 % |
-| `col_3` | 0,09 % |
-| `col_4` | 0,72 % |
-| `col_5` | 0,09 % |
-| `col_6` | 1,08 % |
-| `col_7` | 0,09 % |
-| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
-
-## `enerandes_ventas_2025.parquet`
-
-Todas las columnas son de tipo `string`. Las columnas genéricas `col_0` a
-`col_6` corresponden a los datos de origen; las tres columnas restantes son
-metadatos de linaje.
-
-| Columna | Nulos |
-|---|---:|
-| `col_0` | 0,09 % |
-| `col_1` | 0,36 % |
-| `col_2` | 0,90 % |
-| `col_3` | 0,36 % |
-| `col_4` | 0,90 % |
-| `col_5` | 0,72 % |
-| `col_6` | 0,36 % |
-| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
-
-## `enerandes_ventas_2026.parquet`
-
-Todas las columnas son de tipo `string`. Las columnas genéricas `col_0` a
-`col_6` corresponden a los datos de origen; las tres columnas restantes son
-metadatos de linaje.
-
-| Columna | Nulos |
-|---|---:|
-| `col_0` | 0,12 % |
-| `col_1` | 0,48 % |
-| `col_2` | 1,07 % |
-| `col_3` | 0,48 % |
-| `col_4` | 1,07 % |
-| `col_5` | 1,31 % |
-| `col_6` | 0,48 % |
-| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
-
-## `ideam_precipitacion_diaria.parquet`
-
-Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
-duplicadas exactas.
-
-| Columna | Nulos |
-|---|---:|
-| `codigoestacion`, `nombreestacion`, `municipio`, `latitud`, `longitud` | 0,00 % |
-| `fecha`, `precipitacion_mm`, `n_obs` | 0,00 % |
-| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
-
-## `ideam_temperatura_diaria.parquet`
-
-Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
-duplicadas exactas. Contiene temperatura media, mínima y máxima diaria por
-estación.
-
-| Columna | Nulos |
-|---|---:|
-| `codigoestacion`, `nombreestacion`, `municipio`, `latitud`, `longitud` | 0,00 % |
-| `fecha`, `temp_media`, `temp_min`, `temp_max`, `n_obs` | 0,00 % |
-| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
-
-## `noaa_oni.parquet`
-
-Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
-duplicadas exactas. La cobertura anual se toma de `YR`.
-
-| Columna | Nulos |
-|---|---:|
-| `SEAS`, `YR`, `TOTAL`, `ANOM` | 0,00 % |
-| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
-
-## `xm_demanda.parquet`
-
-`string` representa el tipo textual (`str`) detectado al leer el Parquet con
-pandas. El porcentaje de nulos se calcula con `isna()` sobre cada columna.
-
-| Columna | Tipo de dato | Nulos |
+| Columna | Tipo | Nulos (%) |
 |---|---|---:|
-| `Date` | `string` | 0,0 % |
-| `Id` | `string` | 0,0 % |
-| `code` | `string` | 0,0 % |
-| `Hour01` | `string` | 0,0 % |
-| `Hour02` | `string` | 0,0 % |
-| `Hour03` | `string` | 0,0 % |
-| `Hour04` | `string` | 0,0 % |
-| `Hour05` | `string` | 0,0 % |
-| `Hour06` | `string` | 0,0 % |
-| `Hour07` | `string` | 0,0 % |
-| `Hour08` | `string` | 0,0 % |
-| `Hour09` | `string` | 0,0 % |
-| `Hour10` | `string` | 0,0 % |
-| `Hour11` | `string` | 0,0 % |
-| `Hour12` | `string` | 0,0 % |
-| `Hour13` | `string` | 0,0 % |
-| `Hour14` | `string` | 0,0 % |
-| `Hour15` | `string` | 0,0 % |
-| `Hour16` | `string` | 0,0 % |
-| `Hour17` | `string` | 0,0 % |
-| `Hour18` | `string` | 0,0 % |
-| `Hour19` | `string` | 0,0 % |
-| `Hour20` | `string` | 0,0 % |
-| `Hour21` | `string` | 0,0 % |
-| `Hour22` | `string` | 0,0 % |
-| `Hour23` | `string` | 0,0 % |
-| `Hour24` | `string` | 0,0 % |
-| `_fuente` | `string` | 0,0 % |
-| `_origen` | `string` | 0,0 % |
-| `_extraido_en` | `string` | 0,0 % |
+| `col_0` | `str` | 0.00 |
+| `col_1` | `str` | 0.09 |
+| `col_2` | `str` | 1.44 |
+| `col_3` | `str` | 0.09 |
+| `col_4` | `str` | 0.90 |
+| `col_5` | `str` | 0.72 |
+| `col_6` | `str` | 0.09 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
 
-## `trm_colombia.parquet`
+### `enerandes_ventas_2024.parquet`
 
-Todas las columnas son de tipo `string`; no se encontraron nulos ni filas
-duplicadas exactas. Hay 649 fechas distintas, una por registro.
+- Filas: 1,114
+- Columnas: 11
+- Filas duplicadas exactas: 32
+- Cobertura temporal: Sin rango normalizable
 
-| Columna | Nulos |
-|---|---:|
-| `valor`, `unidad`, `vigenciadesde`, `vigenciahasta` | 0,00 % |
-| `_fuente`, `_origen`, `_extraido_en` | 0,00 % |
-
-## `xm_embalses.parquet`
-
-| Columna | Tipo de dato | Nulos |
+| Columna | Tipo | Nulos (%) |
 |---|---|---:|
-| `Date` | `string` | 0,0 % |
-| `Id` | `string` | 0,0 % |
-| `Value` | `string` | 0,0 % |
-| `_fuente` | `string` | 0,0 % |
-| `_origen` | `string` | 0,0 % |
-| `_extraido_en` | `string` | 0,0 % |
+| `col_0` | `str` | 0.00 |
+| `col_1` | `str` | 0.09 |
+| `col_2` | `str` | 0.36 |
+| `col_3` | `str` | 0.09 |
+| `col_4` | `str` | 0.72 |
+| `col_5` | `str` | 0.09 |
+| `col_6` | `str` | 1.08 |
+| `col_7` | `str` | 0.09 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
 
-## `xm_precio_bolsa.parquet`
+### `enerandes_ventas_2025.parquet`
 
-| Columna | Tipo de dato | Nulos |
+- Filas: 1,117
+- Columnas: 10
+- Filas duplicadas exactas: 32
+- Cobertura temporal: Sin rango normalizable
+
+| Columna | Tipo | Nulos (%) |
 |---|---|---:|
-| `Date` | `string` | 0,0 % |
-| `Id` | `string` | 0,0 % |
-| `code` | `string` | 0,0 % |
-| `Hour01` | `string` | 0,0 % |
-| `Hour02` | `string` | 0,0 % |
-| `Hour03` | `string` | 0,0 % |
-| `Hour04` | `string` | 0,0 % |
-| `Hour05` | `string` | 0,0 % |
-| `Hour06` | `string` | 0,0 % |
-| `Hour07` | `string` | 0,0 % |
-| `Hour08` | `string` | 0,0 % |
-| `Hour09` | `string` | 0,0 % |
-| `Hour10` | `string` | 0,0 % |
-| `Hour11` | `string` | 0,0 % |
-| `Hour12` | `string` | 0,0 % |
-| `Hour13` | `string` | 0,0 % |
-| `Hour14` | `string` | 0,0 % |
-| `Hour15` | `string` | 0,0 % |
-| `Hour16` | `string` | 0,0 % |
-| `Hour17` | `string` | 0,0 % |
-| `Hour18` | `string` | 0,0 % |
-| `Hour19` | `string` | 0,0 % |
-| `Hour20` | `string` | 0,0 % |
-| `Hour21` | `string` | 0,0 % |
-| `Hour22` | `string` | 0,0 % |
-| `Hour23` | `string` | 0,0 % |
-| `Hour24` | `string` | 0,0 % |
-| `_fuente` | `string` | 0,0 % |
-| `_origen` | `string` | 0,0 % |
-| `_extraido_en` | `string` | 0,0 % |
+| `col_0` | `str` | 0.09 |
+| `col_1` | `str` | 0.36 |
+| `col_2` | `str` | 0.90 |
+| `col_3` | `str` | 0.36 |
+| `col_4` | `str` | 0.90 |
+| `col_5` | `str` | 0.72 |
+| `col_6` | `str` | 0.36 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
 
-## Cómo repetir el perfilamiento
+### `enerandes_ventas_2026.parquet`
 
-1. Ejecuta `python -m src.pipeline` para crear o actualizar los archivos de
-   `data/bronze/`.
-2. Lee cada Parquet con `pandas.read_parquet`.
-3. Calcula filas y columnas con `df.shape`, los tipos con `df.dtypes`, y los
-   nulos por columna con `df.isna().mean() * 100`.
-4. Cuenta filas completamente duplicadas con `df.duplicated().sum()`.
-5. Calcula el rango para `Date` o `fecha`; para fuentes anuales como NOAA,
-   utiliza `YR`. No interpretes como fechas los campos heterogéneos de
-   EnerAndes antes de normalizar sus encabezados y valores.
-6. Actualiza este documento con los resultados de todos los archivos del
-   conjunto descargado.
+- Filas: 839
+- Columnas: 10
+- Filas duplicadas exactas: 24
+- Cobertura temporal: Sin rango normalizable
 
-Este perfilamiento incluye los archivos presentes durante la medición. Si el
-pipeline descarga otras fuentes o archivos, agrégalos con el mismo formato.
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `col_0` | `str` | 0.12 |
+| `col_1` | `str` | 0.48 |
+| `col_2` | `str` | 1.07 |
+| `col_3` | `str` | 0.48 |
+| `col_4` | `str` | 1.07 |
+| `col_5` | `str` | 1.31 |
+| `col_6` | `str` | 0.48 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `ideam_precipitacion_diaria.parquet`
+
+- Filas: 18,221
+- Columnas: 11
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 2025-01-01 a 2025-12-31
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `codigoestacion` | `str` | 0.00 |
+| `nombreestacion` | `str` | 0.00 |
+| `municipio` | `str` | 0.00 |
+| `latitud` | `str` | 0.00 |
+| `longitud` | `str` | 0.00 |
+| `fecha` | `str` | 0.00 |
+| `precipitacion_mm` | `str` | 0.00 |
+| `n_obs` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `ideam_temperatura_diaria.parquet`
+
+- Filas: 10,772
+- Columnas: 13
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 2025-01-01 a 2025-12-31
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `codigoestacion` | `str` | 0.00 |
+| `nombreestacion` | `str` | 0.00 |
+| `municipio` | `str` | 0.00 |
+| `latitud` | `str` | 0.00 |
+| `longitud` | `str` | 0.00 |
+| `fecha` | `str` | 0.00 |
+| `temp_media` | `str` | 0.00 |
+| `temp_min` | `str` | 0.00 |
+| `temp_max` | `str` | 0.00 |
+| `n_obs` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `noaa_oni.parquet`
+
+- Filas: 921
+- Columnas: 7
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 1950-01-01 a 2026-01-01
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `SEAS` | `str` | 0.00 |
+| `YR` | `str` | 0.00 |
+| `TOTAL` | `str` | 0.00 |
+| `ANOM` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `trm_colombia.parquet`
+
+- Filas: 649
+- Columnas: 7
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 2024-01-03 a 2026-09-30
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `valor` | `str` | 0.00 |
+| `unidad` | `str` | 0.00 |
+| `vigenciadesde` | `str` | 0.00 |
+| `vigenciahasta` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `xm_aportes.parquet`
+
+- Filas: 1,004
+- Columnas: 6
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 2024-01-01 a 2026-09-30
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `Date` | `str` | 0.00 |
+| `Id` | `str` | 0.00 |
+| `Value` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `xm_demanda.parquet`
+
+- Filas: 1,004
+- Columnas: 30
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 2024-01-01 a 2026-09-30
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `Date` | `str` | 0.00 |
+| `Id` | `str` | 0.00 |
+| `code` | `str` | 0.00 |
+| `Hour01` | `str` | 0.00 |
+| `Hour02` | `str` | 0.00 |
+| `Hour03` | `str` | 0.00 |
+| `Hour04` | `str` | 0.00 |
+| `Hour05` | `str` | 0.00 |
+| `Hour06` | `str` | 0.00 |
+| `Hour07` | `str` | 0.00 |
+| `Hour08` | `str` | 0.00 |
+| `Hour09` | `str` | 0.00 |
+| `Hour10` | `str` | 0.00 |
+| `Hour11` | `str` | 0.00 |
+| `Hour12` | `str` | 0.00 |
+| `Hour13` | `str` | 0.00 |
+| `Hour14` | `str` | 0.00 |
+| `Hour15` | `str` | 0.00 |
+| `Hour16` | `str` | 0.00 |
+| `Hour17` | `str` | 0.00 |
+| `Hour18` | `str` | 0.00 |
+| `Hour19` | `str` | 0.00 |
+| `Hour20` | `str` | 0.00 |
+| `Hour21` | `str` | 0.00 |
+| `Hour22` | `str` | 0.00 |
+| `Hour23` | `str` | 0.00 |
+| `Hour24` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `xm_embalses.parquet`
+
+- Filas: 1,004
+- Columnas: 6
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 2024-01-01 a 2026-09-30
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `Date` | `str` | 0.00 |
+| `Id` | `str` | 0.00 |
+| `Value` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `xm_generacion.parquet`
+
+- Filas: 350,361
+- Columnas: 30
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 2024-01-01 a 2026-09-30
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `Date` | `str` | 0.00 |
+| `Id` | `str` | 0.00 |
+| `code` | `str` | 0.00 |
+| `Hour01` | `str` | 0.00 |
+| `Hour02` | `str` | 0.00 |
+| `Hour03` | `str` | 0.00 |
+| `Hour04` | `str` | 0.00 |
+| `Hour05` | `str` | 0.00 |
+| `Hour06` | `str` | 0.00 |
+| `Hour07` | `str` | 0.00 |
+| `Hour08` | `str` | 0.00 |
+| `Hour09` | `str` | 0.00 |
+| `Hour10` | `str` | 0.00 |
+| `Hour11` | `str` | 0.00 |
+| `Hour12` | `str` | 0.00 |
+| `Hour13` | `str` | 0.00 |
+| `Hour14` | `str` | 0.00 |
+| `Hour15` | `str` | 0.00 |
+| `Hour16` | `str` | 0.00 |
+| `Hour17` | `str` | 0.00 |
+| `Hour18` | `str` | 0.00 |
+| `Hour19` | `str` | 0.00 |
+| `Hour20` | `str` | 0.00 |
+| `Hour21` | `str` | 0.00 |
+| `Hour22` | `str` | 0.00 |
+| `Hour23` | `str` | 0.00 |
+| `Hour24` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `xm_listado_recursos.parquet`
+
+- Filas: 2,502
+- Columnas: 5
+- Filas duplicadas exactas: 2
+- Cobertura temporal: Sin rango normalizable
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `Id` | `str` | 0.00 |
+| `Values` | `object` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
+### `xm_precio_bolsa.parquet`
+
+- Filas: 1,004
+- Columnas: 30
+- Filas duplicadas exactas: 0
+- Cobertura temporal: 2024-01-01 a 2026-09-30
+
+| Columna | Tipo | Nulos (%) |
+|---|---|---:|
+| `Date` | `str` | 0.00 |
+| `Id` | `str` | 0.00 |
+| `code` | `str` | 0.00 |
+| `Hour01` | `str` | 0.00 |
+| `Hour02` | `str` | 0.00 |
+| `Hour03` | `str` | 0.00 |
+| `Hour04` | `str` | 0.00 |
+| `Hour05` | `str` | 0.00 |
+| `Hour06` | `str` | 0.00 |
+| `Hour07` | `str` | 0.00 |
+| `Hour08` | `str` | 0.00 |
+| `Hour09` | `str` | 0.00 |
+| `Hour10` | `str` | 0.00 |
+| `Hour11` | `str` | 0.00 |
+| `Hour12` | `str` | 0.00 |
+| `Hour13` | `str` | 0.00 |
+| `Hour14` | `str` | 0.00 |
+| `Hour15` | `str` | 0.00 |
+| `Hour16` | `str` | 0.00 |
+| `Hour17` | `str` | 0.00 |
+| `Hour18` | `str` | 0.00 |
+| `Hour19` | `str` | 0.00 |
+| `Hour20` | `str` | 0.00 |
+| `Hour21` | `str` | 0.00 |
+| `Hour22` | `str` | 0.00 |
+| `Hour23` | `str` | 0.00 |
+| `Hour24` | `str` | 0.00 |
+| `_fuente` | `str` | 0.00 |
+| `_origen` | `str` | 0.00 |
+| `_extraido_en` | `str` | 0.00 |
+
 
 ## Hallazgos de calidad
 
-Estos hallazgos se calcularon sobre los Parquet del entorno de clase disponibles
-el 2026-11-04. Aunque el perfil se hizo en 2026, las fechas de los datos varían
-por fuente; en particular, IDEAM cubre 2025 y XM/TRM llegan hasta 2026-09-30.
-La capa bronce conserva los datos sin limpiar; las correcciones y
-normalizaciones deben realizarse en la capa plata.
-
-| # | Hallazgo | Evidencia numérica | Recomendación |
-|---:|---|---|---|
-| 1 | Filas duplicadas en las ventas de EnerAndes. | Se detectaron **120 filas duplicadas exactas** en **4.184 filas**: 32 en 2023, 32 en 2024, 32 en 2025 y 24 en 2026 (**2,87 %** del total). | Revisar la clave de negocio y deduplicar en plata, conservando el registro válido. |
-| 2 | Valores faltantes en campos de ventas de EnerAndes. | Los cuatro archivos suman **148 celdas nulas** en sus columnas de datos: 37 (2023), 28 (2024), 41 (2025) y 42 (2026). Los campos de linaje no presentan nulos. | Cuantificar nulos por campo y definir si se imputan, se excluyen o se conservan como desconocidos. |
-| 3 | Esquema y filas de encabezado inconsistentes en EnerAndes. | Los **4 archivos anuales** exponen columnas genéricas `col_0`…; tres tienen 7 columnas de origen y uno 8. En 2023 y 2024 la primera fila contiene encabezados dentro de los datos; en 2025 y 2026 las primeras filas incluyen título y nota de fuente. | Normalizar nombres, unidades y formatos por año en plata; separar encabezados y metadatos antes de combinar. |
-| 4 | Cobertura temporal incompleta en IDEAM. | Para el año solicitado **2025** (365 días), precipitación y temperatura tienen datos en **48 fechas**, del 2025-01-01 al 2025-03-11; faltan **317 días (86,85 %)** del año. | Revisar la extracción/paginación y la disponibilidad de ambas fuentes; registrar explícitamente las fechas ausentes. |
-| 5 | Conteos `n_obs` que requieren validación en IDEAM. | En precipitación, **1.692 de 2.374 registros (71,27 %)** tienen `n_obs > 144` (máximo **1.738**, mediana **282**). En temperatura, **96 de 1.477 (6,50 %)** superan 144 (máximo **1.460**, mediana **46**). | Validar la frecuencia de medición por estación y los agregados SoQL; estos conteos son una alerta y no prueban por sí solos que los datos sean inválidos. |
-
-Los hallazgos 1–3 describen datos crudos de EnerAndes que requieren
-estandarización; no implican que la capa bronce deba modificarse. El hallazgo 5
-es una alerta para validar contra la frecuencia de medición de cada estación,
-no una conclusión de que esos conteos sean necesariamente inválidos.
+| Hallazgo | Observación |
+|---|---|
+| Duplicados en `enerandes_ventas_2023.parquet` | Se detectaron 32 filas duplicadas exactas. |
+| Nulos relevantes en `enerandes_ventas_2023.parquet` | La columna `col_2` tiene 1.44% de valores nulos. |
+| Duplicados en `enerandes_ventas_2024.parquet` | Se detectaron 32 filas duplicadas exactas. |
+| Nulos relevantes en `enerandes_ventas_2024.parquet` | La columna `col_6` tiene 1.08% de valores nulos. |
+| Duplicados en `enerandes_ventas_2025.parquet` | Se detectaron 32 filas duplicadas exactas. |
+| Nulos relevantes en `enerandes_ventas_2025.parquet` | La columna `col_2` tiene 0.90% de valores nulos. |
+| Duplicados en `enerandes_ventas_2026.parquet` | Se detectaron 24 filas duplicadas exactas. |
+| Nulos relevantes en `enerandes_ventas_2026.parquet` | La columna `col_5` tiene 1.31% de valores nulos. |
+| Rango temporal en `ideam_precipitacion_diaria.parquet` | `fecha` cubre desde 2025-01-01 hasta 2025-12-31. |
+| Rango temporal en `ideam_temperatura_diaria.parquet` | `fecha` cubre desde 2025-01-01 hasta 2025-12-31. |
+| Rango temporal en `xm_aportes.parquet` | `Date` cubre desde 2024-01-01 hasta 2026-09-30. |
+| Rango temporal en `xm_demanda.parquet` | `Date` cubre desde 2024-01-01 hasta 2026-09-30. |
+| Rango temporal en `xm_embalses.parquet` | `Date` cubre desde 2024-01-01 hasta 2026-09-30. |
+| Rango temporal en `xm_generacion.parquet` | `Date` cubre desde 2024-01-01 hasta 2026-09-30. |
+| Duplicados en `xm_listado_recursos.parquet` | Se detectaron 2 filas duplicadas exactas. |
+| Rango temporal en `xm_precio_bolsa.parquet` | `Date` cubre desde 2024-01-01 hasta 2026-09-30. |
