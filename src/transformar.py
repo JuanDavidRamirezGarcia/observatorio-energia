@@ -1,7 +1,10 @@
 """
-Orquestador general del pipeline de transformación - Capa Plata (Puntos 1 a 4).
-Ejecuta la limpieza y estandarización de todas las fuentes de datos.
+Orquestador general del pipeline de transformación.
+Ejecuta la limpieza de todas las fuentes y construye las capas Plata y Oro.
 """
+import subprocess
+
+from src import config
 from src.silver.enerandes import main as limpiar_enerandes
 from src.silver.noaa import main as limpiar_noaa
 from src.silver.xm import main as limpiar_xm
@@ -28,6 +31,13 @@ def main():
     limpiar_trm()
 
     log("=== CAPA PLATA COMPLETADA CON ÉXITO ===")
+    log("=== INICIANDO CONSTRUCCIÓN DE CAPA ORO CON DBT ===")
+    subprocess.run(
+        ["dbt", "build", "--project-dir", "dbt", "--profiles-dir", "dbt"],
+        cwd=config.RAIZ,
+        check=True,
+    )
+    log("=== CAPA ORO COMPLETADA CON ÉXITO ===")
 
 if __name__ == "__main__":
     main()
