@@ -322,14 +322,16 @@ genera `data/silver/trm_colombia.parquet`.
 
 ### Cómo ejecutar
 
-Si los archivos bronce ya existen, basta con ejecutar:
+El comando comprueba los insumos de Bronce, descarga los que falten sin
+repetir los que ya existen, limpia las fuentes y construye las capas Plata y
+Oro con dbt:
 
 ```bash
 python -m src.transformar
 ```
 
-Este comando limpia EnerAndes, NOAA, XM, IDEAM y TRM. Para volver a descargar
-los datos bronce se usa:
+Para volver a descargar todos los datos de Bronce, ignorando los archivos
+existentes, se usa:
 
 ```bash
 python -m src.pipeline --forzar
