@@ -1,15 +1,15 @@
-# Observatorio Energía y Clima – Equipo <nombre>
+# Observatorio Energía y Clima
 
 > Proyecto Integrado IV – Integración de Información · IU Digital de Antioquia · 2026-2
 
 ## 👥 Integrantes
 
-| Nombre | Usuario GitHub | Rol |
+| Integrante | Rol | Aportes (resumen de bitácora) |
 |---|---|---|
-| juan david ramirez | Líder técnico | Data Engineer |
-| rober castillo| Data Quality | Analyst |
-| Juan Fernando Cataño Higuita|juancatano-col | Analytics Engineer |
-| oscar garcia garcia| BI Analyst | Storyteller |
+| [Juan David Ramírez García](docs/bitacoras/RamirezGarcia_JuanDavid.md) | Data Engineer | Amplió la extracción de XM con generación, aportes y catálogo de recursos; integró la TRM como fuente propia; configuró el modelo estrella en dbt/DuckDB y sus pruebas de calidad; documentó y probó la ejecución del pipeline. |
+| [Rober Castillo](docs/bitacoras/rober_castilllo_bitcora.md) | Data Quality Analyst | Perfiló los datos de Bronce y documentó problemas de calidad; contribuyó a la limpieza de EnerAndes y las demás fuentes; orquestó la construcción de Plata y Oro, verificó la exclusión de datos generados y añadió pruebas al flujo. |
+| [Juan Fernando Cataño Higuita](docs/bitacoras/catano_juan_fernando.md) | Analytics Engineer | Documentó el perfilamiento y los hallazgos de calidad; creó pruebas automatizadas del pipeline; documentó el modelo dimensional y el diccionario de datos; desarrolló las consultas analíticas y registró sus resultados en este README. |
+| [Oscar García García](docs/bitacoras/oscar_bitacora.md) | BI Analyst / Data Engineer | Desarrolló y optimizó la extracción de precipitación y temperatura del IDEAM con consultas SoQL agregadas; contribuyó a la limpieza de EnerAndes y de las fuentes XM, NOAA, IDEAM y TRM, y verificó sus salidas. |
 
 ## 🎯 Objetivo
 
@@ -43,14 +43,16 @@ fuentes públicas. El archivo interno
 `data/insumos/ventas_enerandes_2023_2026.xlsx` está incluido en el repositorio;
 no es necesario copiarlo aparte.
 
-Desde la raíz del proyecto, crea el entorno e instala las dependencias:
+Desde la raíz del proyecto, crea el entorno e instala las dependencias. El
+comando principal construye las capas Bronce, Plata y Oro: descarga los
+insumos faltantes, limpia las fuentes y termina con `dbt build`.
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m src.pipeline
+.\.venv\Scripts\python.exe -m src.transformar
 .\.venv\Scripts\python.exe -m src.consultar
-.\.venv\Scripts\python.exe -m pytest
+.\.venv\Scripts\python.exe -m pytest -q
 ```
 
 En macOS o Linux, usa el intérprete del entorno virtual con estos comandos:
@@ -58,31 +60,126 @@ En macOS o Linux, usa el intérprete del entorno virtual con estos comandos:
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python -m src.pipeline
+.venv/bin/python -m src.transformar
 .venv/bin/python -m src.consultar
-.venv/bin/python -m pytest
+.venv/bin/python -m pytest -q
 ```
 
-El pipeline descarga XM, IDEAM, NOAA y TRM, y lee el Excel de EnerAndes.
-Necesita conexión a Internet y el tiempo total depende de la disponibilidad
-de las API; la generación horaria de XM puede tardar varios minutos. Al
-terminar, genera en `data/sample/` un CSV por cada Parquet de bronce encontrado,
-con sus primeras 200 filas (o todas si contiene menos). Los CSV de muestra se
-versionan; `data/bronze/` contiene datos descargados y está excluida de Git.
+La ejecución requiere conexión a Internet y su duración depende de las API;
+la descarga de generación horaria de XM puede tardar varios minutos. Los datos
+de `data/bronze/`, `data/silver/` y la base `.duckdb` se generan localmente y
+están excluidos de Git.
 
-Para volver a descargar todo: `python -m src.pipeline --forzar`. El rango de fechas se cambia en `src/config.py`.
+`src.pipeline` ejecuta únicamente la extracción de Bronce y genera muestras
+CSV de hasta 200 filas en `data/sample/`. Para volver a descargar todos los
+insumos de Bronce, ignorando los archivos existentes, ejecuta
+`python -m src.pipeline --forzar`. El rango de fechas se configura en
+`src/config.py`.
 
 ## 🏗️ Arquitectura
 
+1. **Bronce:** conserva los datos obtenidos de XM, IDEAM, NOAA, EnerAndes y
+   TRM, con información de linaje.
+2. **Plata:** limpia, tipa, normaliza y deduplica las fuentes en archivos
+   Parquet; los registros no corregibles de EnerAndes se separan en cuarentena.
+3. **Oro:** dbt construye en DuckDB un modelo dimensional de seis dimensiones
+   y tres tablas de hechos para el análisis de ventas, mercado y generación.
+
+El diagrama corresponde al modelo implementado en dbt. `dim_fuente` es un
+catálogo independiente; las relaciones mostradas son las llaves usadas por las
+tablas de hechos.
+
+```mermaid
+erDiagram
+    dim_mes ||--o{ fact_ventas_mensual : "mes_id"
+    dim_municipio ||--o{ fact_ventas_mensual : "municipio_id"
+    dim_segmento ||--o{ fact_ventas_mensual : "segmento_id"
+    dim_fecha ||--o{ fact_mercado_horario : "fecha_key"
+    dim_fecha ||--o{ fact_generacion_recurso : "fecha_key"
+    dim_recurso ||--o{ fact_generacion_recurso : "recurso_key"
+
+    dim_fecha {
+        int fecha_key PK
+        date fecha
+        int anio
+        int mes
+        string fase_enso
+    }
+    dim_mes {
+        int mes_id PK
+        string periodo
+    }
+    dim_municipio {
+        int municipio_id PK
+        string municipio
+        string divipola
+    }
+    dim_segmento {
+        int segmento_id PK
+        string segmento
+        string tipo_compra
+    }
+    dim_recurso {
+        int recurso_key PK
+        string codigo_recurso
+        string nombre_recurso
+    }
+    dim_fuente {
+        int fuente_key PK
+        string nombre_fuente
+    }
+    fact_ventas_mensual {
+        int mes_id FK
+        int municipio_id FK
+        int segmento_id FK
+        double energia_kwh
+        double valor_cop
+    }
+    fact_mercado_horario {
+        int fecha_key FK
+        int hora
+        double precio_bolsa_kwh
+        double demanda_kwh
+    }
+    fact_generacion_recurso {
+        int fecha_key FK
+        int recurso_key FK
+        int hora
+        double generacion_mwh
+    }
 ```
-Fuentes -> BRONCE (dato tal cual + linaje) -> PLATA (limpio) -> ORO (modelo estrella) -> Dashboard
-```
+
+Consulta el [modelo dimensional](docs/modelo_dimensional.md) y el
+[diccionario de datos](docs/diccionario_datos.md) para el detalle de granos,
+campos y fuentes.
+
+## 🧪 Resumen del reporte de calidad
+
+Las cifras siguientes corresponden al corte documentado en el
+[reporte de calidad](docs/reporte_calidad.md); pueden cambiar al volver a
+extraer y transformar los datos.
+
+| Fuente / control | Resultado de calidad |
+|---|---|
+| EnerAndes | 4.007 filas válidas en Plata; 118 duplicados válidos removidos y 45 filas en cuarentena: 27 con energía inválida o vacía y 18 con energía negativa. |
+| XM | 24.096 filas horarias para precio y demanda; 5.935.449 filas válidas de generación, tras descartar 2.473.215 celdas horarias nulas; 1.004 registros para embalses y aportes, y 2.500 recursos en el catálogo. |
+| IDEAM | 2.374 registros de precipitación y 1.477 de temperatura; sin fechas, valores inválidos ni llaves estación-fecha repetidas en el corte. |
+| NOAA (ONI) | 920 periodos interpretables y válidos: 234 clasificados como El Niño, 238 como La Niña y 448 como Neutral. |
+| TRM | 649 registros con fecha y valor válidos; sin fechas repetidas en el corte. |
+
+En XM se descartaron valores horarios nulos o fechas inválidas durante la
+limpieza de generación. El reporte detalla los controles, reglas y métricas
+antes/después por fuente.
 
 ## 📊 Resultados de consultas de la capa oro
 
-Las consultas de negocio se almacenan en `consultas/oro/` y fueron ejecutadas en DuckDB sobre datos derivados del modelo analítico.
+Las consultas de negocio se almacenan en `consultas/oro/` y fueron ejecutadas
+en DuckDB sobre datos derivados del modelo analítico. Los resultados son una
+instantánea del conjunto de datos usado para ese corte.
 
 ### 1) Municipios con mayor consumo en kWh
+
+Consulta: [consulta_1_ventas_por_municipio.sql](consultas/oro/consulta_1_ventas_por_municipio.sql); se muestran los diez municipios con mayor consumo.
 
 | Municipio | Consumo (GWh) |
 |---|---:|
@@ -99,6 +196,8 @@ Las consultas de negocio se almacenan en `consultas/oro/` y fueron ejecutadas en
 
 ### 2) Promedio de precio de bolsa por hora y fase ENSO
 
+Consulta: [consulta_2_comportamiento_precio_bolsa.sql](consultas/oro/consulta_2_comportamiento_precio_bolsa.sql). La tabla muestra las diez primeras filas documentadas del resultado para El Niño.
+
 | Hora | Fase ENSO | Precio promedio (COP/kWh) |
 |---:|---|---:|
 | 0 | El Niño | 437.58 |
@@ -114,6 +213,8 @@ Las consultas de negocio se almacenan en `consultas/oro/` y fueron ejecutadas en
 
 ### 3) Comparativo horario de generación vs demanda
 
+Consulta: [consulta_3_generacion_vs_demanda.sql](consultas/oro/consulta_3_generacion_vs_demanda.sql). La tabla muestra las primeras diez horas documentadas.
+
 | Hora | Generación (MWh) | Demanda (MWh) | Diferencia (MWh) |
 |---:|---:|---:|---:|
 | 0 | 8,712,276.21 | 8,712,276.21 | 0.00 |
@@ -126,6 +227,10 @@ Las consultas de negocio se almacenan en `consultas/oro/` y fueron ejecutadas en
 | 7 | 8,905,922.19 | 8,905,922.19 | 0.00 |
 | 8 | 9,341,290.77 | 9,341,290.77 | 0.00 |
 | 9 | 9,634,153.22 | 9,634,153.22 | 0.00 |
+
+Nota: la consulta calcula el promedio de generación por recurso y lo compara
+con la demanda horaria total; por ello, la diferencia mostrada no debe
+interpretarse como el balance total de oferta y demanda del sistema.
 
 ## 🎥 **Videos Explicativos del Equipo**
 
@@ -322,9 +427,9 @@ genera `data/silver/trm_colombia.parquet`.
 
 ### Cómo ejecutar
 
-El comando comprueba los insumos de Bronce, descarga los que falten sin
-repetir los que ya existen, limpia las fuentes y construye las capas Plata y
-Oro con dbt:
+El comando de punta a punta comprueba los insumos de Bronce, descarga los que
+falten sin repetir los existentes, limpia las fuentes y construye las capas
+Plata y Oro con dbt:
 
 ```bash
 python -m src.transformar
@@ -347,5 +452,5 @@ Para comprobar que el código de limpieza sigue funcionando:
 python -m pytest -q
 ```
 
-La verificación realizada terminó con 19 pruebas aprobadas. Esta sección no
-documenta los puntos posteriores de la actividad.
+El número de pruebas aprobadas puede cambiar con futuras modificaciones; usa
+`python -m pytest -q` para obtener el resultado vigente.
