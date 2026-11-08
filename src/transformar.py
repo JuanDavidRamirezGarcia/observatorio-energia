@@ -1,10 +1,10 @@
 """
-Orquestador general del pipeline de transformación.
-Ejecuta la limpieza de todas las fuentes y construye las capas Plata y Oro.
+Orquestador de datos que completa Bronce, limpia las fuentes y construye Plata y Oro.
 """
 import subprocess
 
 from src import config
+from src.extract import enerandes, ideam, noaa, trm, xm
 from src.silver.enerandes import main as limpiar_enerandes
 from src.silver.noaa import main as limpiar_noaa
 from src.silver.xm import main as limpiar_xm
@@ -12,7 +12,12 @@ from src.silver.ideam import main as limpiar_ideam
 from src.silver.trm import main as limpiar_trm
 from src.utils import log
 
+
 def main():
+    log("=== VERIFICANDO Y DESCARGANDO INSUMOS BRONCE FALTANTES ===")
+    for extractor in (xm, ideam, noaa, enerandes, trm):
+        extractor.extraer()
+
     log("=== INICIANDO PIPELINE DE LIMPIEZA - CAPA PLATA ===")
 
     log("--- Step 1: EnerAndes (Limpieza y Cuarentena) ---")
