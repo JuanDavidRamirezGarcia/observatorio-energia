@@ -10,7 +10,11 @@ sources:
       - name: enerandes_cuarentena
       - name: xm_precio_bolsa
       - name: xm_demanda
+      - name: xm_generacion
+      - name: xm_aportes
       - name: xm_embalses
+      - name: xm_listado_recursos
       - name: noaa_oni
       - name: ideam_precipitacion
       - name: ideam_temperatura
+      - name: trm_colombia

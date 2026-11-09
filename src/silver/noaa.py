@@ -25,12 +25,18 @@ def main():
         return
 
     df = pd.read_parquet(ruta)
-    df["mes_num"] = df["SEAS"].map(TRIMESTRE_A_MES)
-    df["periodo"] = df["YR"].astype(str) + "-" + df["mes_num"]
+    df["mes_num"] = df["SEAS"].str.strip().str.upper().map(TRIMESTRE_A_MES)
+    df["periodo"] = df["YR"].astype("Int64").astype(str) + "-" + df["mes_num"]
     df["oni"] = pd.to_numeric(df["ANOM"], errors="coerce")
     df["fase_enso"] = df["oni"].apply(calcular_fase_enso)
 
-    df_limpio = df[["periodo", "oni", "fase_enso"]].dropna().drop_duplicates()
+    df_limpio = (
+        df[["periodo", "oni", "fase_enso"]]
+        .dropna()
+        .groupby("periodo", as_index=False)
+        .agg(oni=("oni", "mean"))
+    )
+    df_limpio["fase_enso"] = df_limpio["oni"].apply(calcular_fase_enso)
     ESQUEMA_NOAA.validate(df_limpio, lazy=True)
 
     config.DIR_SILVER.mkdir(parents=True, exist_ok=True)

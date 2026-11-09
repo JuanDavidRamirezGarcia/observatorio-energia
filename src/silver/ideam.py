@@ -26,24 +26,28 @@ def limpiar_ideam_variable(nombre_archivo: str, nombre_col_valor: str) -> pd.Dat
     cols_fecha = [c for c in df.columns if any(x in c for x in ["fecha", "time", "date"])]
     col_fecha = cols_fecha[0] if cols_fecha else df.columns[0]
     
-    # Identificar columna de valor numérico
-    cols_valor = [c for c in df.columns if any(x in c for x in ["valor", "val", "precipitacion", "temperatura", "medida", "dato"])]
-    if cols_valor:
-        col_valor = cols_valor[0]
-    else:
-        candidatas = [c for c in df.columns if c != col_fecha]
-        col_valor = candidatas[0] if candidatas else df.columns[0]
-    
     df["fecha"] = pd.to_datetime(df[col_fecha], errors="coerce")
-    for col in ["latitud", "longitud", "n_obs"]:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col].astype(str).str.replace(",", ".", regex=False), errors="coerce")
-    
-    # Reemplazar comas decimales por puntos antes de convertir a número
-    serie_val = df[col_valor].astype(str).str.replace(",", ".", regex=False)
-    df[nombre_col_valor] = pd.to_numeric(serie_val, errors="coerce").astype(float)
-    
-    df_limpio = df.dropna(subset=["fecha", nombre_col_valor]).drop_duplicates().reset_index(drop=True)
+    if nombre_archivo == "precipitacion":
+        columnas_valor = ["precipitacion_mm"]
+    else:
+        columnas_valor = ["temp_media", "temp_min", "temp_max"]
+    for columna in columnas_valor:
+        if columna in df.columns:
+            serie_val = df[columna].astype(str).str.replace(",", ".", regex=False)
+            df[columna] = pd.to_numeric(serie_val, errors="coerce").astype(float)
+    for columna in ["latitud", "longitud", "n_obs"]:
+        if columna in df.columns:
+            serie = df[columna].astype(str).str.replace(",", ".", regex=False)
+            df[columna] = pd.to_numeric(serie, errors="coerce")
+
+    if nombre_archivo == "temperatura" and "temp_media" in df.columns:
+        df[nombre_col_valor] = df["temp_media"]
+
+    df_limpio = (
+        df.dropna(subset=["fecha", nombre_col_valor])
+        .drop_duplicates(subset=["codigoestacion", "fecha"])
+        .reset_index(drop=True)
+    )
     return df_limpio
 
 def main():

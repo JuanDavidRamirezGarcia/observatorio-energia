@@ -61,22 +61,23 @@
 
 ### Configuración del entorno dbt y fuentes
 - **Integración con DuckDB:** Configuración del adaptador `dbt-duckdb` en `profiles.yml` para conectarse a la base de datos `observatorio.duckdb` operando sobre los datos Parquet de la Capa Plata (`data/silver/`).
-- **Estandarización de fuentes (`sources.yml`):** Mapeo de la fuente `silver` conectando la totalidad de los archivos Parquet procesados (`enerandes_ventas`, `enerandes_cuarentena`, `xm_precio_bolsa`, `xm_demanda`, `xm_embalses`, `noaa_oni`, `ideam_precipitacion`, `ideam_temperatura`).
+- **Estandarización de fuentes (`sources.yml`):** Mapeo de la fuente `silver` conectando los archivos Parquet procesados de EnerAndes, XM (incluidos generación y `ListadoRecursos`), NOAA, IDEAM y TRM.
 
-### Construcción del Esquema Estrella (8 Tablas)
-Se implementó un modelo estrella compuesto por 5 tablas de dimensión y 3 tablas de hechos:
+### Construcción del Esquema Estrella (9 Tablas)
+Se implementó un modelo estrella compuesto por 6 tablas de dimensión y 3 tablas de hechos:
 
 - **Dimensiones:**
   - `dim_fecha`: Dimensión temporal diaria (2023–2026) con llaves numéricas en formato `YYYYMMDD`.
+  - `dim_fuente`: Catálogo de las fuentes de datos del observatorio (`fuente_key`).
   - `dim_mes`: Dimensión agrupada a nivel mensual (`YYYY-MM`).
   - `dim_municipio`: Dimensión geográfica de municipios de Antioquia extraída de la fuente de ventas, asignando llaves primarias sustitutas (`municipio_id`).
   - `dim_segmento`: Dimensión de segmento de mercado y tipo de compra (`segmento_id`).
-  - `dim_recurso`: Dimensión de recursos de generación energética a partir de las fuentes de embalses y demanda (`recurso_key`).
+  - `dim_recurso`: Dimensión de plantas basada en el catálogo XM `ListadoRecursos`, con llave `recurso_key` y código natural del recurso. Los recursos históricos ausentes del catálogo se conservan con sus atributos descriptivos marcados como no identificados.
 
 - **Tablas de Hechos:**
-  - `fact_ventas_mensual`: Consolidado mensual de consumo en kWh, facturación en COP y total de clientes por municipio y segmento.
-  - `fact_mercado_horario`: Registro horario del mercado mayorista integrando el precio de bolsa y la demanda total del sistema.
-  - `fact_generacion_recurso`: Registro horario de generación energética por recurso vinculando la dimensión de fechas y recursos.
+  - `fact_ventas_mensual`: Una fila por mes, municipio, segmento y tipo de compra; incluye ventas desde 2023 hasta septiembre de 2026 según los datos disponibles.
+  - `fact_mercado_horario`: Una fila por fecha y hora con el precio de bolsa y la demanda total del sistema.
+  - `fact_generacion_recurso`: Una fila por fecha, hora y planta, con generación horaria XM en MWh vinculada por código de recurso.
 
 ---
 
@@ -92,3 +93,21 @@ Se implementó un modelo estrella compuesto por 5 tablas de dimensión y 3 tabla
   - Pruebas de unicitad (`unique`) y valores no nulos (`not_null`) en todas las llaves primarias de las dimensiones.
   - Pruebas de integridad referencial (`relationships`) entre las llaves foráneas de las tablas de hechos y sus respectivas dimensiones.
 - **Resultado final:** Ejecución exitosa del comando `dbt build --project-dir dbt --profiles-dir dbt`, logrando un pase total de **35/35 nodos** (modelos de tablas, vistas y pruebas de calidad en verde sin errores ni advertencias).
+
+### Ajustes de grano, fuentes y relaciones (2026-11-04)
+- Se corrigió `fact_generacion_recurso` para leer `xm_generacion` y relacionar cada fila con la planta por el código de recurso; dejó de usar incorrectamente la demanda como generación.
+- Se reconstruyó `dim_recurso` desde el catálogo `xm_listado_recursos`, deduplicando códigos. Los códigos de generación histórica que no figuran en el catálogo se conservan con descripción no identificada para mantener integridad referencial.
+- Se documentaron en `schema.yml` los granos de las tres tablas de hechos y las dimensiones, y se añadieron pruebas `unique`/`not_null` a las llaves de todas las dimensiones, además de relaciones en las llaves foráneas de hechos.
+- Se regeneró la capa plata de EnerAndes desde las cuatro fuentes bronce; el resultado verificado abarca 2023-01 a 2026-09.
+- Validación dbt: `dbt build` con datos reales de ventas (2023-01 a 2026-09), mercado y calendario, y una muestra horaria real de XM más el catálogo vigente; resultado **37/37 nodos aprobados, sin errores ni advertencias**. Los Parquet completos de generación y catálogo no estaban presentes localmente, por lo que la prueba de generación usó una ventana diaria de XM; la ejecución completa debe partir de los datos generados por el pipeline.
+
+---
+
+## 7. Actualización del pipeline, perfilamiento y muestras (2026-11-04)
+
+- Se corrigió la dependencia `pytest -cov` a `pytest-cov` en `requirements.txt` y se eliminó la declaración duplicada de `pytest`.
+- Se actualizó el perfilamiento de la capa bronce para incluir IDEAM temperatura y TRM y reflejar las filas, los rangos de fechas y las observaciones del conjunto de clase disponible, evitando presentar todas las cifras como datos de 2026.
+- Se regeneraron los CSV de `data/sample/`: una muestra con las primeras 200 filas por cada Parquet de bronce disponible. Las muestras se versionan; `data/bronze/` permanece excluida de Git.
+- Se documentaron en el README los pasos de instalación y ejecución desde Windows, macOS y Linux, el requisito de conexión a Internet y la presencia del Excel de EnerAndes en el repositorio.
+- Se añadieron pruebas para verificar la generación de muestras de hasta 200 filas y el flujo del pipeline desde carpetas vacías con extractores aislados. La instalación de dependencias en un entorno virtual limpio y las **21 pruebas** finalizaron correctamente.
+- Los cambios se integraron en el commit `d70750f` (`Document reproducible pipeline setup and samples`).

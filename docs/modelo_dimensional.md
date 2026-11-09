@@ -130,14 +130,18 @@ Uso: distinguir bolsa, demanda, generación o embarque energético.
 
 ### 4.7. dim_recurso
 
-Descripción: fuente de generación eléctrica.
+Descripción: planta o recurso de generación eléctrica, descrito por el catálogo
+XM `ListadoRecursos` y vinculado con la generación horaria por su código.
 
-Campos sugeridos:
+Campos:
 - recurso_key (PK)
-- recurso
-- tipo_recurso
-- categoria
-- descripcion
+- codigo_recurso
+- nombre_recurso
+- tipo_generacion
+- fuente_energia
+- empresa
+- disponibilidad
+- estado
 
 Uso: comparar producción por recurso (hidráulica, térmica, solar, eólica, etc.).
 
@@ -160,7 +164,7 @@ Uso: análisis de precipitación y temperatura por zona.
 
 ### 5.1. fact_ventas_mensual
 
-Grano: 1 fila por mes + municipio + segmento.
+Grano: 1 fila por mes + municipio + segmento + tipo de compra.
 
 Esto significa que cada registro representa el total vendido en un municipio durante un mes para un segmento específico. Es el nivel ideal para responder:
 - ¿Cuánto se vendió por municipio cada mes?
@@ -178,7 +182,7 @@ Campos sugeridos:
 
 ### 5.2. fact_mercado_horario
 
-Grano: 1 fila por fecha + hora + mercado.
+Grano: 1 fila por fecha + hora, con precio y demanda total del sistema.
 
 Cada fila describe el comportamiento del mercado eléctrico en una hora exacta. Permite analizar:
 - precio por hora
@@ -196,7 +200,7 @@ Campos sugeridos:
 
 ### 5.3. fact_generacion_recurso
 
-Grano: 1 fila por fecha + recurso.
+Grano: 1 fila por fecha + hora + planta (código de recurso).
 
 Cada registro representa la generación asociada a una fuente de energía en un día determinado. Se usa para responder:
 - ¿Qué recurso generó más energía?
@@ -272,9 +276,9 @@ Campos sugeridos:
 El modelo dimensional recomendado para este proyecto se centra en una estructura de estrella que conecta los hechos energéticos y climáticos con sus dimensiones de contexto. El elemento central es la fecha, que permite unir precio, demanda, generación, clima y tasa de cambio en una sola visión analítica.
 
 El grano más importante del modelo es:
-- fact_ventas_mensual: mes + municipio + segmento
-- fact_mercado_horario: fecha + hora + mercado
-- fact_generacion_recurso: fecha + recurso
+- fact_ventas_mensual: mes + municipio + segmento + tipo de compra
+- fact_mercado_horario: fecha + hora
+- fact_generacion_recurso: fecha + hora + recurso
 - fact_precipitacion: fecha + estación
 
 Con esta estructura, el proyecto puede responder preguntas de negocio y de riesgo energético con análisis más claros, reutilizables y compatibles con BI.

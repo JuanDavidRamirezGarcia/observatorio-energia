@@ -68,6 +68,13 @@ def extraer_metrica(metrica: str, entidad: str, periodo: str, nombre: str, forza
         respuesta = http_json("POST", url, json=cuerpo)
         nuevas = aplanar(respuesta, periodo)
         filas.extend(nuevas)
+        if metrica == "Gene":
+            guardar_bronce(
+                pd.DataFrame(filas),
+                nombre,
+                fuente="XM",
+                origen=f"{url} MetricId={metrica}",
+            )
         log(f"   {metrica} {inicio} a {fin}: {len(nuevas)} filas")
 
     guardar_bronce(pd.DataFrame(filas), nombre, fuente="XM", origen=f"{url} MetricId={metrica}")

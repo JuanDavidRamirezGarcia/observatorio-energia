@@ -13,7 +13,8 @@ LINAJE = ["_fuente", "_origen", "_extraido_en"]
 MESES_ESP = {
     "ene": "01", "feb": "02", "mar": "03", "abr": "04",
     "may": "05", "jun": "06", "jul": "07", "ago": "08",
-    "sep": "09", "oct": "10", "nov": "11", "dic": "12"
+    "sep": "09", "oct": "10", "nov": "11", "dic": "12",
+    "jan": "01", "apr": "04", "aug": "08", "dec": "12",
 }
 
 MUNICIPIOS = {
@@ -106,34 +107,44 @@ def normalizar_tipo_compra(val) -> str:
     return "Contrato"
 
 def normalizar_encabezados(df: pd.DataFrame) -> pd.DataFrame:
-    cols_str = [sin_tildes(str(c)) for c in df.columns]
-    
-    if not any(k in cols_str for k in ["fecha", "periodo", "municipio", "segmento", "modalidad", "energia"]):
-        df.columns = [str(x) for x in df.iloc[0].tolist()]
-        df = df.iloc[1:].copy()
+    df = df.copy()
+    posibles_encabezados = {
+        "fecha", "fecha corte", "periodo", "mes", "municipio", "ciudad"
+    }
+    fila_encabezado = None
+    for indice, fila in df.iterrows():
+        valores = {sin_tildes(valor) for valor in fila.tolist()}
+        if len(valores & posibles_encabezados) >= 2:
+            fila_encabezado = indice
+            break
+    if fila_encabezado is not None:
+        df.columns = [str(x).strip() for x in df.loc[fila_encabezado].tolist()]
+        df = df.loc[fila_encabezado + 1:].copy()
 
     nuevos_nombres = {}
     for col in df.columns:
         c_clean = sin_tildes(str(col)).replace(" ", "_")
-        if any(x in c_clean for x in ["fecha", "periodo"]):
+        if any(x in c_clean for x in ["fecha", "periodo", "mes"]):
             nuevos_nombres[col] = "periodo"
-        elif "municipio" in c_clean:
+        elif any(x in c_clean for x in ["municipio", "ciudad"]):
             nuevos_nombres[col] = "municipio"
-        elif "segmento" in c_clean:
+        elif any(x in c_clean for x in ["segmento", "tipo_cliente"]):
             nuevos_nombres[col] = "segmento"
-        elif any(x in c_clean for x in ["modalidad", "compra", "tipo"]):
+        elif any(x in c_clean for x in ["modalidad", "compra"]):
             nuevos_nombres[col] = "tipo_compra"
-        elif "energia" in c_clean:
+        elif any(x in c_clean for x in ["energia", "consumo", "kwh"]):
             nuevos_nombres[col] = "energia_kwh"
-        elif "valor" in c_clean:
+        elif any(x in c_clean for x in ["valor", "facturado"]):
             nuevos_nombres[col] = "valor_cop"
-        elif "cliente" in c_clean:
+        elif any(x in c_clean for x in ["client", "usuario"]):
             nuevos_nombres[col] = "clientes"
+        elif "unidad" in c_clean:
+            nuevos_nombres[col] = "unidad"
 
     df = df.rename(columns=nuevos_nombres)
     df = df.loc[:, ~df.columns.duplicated()].copy()
 
-    for c in ["periodo", "municipio", "segmento", "tipo_compra", "energia_kwh", "valor_cop", "clientes"]:
+    for c in ["periodo", "municipio", "segmento", "tipo_compra", "energia_kwh", "valor_cop", "clientes", "unidad"]:
         if c not in df.columns:
             df[c] = None
 
@@ -144,14 +155,17 @@ def limpiar_hoja(df_raw: pd.DataFrame, anio: int) -> tuple[pd.DataFrame, pd.Data
     
     df = normalizar_encabezados(df)
     df["periodo"] = df["periodo"].apply(estandarizar_fecha)
-    df = df[df["periodo"] != "TOTAL"].dropna(subset=["periodo"])
+    df = df[df["periodo"] != "TOTAL"].copy()
     
     df["energia_kwh"] = pd.to_numeric(df["energia_kwh"], errors="coerce")
+    unidades = df["unidad"].map(sin_tildes)
+    es_mwh = unidades.str.contains("mwh", na=False)
     if anio == 2024:
-        df["energia_kwh"] = df["energia_kwh"] * 1000.0
+        es_mwh |= unidades.eq("")
+    df.loc[es_mwh, "energia_kwh"] *= 1000.0
 
     df["valor_cop"] = pd.to_numeric(df["valor_cop"], errors="coerce")
-    df["clientes"] = pd.to_numeric(df["clientes"], errors="coerce").fillna(0).astype(int)
+    df["clientes"] = pd.to_numeric(df["clientes"], errors="coerce")
 
     df["clave_mun"] = df["municipio"].apply(clave_municipio)
     df["divipola"] = df["clave_mun"].apply(lambda c: MUNICIPIOS.get(c, (None, None))[0])
@@ -160,9 +174,22 @@ def limpiar_hoja(df_raw: pd.DataFrame, anio: int) -> tuple[pd.DataFrame, pd.Data
     df["segmento"] = df["segmento"].apply(normalizar_segmento)
     df["tipo_compra"] = df["tipo_compra"].apply(normalizar_tipo_compra)
 
-    malas = df["energia_kwh"].isna() | (df["energia_kwh"] < 0) | df["divipola"].isna()
-    cuarentena = df[malas].copy()
-    limpias = df[~malas].copy()
+    motivos = pd.Series("", index=df.index, dtype="string")
+    motivos = motivos.mask(df["periodo"].isna(), "fecha inválida o vacía")
+    motivos = motivos.mask(df["energia_kwh"].isna(), "energía inválida o vacía")
+    motivos = motivos.mask(df["energia_kwh"] < 0, "energía negativa")
+    motivos = motivos.mask(df["valor_cop"] < 0, "valor facturado negativo")
+    motivos = motivos.mask(df["divipola"].isna(), "municipio inválido o vacío")
+    motivos = motivos.mask(df["clientes"].isna(), "clientes inválidos o vacíos")
+    malas = motivos.ne("")
+    df["clientes"] = df["clientes"].fillna(0).astype(int)
+    df["motivo_cuarentena"] = motivos
+    columnas = [
+        "periodo", "divipola", "municipio", "segmento", "tipo_compra",
+        "energia_kwh", "valor_cop", "clientes",
+    ]
+    cuarentena = df.loc[malas].copy()
+    limpias = df.loc[~malas, columnas].drop_duplicates().copy()
 
     return limpias, cuarentena
 
@@ -202,6 +229,10 @@ def main():
     config.DIR_SILVER.mkdir(parents=True, exist_ok=True)
     df_final.to_parquet(config.DIR_SILVER / "enerandes_ventas.parquet", index=False)
     if not df_cuarentena.empty:
+        df_cuarentena = df_cuarentena[
+            ["periodo", "municipio", "segmento", "tipo_compra", "energia_kwh",
+             "valor_cop", "clientes", "motivo_cuarentena"]
+        ]
         df_cuarentena.to_parquet(config.DIR_SILVER / "enerandes_cuarentena.parquet", index=False)
     log(f"Plata EnerAndes: {len(df_final)} filas limpias y {len(df_cuarentena)} en cuarentena.")
 
