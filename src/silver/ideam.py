@@ -35,10 +35,13 @@ def limpiar_ideam_variable(nombre_archivo: str, nombre_col_valor: str) -> pd.Dat
         col_valor = candidatas[0] if candidatas else df.columns[0]
     
     df["fecha"] = pd.to_datetime(df[col_fecha], errors="coerce")
+    for col in ["latitud", "longitud", "n_obs"]:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col].astype(str).str.replace(",", ".", regex=False), errors="coerce")
     
     # Reemplazar comas decimales por puntos antes de convertir a número
     serie_val = df[col_valor].astype(str).str.replace(",", ".", regex=False)
-    df[nombre_col_valor] = pd.to_numeric(serie_val, errors="coerce")
+    df[nombre_col_valor] = pd.to_numeric(serie_val, errors="coerce").astype(float)
     
     df_limpio = df.dropna(subset=["fecha", nombre_col_valor]).drop_duplicates().reset_index(drop=True)
     return df_limpio

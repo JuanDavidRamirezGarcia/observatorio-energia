@@ -19,9 +19,13 @@ def unpivot_24_horas(df_raw: pd.DataFrame, nombre_valor: str) -> pd.DataFrame:
     
     df_melt = df.melt(id_vars=cols_id, value_vars=cols_horas, var_name="hora_str", value_name=nombre_valor)
     df_melt["hora"] = df_melt["hora_str"].str.extract(r"(\d+)").astype(int)
+    if "Date" in df_melt.columns:
+        df_melt["Date"] = pd.to_datetime(df_melt["Date"], errors="coerce")
     
     col_fecha = next((c for c in cols_id if "fecha" in str(c).lower()), cols_id[0])
     df_melt["fecha"] = pd.to_datetime(df_melt[col_fecha], errors="coerce")
+    if "Date" in df_melt.columns and df_melt["Date"].notna().any():
+        df_melt["fecha"] = df_melt["Date"]
     df_melt[nombre_valor] = pd.to_numeric(df_melt[nombre_valor], errors="coerce")
     
     df_limpio = df_melt.dropna(subset=["fecha", nombre_valor]).copy()
@@ -50,6 +54,9 @@ def main():
     ruta_embalses = config.DIR_BRONZE / "xm_embalses.parquet"
     if ruta_embalses.exists():
         df_emb = pd.read_parquet(ruta_embalses).drop(columns=LINAJE, errors="ignore").drop_duplicates()
+        df_emb["Date"] = pd.to_datetime(df_emb["Date"], errors="coerce")
+        df_emb["Value"] = pd.to_numeric(df_emb["Value"], errors="coerce")
+        df_emb = df_emb.dropna(subset=["Date", "Value"]).copy()
         ESQUEMA_XM_EMBALSES.validate(df_emb, lazy=True)
         df_emb.to_parquet(config.DIR_SILVER / "xm_embalses.parquet", index=False)
         log(f"Plata XM Embalses: {len(df_emb)} registros.")

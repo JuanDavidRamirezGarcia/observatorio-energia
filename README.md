@@ -64,46 +64,46 @@ Las consultas de negocio se almacenan en `consultas/oro/` y fueron ejecutadas en
 
 | Municipio | Consumo (GWh) |
 |---|---:|
-| Medellín | 16572.49 |
-| Bello | 3929.85 |
-| Itagüí | 2946.06 |
-| Envigado | 2632.21 |
-| Rionegro | 1910.89 |
-| Sabaneta | 1644.75 |
-| Apartadó | 1328.41 |
-| Turbo | 1113.57 |
-| Copacabana | 954.87 |
-| La Estrella | 940.26 |
+| Medellín | 173105.78 |
+| Bello | 55326.51 |
+| Itagüí | 37775.61 |
+| Envigado | 26613.45 |
+| Rionegro | 26011.43 |
+| Sabaneta | 19165.63 |
+| Apartadó | 18347.56 |
+| Turbo | 13721.23 |
+| La Estrella | 11329.72 |
+| Caldas | 11053.32 |
 
 ### 2) Promedio de precio de bolsa por hora y fase ENSO
 
 | Hora | Fase ENSO | Precio promedio (COP/kWh) |
 |---:|---|---:|
-| 0 | El Niño | 437.58 |
-| 1 | El Niño | 437.16 |
-| 2 | El Niño | 435.89 |
-| 3 | El Niño | 434.64 |
-| 4 | El Niño | 439.70 |
-| 5 | El Niño | 452.04 |
-| 6 | El Niño | 441.29 |
-| 7 | El Niño | 413.96 |
-| 8 | El Niño | 395.21 |
-| 9 | El Niño | 387.64 |
+| 1 | El Niño | 619.39 |
+| 2 | El Niño | 615.51 |
+| 3 | El Niño | 606.36 |
+| 4 | El Niño | 602.41 |
+| 5 | El Niño | 613.39 |
+| 6 | El Niño | 630.27 |
+| 7 | El Niño | 616.46 |
+| 8 | El Niño | 593.46 |
+| 9 | El Niño | 581.85 |
+| 10 | El Niño | 577.50 |
 
 ### 3) Comparativo horario de generación vs demanda
 
 | Hora | Generación (MWh) | Demanda (MWh) | Diferencia (MWh) |
 |---:|---:|---:|---:|
-| 0 | 8,712,276.21 | 8,712,276.21 | 0.00 |
-| 1 | 8,416,696.11 | 8,416,696.11 | 0.00 |
-| 2 | 8,200,508.65 | 8,200,508.65 | 0.00 |
-| 3 | 8,082,390.33 | 8,082,390.33 | 0.00 |
-| 4 | 8,169,164.38 | 8,169,164.38 | 0.00 |
-| 5 | 8,396,448.57 | 8,396,448.57 | 0.00 |
-| 6 | 8,495,008.73 | 8,495,008.73 | 0.00 |
-| 7 | 8,905,922.19 | 8,905,922.19 | 0.00 |
-| 8 | 9,341,290.77 | 9,341,290.77 | 0.00 |
-| 9 | 9,634,153.22 | 9,634,153.22 | 0.00 |
+| 1 | 8.71 | 8.71 | 0.00 |
+| 2 | 8.42 | 8.42 | 0.00 |
+| 3 | 8.20 | 8.20 | 0.00 |
+| 4 | 8.08 | 8.08 | 0.00 |
+| 5 | 8.17 | 8.17 | 0.00 |
+| 6 | 8.40 | 8.40 | 0.00 |
+| 7 | 8.50 | 8.50 | 0.00 |
+| 8 | 8.91 | 8.91 | 0.00 |
+| 9 | 9.34 | 9.34 | 0.00 |
+| 10 | 9.63 | 9.63 | 0.00 |
 
 ## 🎥 **Videos Explicativos del Equipo**
 

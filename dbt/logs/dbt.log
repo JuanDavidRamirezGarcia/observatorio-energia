@@ -4091,3 +4091,1632 @@ where parent.to_field is null
 [0m10:04:05.574260 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000254FB1F2090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000254F90C9E50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000254FCEF93D0>]}
 [0m10:04:05.574489 [debug] [MainThread]: Flushing usage events
 [0m10:04:06.195018 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m19:19:44.115627 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4901fc5a90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4903f48cd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f490095b9d0>]}
+
+
+============================== 19:19:44.119764 | 037afd87-a291-4f98-b6da-09344ec9c800 ==============================
+[0m19:19:44.119764 [info ] [MainThread]: Running with dbt=1.12.6
+[0m19:19:44.120603 [debug] [MainThread]: running dbt with arguments {'hints_enabled': 'True', 'profiles_dir': 'dbt', 'no_print': 'None', 'log_cache_events': 'False', 'fail_fast': 'False', 'target_path': 'None', 'introspect': 'True', 'use_colors': 'True', 'log_path': 'dbt/logs', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'empty': 'False', 'partial_parse': 'True', 'maximum_seed_size_mib': '1', 'debug': 'False', 'invocation_command': 'dbt run --project-dir dbt --profiles-dir dbt', 'cache_selected_only': 'False', 'quiet': 'False', 'version_check': 'True', 'log_format': 'default', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True', 'printer_width': '80', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'warn_error': 'None', 'write_json': 'True'}
+[0m19:19:44.474796 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4904677e10>]}
+[0m19:19:44.561868 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4900b539b0>]}
+[0m19:19:44.564258 [info ] [MainThread]: Registered adapter: duckdb=1.11.1
+[0m19:19:44.699800 [debug] [MainThread]: checksum: 613c33d9539afd1da17811762b3ea3e08c5e6a6b5b3fbe0687afb0711dc39a36, vars: {}, profile: observatorio, target: dev, version: 1.12.6
+[0m19:19:44.895220 [debug] [MainThread]: Partial parsing enabled: 148 files deleted, 148 files added, 0 files changed.
+[0m19:19:44.896073 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/timestamps.sql
+[0m19:19:44.896612 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/show.sql
+[0m19:19:44.897087 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/incremental_strategy/microbatch.sql
+[0m19:19:44.897589 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/external.sql
+[0m19:19:44.898058 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/except.sql
+[0m19:19:44.898526 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/snapshots/snapshot.sql
+[0m19:19:44.898972 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/snapshots/strategies.sql
+[0m19:19:44.899404 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/rename_intermediate.sql
+[0m19:19:44.899881 [debug] [MainThread]: Partial parsing: added file: dbt://macros/get_custom_name/get_custom_schema.sql
+[0m19:19:44.900313 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/table/replace.sql
+[0m19:19:44.900790 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/schema.sql
+[0m19:19:44.901231 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/materialized_view.sql
+[0m19:19:44.901755 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/table.sql
+[0m19:19:44.902197 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/datediff.sql
+[0m19:19:44.902680 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/incremental/incremental.sql
+[0m19:19:44.903115 [debug] [MainThread]: Partial parsing: added file: dbt://macros/get_custom_name/get_custom_alias.sql
+[0m19:19:44.903569 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/dim_fecha.sql
+[0m19:19:44.904010 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/clone/create_or_replace_clone.sql
+[0m19:19:44.904440 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/tests/unit.sql
+[0m19:19:44.904923 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/columns.sql
+[0m19:19:44.905351 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/columns.sql
+[0m19:19:44.905837 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/persist_docs.sql
+[0m19:19:44.906285 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/date.sql
+[0m19:19:44.906763 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/materialized_view/alter.sql
+[0m19:19:44.907193 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/dateadd.sql
+[0m19:19:44.907665 [debug] [MainThread]: Partial parsing: added file: dbt://macros/generic_test_sql/accepted_values.sql
+[0m19:19:44.908094 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/hooks.sql
+[0m19:19:44.908552 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/normalize.sql
+[0m19:19:44.909046 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/snapshots/helpers.sql
+[0m19:19:44.909505 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/data_types.sql
+[0m19:19:44.909945 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/materialized_view/create.sql
+[0m19:19:44.910385 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/snapshot_helper.sql
+[0m19:19:44.910873 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/safe_cast.sql
+[0m19:19:44.911295 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/lastday.sql
+[0m19:19:44.911770 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/dim_mes.sql
+[0m19:19:44.912206 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/freshness.sql
+[0m19:19:44.912697 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/incremental.sql
+[0m19:19:44.913133 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/incremental_strategy/delete_insert.sql
+[0m19:19:44.913595 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/materialized_view/refresh.sql
+[0m19:19:44.914044 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/hash.sql
+[0m19:19:44.914503 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/array_concat.sql
+[0m19:19:44.914938 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/replace.sql
+[0m19:19:44.915366 [debug] [MainThread]: Partial parsing: added file: dbt://macros/unit_test_sql/get_fixture_sql.sql
+[0m19:19:44.915837 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/generate_series.sql
+[0m19:19:44.916261 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/any_value.sql
+[0m19:19:44.916738 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/relation.sql
+[0m19:19:44.917176 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/incremental/is_incremental.sql
+[0m19:19:44.917646 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/listagg.sql
+[0m19:19:44.918085 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/functions/scalar.sql
+[0m19:19:44.918540 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/dateadd.sql
+[0m19:19:44.918977 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/generate_series.sql
+[0m19:19:44.919402 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/materialized_view/replace.sql
+[0m19:19:44.919898 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/dim_segmento.sql
+[0m19:19:44.920325 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/view.sql
+[0m19:19:44.920797 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/hooks.sql
+[0m19:19:44.921216 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/dim_municipio.sql
+[0m19:19:44.921692 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/incremental/strategies.sql
+[0m19:19:44.922126 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/dim_fuente.sql
+[0m19:19:44.922573 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/functions/helpers.sql
+[0m19:19:44.923211 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/seeds/seed.sql
+[0m19:19:44.923910 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/functions/function.sql
+[0m19:19:44.924585 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/seeds/helpers.sql
+[0m19:19:44.925238 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/escape_single_quotes.sql
+[0m19:19:44.925882 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/length.sql
+[0m19:19:44.926513 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/splitpart.sql
+[0m19:19:44.926955 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/validate_sql.sql
+[0m19:19:44.927384 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/clone/clone.sql
+[0m19:19:44.928076 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/metadata.sql
+[0m19:19:44.928784 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/date_trunc.sql
+[0m19:19:44.929502 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/split_part.sql
+[0m19:19:44.930103 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/upstream.sql
+[0m19:19:44.930581 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/right.sql
+[0m19:19:44.931014 [debug] [MainThread]: Partial parsing: added file: dbt://macros/generic_test_sql/not_null.sql
+[0m19:19:44.931440 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/schema.sql
+[0m19:19:44.931976 [debug] [MainThread]: Partial parsing: added file: observatorio://models/staging/sources.yml
+[0m19:19:44.932406 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/incremental/column_helpers.sql
+[0m19:19:44.932892 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/view/replace.sql
+[0m19:19:44.933324 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/incremental_strategy/validation_helper.sql
+[0m19:19:44.933808 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/table/drop.sql
+[0m19:19:44.934239 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/equals.sql
+[0m19:19:44.934699 [debug] [MainThread]: Partial parsing: added file: dbt://macros/generic_test_sql/relationships.sql
+[0m19:19:44.935120 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/clone/can_clone_table.sql
+[0m19:19:44.935562 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/incremental_strategy/merge_config_validation.sql
+[0m19:19:44.935990 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/cast_bool_to_text.sql
+[0m19:19:44.936415 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/functions/aggregate.sql
+[0m19:19:44.936893 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/create.sql
+[0m19:19:44.937309 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/catalog.sql
+[0m19:19:44.937788 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/flights.sql
+[0m19:19:44.938207 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/listagg.sql
+[0m19:19:44.938678 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/indexes.sql
+[0m19:19:44.939095 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/table_function.sql
+[0m19:19:44.939533 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/replace.sql
+[0m19:19:44.939965 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/materialized_view/rename.sql
+[0m19:19:44.940385 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/fact_mercado_horario.sql
+[0m19:19:44.940852 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/intersect.sql
+[0m19:19:44.941267 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/fact_ventas_mensual.sql
+[0m19:19:44.941735 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/incremental/on_schema_change.sql
+[0m19:19:44.942161 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/tests/where_subquery.sql
+[0m19:19:44.942627 [debug] [MainThread]: Partial parsing: added file: dbt://macros/etc/datetime.sql
+[0m19:19:44.943044 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/view/drop.sql
+[0m19:19:44.943487 [debug] [MainThread]: Partial parsing: added file: dbt://macros/generic_test_sql/unique.sql
+[0m19:19:44.943915 [debug] [MainThread]: Partial parsing: added file: dbt://macros/etc/statement.sql
+[0m19:19:44.944329 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/seed.sql
+[0m19:19:44.944796 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/tests/test.sql
+[0m19:19:44.945211 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/dim_recurso.sql
+[0m19:19:44.945688 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/date.sql
+[0m19:19:44.946107 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/tests/helpers.sql
+[0m19:19:44.946569 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/array_append.sql
+[0m19:19:44.946992 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/materialized_view/drop.sql
+[0m19:19:44.947405 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/array_construct.sql
+[0m19:19:44.947867 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/drop_backup.sql
+[0m19:19:44.948284 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/table/rename.sql
+[0m19:19:44.948777 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/any_value.sql
+[0m19:19:44.949206 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/adapters.sql
+[0m19:19:44.949667 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/datediff.sql
+[0m19:19:44.950083 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/literal.sql
+[0m19:19:44.950537 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/table/create.sql
+[0m19:19:44.951088 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/schema.yml
+[0m19:19:44.951545 [debug] [MainThread]: Partial parsing: added file: dbt://macros/get_custom_name/get_custom_database.sql
+[0m19:19:44.951970 [debug] [MainThread]: Partial parsing: added file: dbt://macros/get_custom_name/get_latest_version_pointer_alias.sql
+[0m19:19:44.952399 [debug] [MainThread]: Partial parsing: added file: dbt://macros/python_model/python.sql
+[0m19:19:44.952857 [debug] [MainThread]: Partial parsing: added file: dbt://docs/overview.md
+[0m19:19:44.953277 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/apply_grants.sql
+[0m19:19:44.953761 [debug] [MainThread]: Partial parsing: added file: dbt://tests/generic/builtin.sql
+[0m19:19:44.954181 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/bool_or.sql
+[0m19:19:44.954644 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/date_spine.sql
+[0m19:19:44.955094 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/table.sql
+[0m19:19:44.955544 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/position.sql
+[0m19:19:44.955972 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/cast.sql
+[0m19:19:44.956387 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/runtime.sql
+[0m19:19:44.956863 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/view/rename.sql
+[0m19:19:44.957282 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/create_intermediate.sql
+[0m19:19:44.957756 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/incremental_strategy/merge.sql
+[0m19:19:44.958175 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/concat.sql
+[0m19:19:44.958632 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/create_backup.sql
+[0m19:19:44.959058 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/utils/external_location.sql
+[0m19:19:44.959497 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/configs.sql
+[0m19:19:44.959922 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/rename.sql
+[0m19:19:44.960339 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/drop.sql
+[0m19:19:44.960815 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/view/create.sql
+[0m19:19:44.961237 [debug] [MainThread]: Partial parsing: added file: dbt://macros/utils/last_day.sql
+[0m19:19:44.961706 [debug] [MainThread]: Partial parsing: added file: observatorio://models/staging/stg_ventas.sql
+[0m19:19:44.962126 [debug] [MainThread]: Partial parsing: added file: dbt_duckdb://macros/materializations/incremental_strategy/merge_defaults.sql
+[0m19:19:44.962571 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/models/incremental/merge.sql
+[0m19:19:44.963011 [debug] [MainThread]: Partial parsing: added file: dbt://macros/materializations/snapshots/snapshot_merge.sql
+[0m19:19:44.963428 [debug] [MainThread]: Partial parsing: added file: dbt://macros/adapters/persist_docs.sql
+[0m19:19:44.963906 [debug] [MainThread]: Partial parsing: added file: dbt://macros/relations/column/columns_spec_ddl.sql
+[0m19:19:44.964332 [debug] [MainThread]: Partial parsing: added file: observatorio://models/marts/fact_generacion_recurso.sql
+[0m19:19:44.964863 [info ] [MainThread]: Unable to do partial parsing because an error occurred. Switching to full reparse.
+[0m19:19:44.967322 [debug] [MainThread]: Partial parsing exception processing file observatorio://models\marts\schema.yml
+[0m19:19:44.967913 [debug] [MainThread]: PP exception info: {'traceback': 'Traceback (most recent call last):\n  File "/workspaces/observatorio-energia/.venv/lib/python3.14/site-packages/dbt/parser/manifest.py", line 637, in safe_update_project_parser_files_partially\n    project_parser_files = self.partial_parser.get_parsing_files()\n  File "/workspaces/observatorio-energia/.venv/lib/python3.14/site-packages/dbt/parser/partial.py", line 199, in get_parsing_files\n    self.delete_schema_file(file_id)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File "/workspaces/observatorio-energia/.venv/lib/python3.14/site-packages/dbt/parser/partial.py", line 787, in delete_schema_file\n    self.handle_schema_file_changes(saved_schema_file, saved_yaml_dict, new_yaml_dict)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspaces/observatorio-energia/.venv/lib/python3.14/site-packages/dbt/parser/partial.py", line 813, in handle_schema_file_changes\n    self.delete_schema_mssa_links(schema_file, dict_key, elem)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspaces/observatorio-energia/.venv/lib/python3.14/site-packages/dbt/parser/partial.py", line 981, in delete_schema_mssa_links\n    self._delete_schema_mssa_links(schema_file, dict_key, elem, elem_unique_ids)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspaces/observatorio-energia/.venv/lib/python3.14/site-packages/dbt/parser/partial.py", line 1034, in _delete_schema_mssa_links\n    self.remove_tests(schema_file, dict_key, elem["name"])\n    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspaces/observatorio-energia/.venv/lib/python3.14/site-packages/dbt/parser/partial.py", line 1066, in remove_tests\n    self.update_in_saved(attached_node.file_id)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspaces/observatorio-energia/.venv/lib/python3.14/site-packages/dbt/parser/partial.py", line 328, in update_in_saved\n    new_source_file = deepcopy(self.new_files[file_id])\n                               ~~~~~~~~~~~~~~^^^^^^^^^\nKeyError: \'observatorio://models\\\\marts\\\\fact_ventas_mensual.sql\'\n', 'location': 'line 328 in update_in_saved', 'exception': "KeyError: 'observatorio://models\\\\marts\\\\fact_ventas_mensual.sql'", 'parse_file_type': 'schema', 'code': 'new_source_file = deepcopy(self.new_files[file_id])'}
+[0m19:19:44.968430 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fb4fbe50>]}
+[0m19:19:47.287795 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fa371e50>]}
+[0m19:19:47.522162 [debug] [MainThread]: Wrote artifact WritableManifest to dbt/target/manifest.json
+[0m19:19:47.525323 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt/target/semantic_manifest.json
+[0m19:19:47.540627 [debug] [MainThread]: Wrote artifact OsiDocument to dbt/target/osi_document.json
+[0m19:19:47.553709 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fa5bb3f0>]}
+[0m19:19:47.554392 [info ] [MainThread]: Found 10 models, 23 data tests, 8 sources, 511 macros
+[0m19:19:47.555042 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fa4ea750>]}
+[0m19:19:47.558294 [info ] [MainThread]: 
+[0m19:19:47.558922 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m19:19:47.559416 [info ] [MainThread]: 
+[0m19:19:47.560405 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m19:19:47.569695 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_observatorio'
+[0m19:19:47.609770 [debug] [ThreadPool]: Using duckdb connection "list_observatorio"
+[0m19:19:47.610394 [debug] [ThreadPool]: On list_observatorio: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "connection_name": "list_observatorio"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"observatorio"'
+    
+  
+  
+[0m19:19:47.610941 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m19:19:47.706986 [debug] [ThreadPool]: SQL status: OK in 0.096 seconds
+[0m19:19:47.710733 [debug] [ThreadPool]: On list_observatorio: Close
+[0m19:19:47.712177 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_observatorio, now create_observatorio_main)
+[0m19:19:47.713100 [debug] [ThreadPool]: Creating schema "database: "observatorio"
+schema: "main"
+"
+[0m19:19:47.721818 [debug] [ThreadPool]: Using duckdb connection "create_observatorio_main"
+[0m19:19:47.722382 [debug] [ThreadPool]: On create_observatorio_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "connection_name": "create_observatorio_main"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='observatorio'
+        and type != 'duckdb'
+    
+  
+[0m19:19:47.722890 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m19:19:47.724688 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m19:19:47.726064 [debug] [ThreadPool]: Using duckdb connection "create_observatorio_main"
+[0m19:19:47.726550 [debug] [ThreadPool]: On create_observatorio_main: BEGIN
+[0m19:19:47.727236 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m19:19:47.727704 [debug] [ThreadPool]: Using duckdb connection "create_observatorio_main"
+[0m19:19:47.728129 [debug] [ThreadPool]: On create_observatorio_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "connection_name": "create_observatorio_main"} */
+
+    
+    
+        create schema if not exists "observatorio"."main"
+    
+[0m19:19:47.728891 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m19:19:47.729877 [debug] [ThreadPool]: On create_observatorio_main: COMMIT
+[0m19:19:47.730325 [debug] [ThreadPool]: Using duckdb connection "create_observatorio_main"
+[0m19:19:47.730803 [debug] [ThreadPool]: On create_observatorio_main: COMMIT
+[0m19:19:47.731575 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m19:19:47.732026 [debug] [ThreadPool]: On create_observatorio_main: Close
+[0m19:19:47.734354 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_observatorio_main, now list_observatorio_main)
+[0m19:19:47.740059 [debug] [ThreadPool]: Using duckdb connection "list_observatorio_main"
+[0m19:19:47.740605 [debug] [ThreadPool]: On list_observatorio_main: BEGIN
+[0m19:19:47.741050 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m19:19:47.741955 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m19:19:47.742384 [debug] [ThreadPool]: Using duckdb connection "list_observatorio_main"
+[0m19:19:47.742871 [debug] [ThreadPool]: On list_observatorio_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "connection_name": "list_observatorio_main"} */
+select
+      'observatorio' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main'
+    and lower(table_catalog) = 'observatorio'
+  
+[0m19:19:47.754578 [debug] [ThreadPool]: SQL status: OK in 0.011 seconds
+[0m19:19:47.756256 [debug] [ThreadPool]: On list_observatorio_main: ROLLBACK
+[0m19:19:47.757262 [debug] [ThreadPool]: On list_observatorio_main: Close
+[0m19:19:47.758742 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fb458ad0>]}
+[0m19:19:47.759490 [debug] [MainThread]: Using duckdb connection "master"
+[0m19:19:47.760069 [debug] [MainThread]: On master: BEGIN
+[0m19:19:47.760514 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m19:19:47.761352 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m19:19:47.761826 [debug] [MainThread]: On master: COMMIT
+[0m19:19:47.762226 [debug] [MainThread]: Using duckdb connection "master"
+[0m19:19:47.762668 [debug] [MainThread]: On master: COMMIT
+[0m19:19:47.763252 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m19:19:47.763736 [debug] [MainThread]: On master: Close
+[0m19:19:47.767880 [debug] [Thread-1 (]: Began running node model.observatorio.dim_fecha
+[0m19:19:47.768667 [info ] [Thread-1 (]: 1 of 10 START sql table model main.dim_fecha ................................... [RUN]
+[0m19:19:47.769356 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_observatorio_main, now model.observatorio.dim_fecha)
+[0m19:19:47.769898 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_fecha
+[0m19:19:47.778861 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_fecha"
+[0m19:19:47.779818 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_fecha
+[0m19:19:47.781063 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:19:47.781594 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+select database_name, type from duckdb_databases()
+[0m19:19:47.782071 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:19:47.783427 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:47.784936 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:19:47.785531 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+
+                    select table_name, constraint_type from duckdb_constraints()
+                    where lower(database_name) = lower('observatorio')
+                      and lower(schema_name) = lower('main')
+                      and constraint_type in ('PRIMARY KEY', 'UNIQUE', 'FOREIGN KEY')
+                    
+[0m19:19:47.787082 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:47.858143 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_fecha"
+[0m19:19:47.859235 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:19:47.859971 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: BEGIN
+[0m19:19:47.861136 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:19:47.861857 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:19:47.862668 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_fecha__dbt_tmp"
+  
+    
+    as (
+      
+
+with rango_fechas as (
+    select unnest(generate_series(date '2023-01-01', date '2026-12-31', interval '1 day')) as fecha
+),
+noaa as (
+    select distinct periodo, fase_enso 
+    from 'data/silver/noaa_oni.parquet'
+)
+select
+    cast(strftime(rf.fecha, '%Y%m%d') as integer) as fecha_key,
+    rf.fecha,
+    year(rf.fecha) as anio,
+    month(rf.fecha) as mes,
+    day(rf.fecha) as dia,
+    strftime(rf.fecha, '%Y-%m') as periodo_yyyy_mm,
+    quarter(rf.fecha) as trimestre,
+    dayofweek(rf.fecha) as dia_semana,
+    coalesce(n.fase_enso, 'Neutral') as fase_enso
+from rango_fechas rf
+left join noaa n on strftime(rf.fecha, '%Y-%m') = n.periodo
+    );
+    
+  
+[0m19:19:47.872414 [debug] [Thread-1 (]: DuckDB adapter: duckdb error: IO Error: No files found that match the pattern "data/silver/noaa_oni.parquet"
+[0m19:19:47.873154 [debug] [Thread-1 (]: DuckDB adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_fecha__dbt_tmp"
+  
+    
+    as (
+      
+
+with rango_fechas as (
+    select unnest(generate_series(date '2023-01-01', date '2026-12-31', interval '1 day')) as fecha
+),
+noaa as (
+    select distinct periodo, fase_enso 
+    from 'data/silver/noaa_oni.parquet'
+)
+select
+    cast(strftime(rf.fecha, '%Y%m%d') as integer) as fecha_key,
+    rf.fecha,
+    year(rf.fecha) as anio,
+    month(rf.fecha) as mes,
+    day(rf.fecha) as dia,
+    strftime(rf.fecha, '%Y-%m') as periodo_yyyy_mm,
+    quarter(rf.fecha) as trimestre,
+    dayofweek(rf.fecha) as dia_semana,
+    coalesce(n.fase_enso, 'Neutral') as fase_enso
+from rango_fechas rf
+left join noaa n on strftime(rf.fecha, '%Y-%m') = n.periodo
+    );
+    
+  
+[0m19:19:47.873717 [debug] [Thread-1 (]: DuckDB adapter: Rolling back transaction.
+[0m19:19:47.874192 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: ROLLBACK
+[0m19:19:47.875205 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: Close
+[0m19:19:47.882508 [debug] [Thread-1 (]: Runtime Error in model dim_fecha (models/marts/dim_fecha.sql)
+  IO Error: No files found that match the pattern "data/silver/noaa_oni.parquet"
+[0m19:19:47.884437 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4901cb5b20>]}
+[0m19:19:47.885626 [error] [Thread-1 (]: 1 of 10 ERROR creating sql table model main.dim_fecha .......................... [[31mERROR[0m in 0.11s]
+[0m19:19:47.887018 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_fecha
+[0m19:19:47.887682 [debug] [Thread-1 (]: Began running node model.observatorio.dim_fuente
+[0m19:19:47.888279 [info ] [Thread-1 (]: 2 of 10 START sql table model main.dim_fuente .................................. [RUN]
+[0m19:19:47.889723 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_fecha, now model.observatorio.dim_fuente)
+[0m19:19:47.891308 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_fuente
+[0m19:19:47.894424 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_fuente"
+[0m19:19:47.889111 [debug] [Thread-4 (]: Marking all children of 'model.observatorio.dim_fecha' to be skipped because of status 'error'.  Reason: Runtime Error in model dim_fecha (models/marts/dim_fecha.sql)
+  IO Error: No files found that match the pattern "data/silver/noaa_oni.parquet".
+[0m19:19:47.896169 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_fuente
+[0m19:19:47.899471 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_fuente"
+[0m19:19:47.900326 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:19:47.900866 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: BEGIN
+[0m19:19:47.901332 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:19:47.902245 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:47.902780 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:19:47.903267 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fuente"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_fuente__dbt_tmp"
+  
+    
+    as (
+      
+
+select 1 as fuente_key, 'EnerAndes' as nombre_fuente, 'Ventas de Energía' as descripcion
+union all
+select 2, 'XM', 'Mercado Mayorista y Sistema Interconectado'
+union all
+select 3, 'NOAA', 'Índice Oceánico El Niño (ONI)'
+union all
+select 4, 'IDEAM', 'Estaciones Climatológicas Antioquia'
+    );
+    
+  
+[0m19:19:47.905709 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:19:47.911814 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:19:47.912356 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fuente"} */
+alter table "observatorio"."main"."dim_fuente__dbt_tmp" rename to "dim_fuente"
+[0m19:19:47.913440 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:47.934548 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: COMMIT
+[0m19:19:47.935298 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:19:47.936016 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: COMMIT
+[0m19:19:47.942078 [debug] [Thread-1 (]: SQL status: OK in 0.005 seconds
+[0m19:19:47.947678 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:19:47.948229 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fuente"} */
+
+      drop table if exists "observatorio"."main"."dim_fuente__dbt_backup" cascade
+    
+[0m19:19:47.949250 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:19:47.952921 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: Close
+[0m19:19:47.953729 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fb6f00f0>]}
+[0m19:19:47.954554 [info ] [Thread-1 (]: 2 of 10 OK created sql table model main.dim_fuente ............................. [[32mOK[0m in 0.06s]
+[0m19:19:47.955511 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_fuente
+[0m19:19:47.956081 [debug] [Thread-1 (]: Began running node model.observatorio.dim_municipio
+[0m19:19:47.956774 [info ] [Thread-1 (]: 3 of 10 START sql table model main.dim_municipio ............................... [RUN]
+[0m19:19:47.957429 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_fuente, now model.observatorio.dim_municipio)
+[0m19:19:47.957954 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_municipio
+[0m19:19:47.960548 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_municipio"
+[0m19:19:47.961623 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_municipio
+[0m19:19:47.966911 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_municipio"
+[0m19:19:47.968170 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_municipio"
+[0m19:19:47.969204 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: BEGIN
+[0m19:19:47.970996 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:19:47.972357 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:47.973135 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_municipio"
+[0m19:19:47.973894 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_municipio"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_municipio__dbt_tmp"
+  
+    
+    as (
+      
+
+with municipios_unicos as (
+    select distinct
+        divipola,
+        municipio
+    from 'data/silver/enerandes_ventas.parquet'
+    where divipola is not null
+)
+select
+    row_number() over (order by divipola) as municipio_id,
+    divipola,
+    municipio,
+    'Antioquia' as departamento
+from municipios_unicos
+    );
+    
+  
+[0m19:19:47.975921 [debug] [Thread-1 (]: DuckDB adapter: duckdb error: IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:47.976741 [debug] [Thread-1 (]: DuckDB adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_municipio"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_municipio__dbt_tmp"
+  
+    
+    as (
+      
+
+with municipios_unicos as (
+    select distinct
+        divipola,
+        municipio
+    from 'data/silver/enerandes_ventas.parquet'
+    where divipola is not null
+)
+select
+    row_number() over (order by divipola) as municipio_id,
+    divipola,
+    municipio,
+    'Antioquia' as departamento
+from municipios_unicos
+    );
+    
+  
+[0m19:19:47.977610 [debug] [Thread-1 (]: DuckDB adapter: Rolling back transaction.
+[0m19:19:47.978399 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: ROLLBACK
+[0m19:19:47.979783 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: Close
+[0m19:19:47.987754 [debug] [Thread-1 (]: Runtime Error in model dim_municipio (models/marts/dim_municipio.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:47.988733 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fae11550>]}
+[0m19:19:47.990950 [error] [Thread-1 (]: 3 of 10 ERROR creating sql table model main.dim_municipio ...................... [[31mERROR[0m in 0.03s]
+[0m19:19:47.991949 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_municipio
+[0m19:19:47.993296 [debug] [Thread-1 (]: Began running node model.observatorio.dim_recurso
+[0m19:19:47.995299 [info ] [Thread-1 (]: 4 of 10 START sql table model main.dim_recurso ................................. [RUN]
+[0m19:19:47.994264 [debug] [Thread-4 (]: Marking all children of 'model.observatorio.dim_municipio' to be skipped because of status 'error'.  Reason: Runtime Error in model dim_municipio (models/marts/dim_municipio.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet".
+[0m19:19:47.996806 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_municipio, now model.observatorio.dim_recurso)
+[0m19:19:47.997883 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_recurso
+[0m19:19:48.002838 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_recurso"
+[0m19:19:48.004335 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_recurso
+[0m19:19:48.011741 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_recurso"
+[0m19:19:48.012700 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_recurso"
+[0m19:19:48.013214 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: BEGIN
+[0m19:19:48.013740 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:19:48.014654 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:48.015140 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_recurso"
+[0m19:19:48.015663 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_recurso"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_recurso__dbt_tmp"
+  
+    
+    as (
+      
+
+with recursos as (
+    select distinct
+        'REC_EMBALSE' as codigo_recurso,
+        'Sistema Embalses XM' as nombre_recurso,
+        'Hidráulico' as tipo_generacion,
+        'XM' as empresa
+    from 'data/silver/xm_embalses.parquet'
+)
+select
+    1 as recurso_key,
+    codigo_recurso,
+    nombre_recurso,
+    tipo_generacion,
+    empresa
+from recursos
+    );
+    
+  
+[0m19:19:48.017042 [debug] [Thread-1 (]: DuckDB adapter: duckdb error: IO Error: No files found that match the pattern "data/silver/xm_embalses.parquet"
+[0m19:19:48.017612 [debug] [Thread-1 (]: DuckDB adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_recurso"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_recurso__dbt_tmp"
+  
+    
+    as (
+      
+
+with recursos as (
+    select distinct
+        'REC_EMBALSE' as codigo_recurso,
+        'Sistema Embalses XM' as nombre_recurso,
+        'Hidráulico' as tipo_generacion,
+        'XM' as empresa
+    from 'data/silver/xm_embalses.parquet'
+)
+select
+    1 as recurso_key,
+    codigo_recurso,
+    nombre_recurso,
+    tipo_generacion,
+    empresa
+from recursos
+    );
+    
+  
+[0m19:19:48.018116 [debug] [Thread-1 (]: DuckDB adapter: Rolling back transaction.
+[0m19:19:48.018607 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: ROLLBACK
+[0m19:19:48.019508 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: Close
+[0m19:19:48.024079 [debug] [Thread-1 (]: Runtime Error in model dim_recurso (models/marts/dim_recurso.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_embalses.parquet"
+[0m19:19:48.024701 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fadc6d60>]}
+[0m19:19:48.025492 [error] [Thread-1 (]: 4 of 10 ERROR creating sql table model main.dim_recurso ........................ [[31mERROR[0m in 0.03s]
+[0m19:19:48.026425 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_recurso
+[0m19:19:48.027008 [debug] [Thread-1 (]: Began running node model.observatorio.dim_segmento
+[0m19:19:48.028258 [info ] [Thread-1 (]: 5 of 10 START sql table model main.dim_segmento ................................ [RUN]
+[0m19:19:48.028974 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_recurso, now model.observatorio.dim_segmento)
+[0m19:19:48.027673 [debug] [Thread-4 (]: Marking all children of 'model.observatorio.dim_recurso' to be skipped because of status 'error'.  Reason: Runtime Error in model dim_recurso (models/marts/dim_recurso.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_embalses.parquet".
+[0m19:19:48.029515 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_segmento
+[0m19:19:48.032560 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_segmento"
+[0m19:19:48.033759 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_segmento
+[0m19:19:48.037794 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_segmento"
+[0m19:19:48.038703 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_segmento"
+[0m19:19:48.039203 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: BEGIN
+[0m19:19:48.039722 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:19:48.040658 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:48.041169 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_segmento"
+[0m19:19:48.041717 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_segmento"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_segmento__dbt_tmp"
+  
+    
+    as (
+      
+
+with segmentos_unicos as (
+    select distinct
+        segmento,
+        tipo_compra
+    from 'data/silver/enerandes_ventas.parquet'
+    where segmento is not null
+)
+select
+    row_number() over (order by segmento, tipo_compra) as segmento_id,
+    segmento,
+    tipo_compra
+from segmentos_unicos
+    );
+    
+  
+[0m19:19:48.043192 [debug] [Thread-1 (]: DuckDB adapter: duckdb error: IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:48.043748 [debug] [Thread-1 (]: DuckDB adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_segmento"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_segmento__dbt_tmp"
+  
+    
+    as (
+      
+
+with segmentos_unicos as (
+    select distinct
+        segmento,
+        tipo_compra
+    from 'data/silver/enerandes_ventas.parquet'
+    where segmento is not null
+)
+select
+    row_number() over (order by segmento, tipo_compra) as segmento_id,
+    segmento,
+    tipo_compra
+from segmentos_unicos
+    );
+    
+  
+[0m19:19:48.044236 [debug] [Thread-1 (]: DuckDB adapter: Rolling back transaction.
+[0m19:19:48.044762 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: ROLLBACK
+[0m19:19:48.045734 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: Close
+[0m19:19:48.053809 [debug] [Thread-1 (]: Runtime Error in model dim_segmento (models/marts/dim_segmento.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:48.055543 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fb215370>]}
+[0m19:19:48.056962 [error] [Thread-1 (]: 5 of 10 ERROR creating sql table model main.dim_segmento ....................... [[31mERROR[0m in 0.03s]
+[0m19:19:48.058066 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_segmento
+[0m19:19:48.058838 [debug] [Thread-1 (]: Began running node model.observatorio.fact_generacion_recurso
+[0m19:19:48.060638 [info ] [Thread-1 (]: 6 of 10 START sql table model main.fact_generacion_recurso ..................... [RUN]
+[0m19:19:48.061613 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_segmento, now model.observatorio.fact_generacion_recurso)
+[0m19:19:48.062229 [debug] [Thread-1 (]: Began compiling node model.observatorio.fact_generacion_recurso
+[0m19:19:48.059681 [debug] [Thread-4 (]: Marking all children of 'model.observatorio.dim_segmento' to be skipped because of status 'error'.  Reason: Runtime Error in model dim_segmento (models/marts/dim_segmento.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet".
+[0m19:19:48.065039 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.fact_generacion_recurso"
+[0m19:19:48.067622 [debug] [Thread-1 (]: Began executing node model.observatorio.fact_generacion_recurso
+[0m19:19:48.071130 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.fact_generacion_recurso"
+[0m19:19:48.072046 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_generacion_recurso"
+[0m19:19:48.072574 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: BEGIN
+[0m19:19:48.073074 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:19:48.074014 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:48.074548 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_generacion_recurso"
+[0m19:19:48.075057 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_generacion_recurso"} */
+
+    
+
+    create  table
+      "observatorio"."main"."fact_generacion_recurso__dbt_tmp"
+  
+    
+    as (
+      
+
+select
+    cast(strftime(d.fecha, '%Y%m%d') as integer) as fecha_key,
+    1 as recurso_key,
+    d.fecha,
+    d.hora,
+    d.demanda_kwh as generacion_kwh
+from 'data/silver/xm_demanda.parquet' d
+    );
+    
+  
+[0m19:19:48.076514 [debug] [Thread-1 (]: DuckDB adapter: duckdb error: IO Error: No files found that match the pattern "data/silver/xm_demanda.parquet"
+[0m19:19:48.077051 [debug] [Thread-1 (]: DuckDB adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_generacion_recurso"} */
+
+    
+
+    create  table
+      "observatorio"."main"."fact_generacion_recurso__dbt_tmp"
+  
+    
+    as (
+      
+
+select
+    cast(strftime(d.fecha, '%Y%m%d') as integer) as fecha_key,
+    1 as recurso_key,
+    d.fecha,
+    d.hora,
+    d.demanda_kwh as generacion_kwh
+from 'data/silver/xm_demanda.parquet' d
+    );
+    
+  
+[0m19:19:48.077564 [debug] [Thread-1 (]: DuckDB adapter: Rolling back transaction.
+[0m19:19:48.078027 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: ROLLBACK
+[0m19:19:48.078939 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: Close
+[0m19:19:48.083543 [debug] [Thread-1 (]: Runtime Error in model fact_generacion_recurso (models/marts/fact_generacion_recurso.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_demanda.parquet"
+[0m19:19:48.084151 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fb3fef30>]}
+[0m19:19:48.084971 [error] [Thread-1 (]: 6 of 10 ERROR creating sql table model main.fact_generacion_recurso ............ [[31mERROR[0m in 0.02s]
+[0m19:19:48.086033 [debug] [Thread-1 (]: Finished running node model.observatorio.fact_generacion_recurso
+[0m19:19:48.086881 [debug] [Thread-1 (]: Began running node model.observatorio.fact_mercado_horario
+[0m19:19:48.087876 [debug] [Thread-4 (]: Marking all children of 'model.observatorio.fact_generacion_recurso' to be skipped because of status 'error'.  Reason: Runtime Error in model fact_generacion_recurso (models/marts/fact_generacion_recurso.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_demanda.parquet".
+[0m19:19:48.088759 [info ] [Thread-1 (]: 7 of 10 START sql table model main.fact_mercado_horario ........................ [RUN]
+[0m19:19:48.089655 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.fact_generacion_recurso, now model.observatorio.fact_mercado_horario)
+[0m19:19:48.090308 [debug] [Thread-1 (]: Began compiling node model.observatorio.fact_mercado_horario
+[0m19:19:48.094854 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.fact_mercado_horario"
+[0m19:19:48.096250 [debug] [Thread-1 (]: Began executing node model.observatorio.fact_mercado_horario
+[0m19:19:48.101512 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.fact_mercado_horario"
+[0m19:19:48.102965 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_mercado_horario"
+[0m19:19:48.103874 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: BEGIN
+[0m19:19:48.104718 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:19:48.106054 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:48.106966 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_mercado_horario"
+[0m19:19:48.107797 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_mercado_horario"} */
+
+    
+
+    create  table
+      "observatorio"."main"."fact_mercado_horario__dbt_tmp"
+  
+    
+    as (
+      
+
+select
+    cast(strftime(p.fecha, '%Y%m%d') as integer) as fecha_key,
+    p.fecha,
+    p.hora,
+    p.precio_bolsa_kwh,
+    d.demanda_kwh
+from 'data/silver/xm_precio_bolsa.parquet' p
+left join 'data/silver/xm_demanda.parquet' d 
+    on p.fecha = d.fecha and p.hora = d.hora
+    );
+    
+  
+[0m19:19:48.109992 [debug] [Thread-1 (]: DuckDB adapter: duckdb error: IO Error: No files found that match the pattern "data/silver/xm_precio_bolsa.parquet"
+[0m19:19:48.111261 [debug] [Thread-1 (]: DuckDB adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_mercado_horario"} */
+
+    
+
+    create  table
+      "observatorio"."main"."fact_mercado_horario__dbt_tmp"
+  
+    
+    as (
+      
+
+select
+    cast(strftime(p.fecha, '%Y%m%d') as integer) as fecha_key,
+    p.fecha,
+    p.hora,
+    p.precio_bolsa_kwh,
+    d.demanda_kwh
+from 'data/silver/xm_precio_bolsa.parquet' p
+left join 'data/silver/xm_demanda.parquet' d 
+    on p.fecha = d.fecha and p.hora = d.hora
+    );
+    
+  
+[0m19:19:48.112254 [debug] [Thread-1 (]: DuckDB adapter: Rolling back transaction.
+[0m19:19:48.113067 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: ROLLBACK
+[0m19:19:48.114657 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: Close
+[0m19:19:48.122489 [debug] [Thread-1 (]: Runtime Error in model fact_mercado_horario (models/marts/fact_mercado_horario.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_precio_bolsa.parquet"
+[0m19:19:48.123176 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fa3c7cb0>]}
+[0m19:19:48.124017 [error] [Thread-1 (]: 7 of 10 ERROR creating sql table model main.fact_mercado_horario ............... [[31mERROR[0m in 0.03s]
+[0m19:19:48.124876 [debug] [Thread-1 (]: Finished running node model.observatorio.fact_mercado_horario
+[0m19:19:48.125422 [debug] [Thread-1 (]: Began running node model.observatorio.stg_ventas
+[0m19:19:48.126689 [info ] [Thread-1 (]: 8 of 10 START sql view model main.stg_ventas ................................... [RUN]
+[0m19:19:48.127401 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.fact_mercado_horario, now model.observatorio.stg_ventas)
+[0m19:19:48.126075 [debug] [Thread-4 (]: Marking all children of 'model.observatorio.fact_mercado_horario' to be skipped because of status 'error'.  Reason: Runtime Error in model fact_mercado_horario (models/marts/fact_mercado_horario.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_precio_bolsa.parquet".
+[0m19:19:48.127956 [debug] [Thread-1 (]: Began compiling node model.observatorio.stg_ventas
+[0m19:19:48.130594 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.stg_ventas"
+[0m19:19:48.131658 [debug] [Thread-1 (]: Began executing node model.observatorio.stg_ventas
+[0m19:19:48.155035 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.stg_ventas"
+[0m19:19:48.156052 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.stg_ventas"
+[0m19:19:48.156609 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: BEGIN
+[0m19:19:48.157087 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:19:48.158020 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:19:48.158575 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.stg_ventas"
+[0m19:19:48.159117 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.stg_ventas"} */
+
+  
+  create view "observatorio"."main"."stg_ventas__dbt_tmp" as (
+    -- Staging: lee la tabla de ventas de la capa plata, sin cambiarla.
+-- En SQL, lo que va despues de -- es un comentario.
+-- dbt reemplaza source('plata', 'enerandes_ventas') por la ruta
+-- data/silver/enerandes_ventas.parquet (la dice sources.yml).
+-- Se crea como VISTA (dbt_project.yml): los demas modelos leen de aqui.
+
+-- select * = traer todas las columnas
+select *
+-- from = de donde: la tabla de ventas de la capa plata
+from 'data/silver/enerandes_ventas.parquet'
+  );
+
+[0m19:19:48.160358 [debug] [Thread-1 (]: DuckDB adapter: duckdb error: IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:48.160925 [debug] [Thread-1 (]: DuckDB adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.stg_ventas"} */
+
+  
+  create view "observatorio"."main"."stg_ventas__dbt_tmp" as (
+    -- Staging: lee la tabla de ventas de la capa plata, sin cambiarla.
+-- En SQL, lo que va despues de -- es un comentario.
+-- dbt reemplaza source('plata', 'enerandes_ventas') por la ruta
+-- data/silver/enerandes_ventas.parquet (la dice sources.yml).
+-- Se crea como VISTA (dbt_project.yml): los demas modelos leen de aqui.
+
+-- select * = traer todas las columnas
+select *
+-- from = de donde: la tabla de ventas de la capa plata
+from 'data/silver/enerandes_ventas.parquet'
+  );
+
+[0m19:19:48.161418 [debug] [Thread-1 (]: DuckDB adapter: Rolling back transaction.
+[0m19:19:48.161937 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: ROLLBACK
+[0m19:19:48.162900 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: Close
+[0m19:19:48.167549 [debug] [Thread-1 (]: Runtime Error in model stg_ventas (models/staging/stg_ventas.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:48.168174 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '037afd87-a291-4f98-b6da-09344ec9c800', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fad3d010>]}
+[0m19:19:48.168983 [error] [Thread-1 (]: 8 of 10 ERROR creating sql view model main.stg_ventas .......................... [[31mERROR[0m in 0.04s]
+[0m19:19:48.169802 [debug] [Thread-1 (]: Finished running node model.observatorio.stg_ventas
+[0m19:19:48.170445 [debug] [Thread-4 (]: Marking all children of 'model.observatorio.stg_ventas' to be skipped because of status 'error'.  Reason: Runtime Error in model stg_ventas (models/staging/stg_ventas.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet".
+[0m19:19:48.172124 [debug] [Thread-1 (]: Began running node model.observatorio.dim_mes
+[0m19:19:48.172709 [info ] [Thread-1 (]: 9 of 10 SKIP relation main.dim_mes ............................................. [[33mSKIP[0m]
+[0m19:19:48.173363 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_mes
+[0m19:19:48.174610 [debug] [Thread-1 (]: Began running node model.observatorio.fact_ventas_mensual
+[0m19:19:48.175139 [info ] [Thread-1 (]: 10 of 10 SKIP relation main.fact_ventas_mensual ................................ [[33mSKIP[0m]
+[0m19:19:48.176045 [debug] [Thread-1 (]: Finished running node model.observatorio.fact_ventas_mensual
+[0m19:19:48.179553 [debug] [MainThread]: Using duckdb connection "master"
+[0m19:19:48.180195 [debug] [MainThread]: On master: BEGIN
+[0m19:19:48.180728 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m19:19:48.181808 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m19:19:48.182577 [debug] [MainThread]: On master: COMMIT
+[0m19:19:48.183191 [debug] [MainThread]: Using duckdb connection "master"
+[0m19:19:48.184017 [debug] [MainThread]: On master: COMMIT
+[0m19:19:48.185089 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m19:19:48.186167 [debug] [MainThread]: On master: Close
+[0m19:19:48.186818 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m19:19:48.187317 [debug] [MainThread]: Connection 'model.observatorio.stg_ventas' was properly closed.
+[0m19:19:48.188170 [info ] [MainThread]: 
+[0m19:19:48.189137 [info ] [MainThread]: Finished running 9 table models, 1 view model in 0 hours 0 minutes and 0.63 seconds (0.63s).
+[0m19:19:48.191324 [debug] [MainThread]: Command end result
+[0m19:19:48.236582 [debug] [MainThread]: Wrote artifact WritableManifest to dbt/target/manifest.json
+[0m19:19:48.240242 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt/target/semantic_manifest.json
+[0m19:19:48.243607 [debug] [MainThread]: Wrote artifact OsiDocument to dbt/target/osi_document.json
+[0m19:19:48.252343 [debug] [MainThread]: Wrote artifact RunExecutionResult to dbt/target/run_results.json
+[0m19:19:48.252963 [info ] [MainThread]: 
+[0m19:19:48.253665 [info ] [MainThread]: [31mCompleted with 7 errors, 0 partial successes, and 0 warnings:[0m
+[0m19:19:48.254234 [info ] [MainThread]: 
+[0m19:19:48.254897 [error] [MainThread]: [[31mERROR[0m]: in model dim_fecha (models/marts/dim_fecha.sql)
+[0m19:19:48.255532 [error] [MainThread]:   Runtime Error in model dim_fecha (models/marts/dim_fecha.sql)
+  IO Error: No files found that match the pattern "data/silver/noaa_oni.parquet"
+[0m19:19:48.256012 [info ] [MainThread]: 
+[0m19:19:48.256677 [info ] [MainThread]:   compiled code at target/compiled/observatorio/models/marts/dim_fecha.sql
+[0m19:19:48.257178 [info ] [MainThread]: 
+[0m19:19:48.257834 [error] [MainThread]: [[31mERROR[0m]: in model dim_municipio (models/marts/dim_municipio.sql)
+[0m19:19:48.258435 [error] [MainThread]:   Runtime Error in model dim_municipio (models/marts/dim_municipio.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:48.258983 [info ] [MainThread]: 
+[0m19:19:48.259690 [info ] [MainThread]:   compiled code at target/compiled/observatorio/models/marts/dim_municipio.sql
+[0m19:19:48.260330 [info ] [MainThread]: 
+[0m19:19:48.261126 [error] [MainThread]: [[31mERROR[0m]: in model dim_recurso (models/marts/dim_recurso.sql)
+[0m19:19:48.261916 [error] [MainThread]:   Runtime Error in model dim_recurso (models/marts/dim_recurso.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_embalses.parquet"
+[0m19:19:48.262512 [info ] [MainThread]: 
+[0m19:19:48.263150 [info ] [MainThread]:   compiled code at target/compiled/observatorio/models/marts/dim_recurso.sql
+[0m19:19:48.263722 [info ] [MainThread]: 
+[0m19:19:48.264719 [error] [MainThread]: [[31mERROR[0m]: in model dim_segmento (models/marts/dim_segmento.sql)
+[0m19:19:48.265525 [error] [MainThread]:   Runtime Error in model dim_segmento (models/marts/dim_segmento.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:48.266187 [info ] [MainThread]: 
+[0m19:19:48.266973 [info ] [MainThread]:   compiled code at target/compiled/observatorio/models/marts/dim_segmento.sql
+[0m19:19:48.267646 [info ] [MainThread]: 
+[0m19:19:48.268331 [error] [MainThread]: [[31mERROR[0m]: in model fact_generacion_recurso (models/marts/fact_generacion_recurso.sql)
+[0m19:19:48.268996 [error] [MainThread]:   Runtime Error in model fact_generacion_recurso (models/marts/fact_generacion_recurso.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_demanda.parquet"
+[0m19:19:48.269538 [info ] [MainThread]: 
+[0m19:19:48.270298 [info ] [MainThread]:   compiled code at target/compiled/observatorio/models/marts/fact_generacion_recurso.sql
+[0m19:19:48.270984 [info ] [MainThread]: 
+[0m19:19:48.271794 [error] [MainThread]: [[31mERROR[0m]: in model fact_mercado_horario (models/marts/fact_mercado_horario.sql)
+[0m19:19:48.272494 [error] [MainThread]:   Runtime Error in model fact_mercado_horario (models/marts/fact_mercado_horario.sql)
+  IO Error: No files found that match the pattern "data/silver/xm_precio_bolsa.parquet"
+[0m19:19:48.272973 [info ] [MainThread]: 
+[0m19:19:48.273562 [info ] [MainThread]:   compiled code at target/compiled/observatorio/models/marts/fact_mercado_horario.sql
+[0m19:19:48.274112 [info ] [MainThread]: 
+[0m19:19:48.274750 [error] [MainThread]: [[31mERROR[0m]: in model stg_ventas (models/staging/stg_ventas.sql)
+[0m19:19:48.275391 [error] [MainThread]:   Runtime Error in model stg_ventas (models/staging/stg_ventas.sql)
+  IO Error: No files found that match the pattern "data/silver/enerandes_ventas.parquet"
+[0m19:19:48.276068 [info ] [MainThread]: 
+[0m19:19:48.276842 [info ] [MainThread]:   compiled code at target/compiled/observatorio/models/staging/stg_ventas.sql
+[0m19:19:48.277527 [info ] [MainThread]: 
+[0m19:19:48.278204 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=7 SKIP=2 NO-OP=0 REUSED=0 TOTAL=10
+[0m19:19:48.281988 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 4.2717557, "process_in_blocks": "105912", "process_kernel_time": 0.475882, "process_mem_max_rss": "201320", "process_out_blocks": "4592", "process_user_time": 5.518849}
+[0m19:19:48.283152 [debug] [MainThread]: Command `dbt run` failed at 19:19:48.282984 after 4.27 seconds
+[0m19:19:48.283838 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f4900777290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fad3e450>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f48fad3e390>]}
+[0m19:19:48.284429 [debug] [MainThread]: Flushing usage events
+[0m19:19:48.406112 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m19:58:14.729020 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e9633e5a90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e965320cd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e961b7f9d0>]}
+
+
+============================== 19:58:14.742032 | 1491454e-1949-4cea-8f98-95a6aff05b79 ==============================
+[0m19:58:14.742032 [info ] [MainThread]: Running with dbt=1.12.6
+[0m19:58:14.743294 [debug] [MainThread]: running dbt with arguments {'warn_error': 'None', 'send_anonymous_usage_stats': 'True', 'empty': 'False', 'target_path': 'None', 'version_check': 'True', 'maximum_seed_size_mib': '1', 'introspect': 'True', 'use_colors': 'True', 'fail_fast': 'False', 'write_json': 'True', 'quiet': 'False', 'hints_enabled': 'True', 'invocation_command': 'dbt run --project-dir dbt --profiles-dir dbt', 'profiles_dir': 'dbt', 'cache_selected_only': 'False', 'log_format': 'default', 'printer_width': '80', 'no_print': 'None', 'indirect_selection': 'eager', 'static_parser': 'True', 'use_experimental_parser': 'False', 'partial_parse': 'True', 'log_cache_events': 'False', 'log_path': 'dbt/logs', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'debug': 'False'}
+[0m19:58:15.225438 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e965a43e10>]}
+[0m19:58:15.354341 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e961d779b0>]}
+[0m19:58:15.361821 [info ] [MainThread]: Registered adapter: duckdb=1.11.1
+[0m19:58:15.763802 [debug] [MainThread]: checksum: 613c33d9539afd1da17811762b3ea3e08c5e6a6b5b3fbe0687afb0711dc39a36, vars: {}, profile: observatorio, target: dev, version: 1.12.6
+[0m19:58:16.173222 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m19:58:16.173935 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m19:58:16.174444 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m19:58:16.193022 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95c707750>]}
+[0m19:58:16.529555 [debug] [MainThread]: Wrote artifact WritableManifest to dbt/target/manifest.json
+[0m19:58:16.533677 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt/target/semantic_manifest.json
+[0m19:58:16.561308 [debug] [MainThread]: Wrote artifact OsiDocument to dbt/target/osi_document.json
+[0m19:58:16.608272 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95c6226c0>]}
+[0m19:58:16.609088 [info ] [MainThread]: Found 10 models, 23 data tests, 8 sources, 511 macros
+[0m19:58:16.609917 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95c65bbd0>]}
+[0m19:58:16.613836 [info ] [MainThread]: 
+[0m19:58:16.614557 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m19:58:16.615567 [info ] [MainThread]: 
+[0m19:58:16.617317 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m19:58:16.629432 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_observatorio'
+[0m19:58:16.698184 [debug] [ThreadPool]: Using duckdb connection "list_observatorio"
+[0m19:58:16.698931 [debug] [ThreadPool]: On list_observatorio: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "connection_name": "list_observatorio"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"observatorio"'
+    
+  
+  
+[0m19:58:16.699541 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m19:58:16.855351 [debug] [ThreadPool]: SQL status: OK in 0.156 seconds
+[0m19:58:16.859644 [debug] [ThreadPool]: On list_observatorio: Close
+[0m19:58:16.861535 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_observatorio, now create_observatorio_main)
+[0m19:58:16.862356 [debug] [ThreadPool]: Creating schema "database: "observatorio"
+schema: "main"
+"
+[0m19:58:16.876063 [debug] [ThreadPool]: Using duckdb connection "create_observatorio_main"
+[0m19:58:16.876664 [debug] [ThreadPool]: On create_observatorio_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "connection_name": "create_observatorio_main"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='observatorio'
+        and type != 'duckdb'
+    
+  
+[0m19:58:16.877199 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m19:58:16.879096 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m19:58:16.880755 [debug] [ThreadPool]: Using duckdb connection "create_observatorio_main"
+[0m19:58:16.881281 [debug] [ThreadPool]: On create_observatorio_main: BEGIN
+[0m19:58:16.882067 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m19:58:16.882616 [debug] [ThreadPool]: Using duckdb connection "create_observatorio_main"
+[0m19:58:16.883138 [debug] [ThreadPool]: On create_observatorio_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "connection_name": "create_observatorio_main"} */
+
+    
+    
+        create schema if not exists "observatorio"."main"
+    
+[0m19:58:16.884120 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m19:58:16.885267 [debug] [ThreadPool]: On create_observatorio_main: COMMIT
+[0m19:58:16.885917 [debug] [ThreadPool]: Using duckdb connection "create_observatorio_main"
+[0m19:58:16.886418 [debug] [ThreadPool]: On create_observatorio_main: COMMIT
+[0m19:58:16.887180 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m19:58:16.887752 [debug] [ThreadPool]: On create_observatorio_main: Close
+[0m19:58:16.890318 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_observatorio_main, now list_observatorio_main)
+[0m19:58:16.897249 [debug] [ThreadPool]: Using duckdb connection "list_observatorio_main"
+[0m19:58:16.897857 [debug] [ThreadPool]: On list_observatorio_main: BEGIN
+[0m19:58:16.898394 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m19:58:16.899300 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m19:58:16.899912 [debug] [ThreadPool]: Using duckdb connection "list_observatorio_main"
+[0m19:58:16.900524 [debug] [ThreadPool]: On list_observatorio_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "connection_name": "list_observatorio_main"} */
+select
+      'observatorio' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main'
+    and lower(table_catalog) = 'observatorio'
+  
+[0m19:58:16.920490 [debug] [ThreadPool]: SQL status: OK in 0.019 seconds
+[0m19:58:16.924756 [debug] [ThreadPool]: On list_observatorio_main: ROLLBACK
+[0m19:58:16.925679 [debug] [ThreadPool]: On list_observatorio_main: Close
+[0m19:58:16.927182 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95bc0b790>]}
+[0m19:58:16.930774 [debug] [MainThread]: Using duckdb connection "master"
+[0m19:58:16.933623 [debug] [MainThread]: On master: BEGIN
+[0m19:58:16.934632 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m19:58:16.937274 [debug] [MainThread]: SQL status: OK in 0.003 seconds
+[0m19:58:16.939650 [debug] [MainThread]: On master: COMMIT
+[0m19:58:16.940218 [debug] [MainThread]: Using duckdb connection "master"
+[0m19:58:16.944774 [debug] [MainThread]: On master: COMMIT
+[0m19:58:16.945579 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m19:58:16.946177 [debug] [MainThread]: On master: Close
+[0m19:58:16.955782 [debug] [Thread-1 (]: Began running node model.observatorio.dim_fecha
+[0m19:58:16.958757 [info ] [Thread-1 (]: 1 of 10 START sql table model main.dim_fecha ................................... [RUN]
+[0m19:58:16.960214 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_observatorio_main, now model.observatorio.dim_fecha)
+[0m19:58:16.960898 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_fecha
+[0m19:58:16.974089 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_fecha"
+[0m19:58:16.975199 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_fecha
+[0m19:58:16.976784 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:58:16.977485 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+select database_name, type from duckdb_databases()
+[0m19:58:16.978150 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:16.979796 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:58:16.981667 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:58:16.982352 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+
+                    select table_name, constraint_type from duckdb_constraints()
+                    where lower(database_name) = lower('observatorio')
+                      and lower(schema_name) = lower('main')
+                      and constraint_type in ('PRIMARY KEY', 'UNIQUE', 'FOREIGN KEY')
+                    
+[0m19:58:16.984306 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.089641 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_fecha"
+[0m19:58:17.091048 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:58:17.091782 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: BEGIN
+[0m19:58:17.092879 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.093656 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:58:17.094377 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_fecha__dbt_tmp"
+  
+    
+    as (
+      
+
+with rango_fechas as (
+    select unnest(generate_series(date '2023-01-01', date '2026-12-31', interval '1 day')) as fecha
+),
+noaa as (
+    select distinct periodo, fase_enso 
+    from 'data/silver/noaa_oni.parquet'
+)
+select
+    cast(strftime(rf.fecha, '%Y%m%d') as integer) as fecha_key,
+    rf.fecha,
+    year(rf.fecha) as anio,
+    month(rf.fecha) as mes,
+    day(rf.fecha) as dia,
+    strftime(rf.fecha, '%Y-%m') as periodo_yyyy_mm,
+    quarter(rf.fecha) as trimestre,
+    dayofweek(rf.fecha) as dia_semana,
+    coalesce(n.fase_enso, 'Neutral') as fase_enso
+from rango_fechas rf
+left join noaa n on strftime(rf.fecha, '%Y-%m') = n.periodo
+    );
+    
+  
+[0m19:58:17.148652 [debug] [Thread-1 (]: SQL status: OK in 0.053 seconds
+[0m19:58:17.158440 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:58:17.159688 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+alter table "observatorio"."main"."dim_fecha__dbt_tmp" rename to "dim_fecha"
+[0m19:58:17.161031 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.195023 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: COMMIT
+[0m19:58:17.195764 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:58:17.196418 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: COMMIT
+[0m19:58:17.224013 [debug] [Thread-1 (]: SQL status: OK in 0.027 seconds
+[0m19:58:17.232163 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fecha"
+[0m19:58:17.232907 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fecha"} */
+
+      drop table if exists "observatorio"."main"."dim_fecha__dbt_backup" cascade
+    
+[0m19:58:17.234041 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.237473 [debug] [Thread-1 (]: On model.observatorio.dim_fecha: Close
+[0m19:58:17.239911 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95c6bee10>]}
+[0m19:58:17.240944 [info ] [Thread-1 (]: 1 of 10 OK created sql table model main.dim_fecha .............................. [[32mOK[0m in 0.28s]
+[0m19:58:17.242160 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_fecha
+[0m19:58:17.242953 [debug] [Thread-1 (]: Began running node model.observatorio.dim_fuente
+[0m19:58:17.245379 [info ] [Thread-1 (]: 2 of 10 START sql table model main.dim_fuente .................................. [RUN]
+[0m19:58:17.246594 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_fecha, now model.observatorio.dim_fuente)
+[0m19:58:17.249152 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_fuente
+[0m19:58:17.252330 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_fuente"
+[0m19:58:17.254859 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_fuente
+[0m19:58:17.259960 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_fuente"
+[0m19:58:17.261175 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:58:17.261847 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: BEGIN
+[0m19:58:17.262423 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.263618 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.264261 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:58:17.264908 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fuente"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_fuente__dbt_tmp"
+  
+    
+    as (
+      
+
+select 1 as fuente_key, 'EnerAndes' as nombre_fuente, 'Ventas de Energía' as descripcion
+union all
+select 2, 'XM', 'Mercado Mayorista y Sistema Interconectado'
+union all
+select 3, 'NOAA', 'Índice Oceánico El Niño (ONI)'
+union all
+select 4, 'IDEAM', 'Estaciones Climatológicas Antioquia'
+    );
+    
+  
+[0m19:58:17.266914 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.274489 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:58:17.275211 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fuente"} */
+
+    SELECT index_name
+    FROM duckdb_indexes()
+    WHERE database_name = 'observatorio'
+      AND schema_name = 'main'
+      AND table_name = 'dim_fuente'
+  
+[0m19:58:17.276884 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.284302 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:58:17.285026 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fuente"} */
+alter table "observatorio"."main"."dim_fuente" rename to "dim_fuente__dbt_backup"
+[0m19:58:17.286165 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.289075 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:58:17.289771 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fuente"} */
+alter table "observatorio"."main"."dim_fuente__dbt_tmp" rename to "dim_fuente"
+[0m19:58:17.290842 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.297064 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: COMMIT
+[0m19:58:17.297813 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:58:17.298512 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: COMMIT
+[0m19:58:17.304099 [debug] [Thread-1 (]: SQL status: OK in 0.005 seconds
+[0m19:58:17.308501 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_fuente"
+[0m19:58:17.309233 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_fuente"} */
+
+      drop table if exists "observatorio"."main"."dim_fuente__dbt_backup" cascade
+    
+[0m19:58:17.312301 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:58:17.314433 [debug] [Thread-1 (]: On model.observatorio.dim_fuente: Close
+[0m19:58:17.316949 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95baa9f40>]}
+[0m19:58:17.318385 [info ] [Thread-1 (]: 2 of 10 OK created sql table model main.dim_fuente ............................. [[32mOK[0m in 0.07s]
+[0m19:58:17.319331 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_fuente
+[0m19:58:17.320389 [debug] [Thread-1 (]: Began running node model.observatorio.dim_municipio
+[0m19:58:17.321231 [info ] [Thread-1 (]: 3 of 10 START sql table model main.dim_municipio ............................... [RUN]
+[0m19:58:17.322180 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_fuente, now model.observatorio.dim_municipio)
+[0m19:58:17.322924 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_municipio
+[0m19:58:17.328341 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_municipio"
+[0m19:58:17.332422 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_municipio
+[0m19:58:17.338023 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_municipio"
+[0m19:58:17.339205 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_municipio"
+[0m19:58:17.339981 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: BEGIN
+[0m19:58:17.340734 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.341961 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.342705 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_municipio"
+[0m19:58:17.343425 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_municipio"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_municipio__dbt_tmp"
+  
+    
+    as (
+      
+
+with municipios_unicos as (
+    select distinct
+        divipola,
+        municipio
+    from 'data/silver/enerandes_ventas.parquet'
+    where divipola is not null
+)
+select
+    row_number() over (order by divipola) as municipio_id,
+    divipola,
+    municipio,
+    'Antioquia' as departamento
+from municipios_unicos
+    );
+    
+  
+[0m19:58:17.373420 [debug] [Thread-1 (]: SQL status: OK in 0.029 seconds
+[0m19:58:17.382771 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_municipio"
+[0m19:58:17.384692 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_municipio"} */
+alter table "observatorio"."main"."dim_municipio__dbt_tmp" rename to "dim_municipio"
+[0m19:58:17.387718 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:58:17.393001 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: COMMIT
+[0m19:58:17.393655 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_municipio"
+[0m19:58:17.394296 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: COMMIT
+[0m19:58:17.398099 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m19:58:17.400614 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_municipio"
+[0m19:58:17.401301 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_municipio"} */
+
+      drop table if exists "observatorio"."main"."dim_municipio__dbt_backup" cascade
+    
+[0m19:58:17.402399 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.404326 [debug] [Thread-1 (]: On model.observatorio.dim_municipio: Close
+[0m19:58:17.405283 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95baa3070>]}
+[0m19:58:17.406319 [info ] [Thread-1 (]: 3 of 10 OK created sql table model main.dim_municipio .......................... [[32mOK[0m in 0.08s]
+[0m19:58:17.407342 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_municipio
+[0m19:58:17.408112 [debug] [Thread-1 (]: Began running node model.observatorio.dim_recurso
+[0m19:58:17.408987 [info ] [Thread-1 (]: 4 of 10 START sql table model main.dim_recurso ................................. [RUN]
+[0m19:58:17.409809 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_municipio, now model.observatorio.dim_recurso)
+[0m19:58:17.410515 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_recurso
+[0m19:58:17.413937 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_recurso"
+[0m19:58:17.414979 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_recurso
+[0m19:58:17.420095 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_recurso"
+[0m19:58:17.421126 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_recurso"
+[0m19:58:17.421875 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: BEGIN
+[0m19:58:17.422615 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.423758 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.424480 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_recurso"
+[0m19:58:17.425200 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_recurso"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_recurso__dbt_tmp"
+  
+    
+    as (
+      
+
+with recursos as (
+    select distinct
+        'REC_EMBALSE' as codigo_recurso,
+        'Sistema Embalses XM' as nombre_recurso,
+        'Hidráulico' as tipo_generacion,
+        'XM' as empresa
+    from 'data/silver/xm_embalses.parquet'
+)
+select
+    1 as recurso_key,
+    codigo_recurso,
+    nombre_recurso,
+    tipo_generacion,
+    empresa
+from recursos
+    );
+    
+  
+[0m19:58:17.428340 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:58:17.436508 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_recurso"
+[0m19:58:17.437200 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_recurso"} */
+alter table "observatorio"."main"."dim_recurso__dbt_tmp" rename to "dim_recurso"
+[0m19:58:17.438355 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.442791 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: COMMIT
+[0m19:58:17.445750 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_recurso"
+[0m19:58:17.446434 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: COMMIT
+[0m19:58:17.452936 [debug] [Thread-1 (]: SQL status: OK in 0.004 seconds
+[0m19:58:17.455194 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_recurso"
+[0m19:58:17.455848 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_recurso"} */
+
+      drop table if exists "observatorio"."main"."dim_recurso__dbt_backup" cascade
+    
+[0m19:58:17.456823 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.458584 [debug] [Thread-1 (]: On model.observatorio.dim_recurso: Close
+[0m19:58:17.459413 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95baefcd0>]}
+[0m19:58:17.460348 [info ] [Thread-1 (]: 4 of 10 OK created sql table model main.dim_recurso ............................ [[32mOK[0m in 0.05s]
+[0m19:58:17.461284 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_recurso
+[0m19:58:17.461968 [debug] [Thread-1 (]: Began running node model.observatorio.dim_segmento
+[0m19:58:17.462872 [info ] [Thread-1 (]: 5 of 10 START sql table model main.dim_segmento ................................ [RUN]
+[0m19:58:17.463697 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_recurso, now model.observatorio.dim_segmento)
+[0m19:58:17.464297 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_segmento
+[0m19:58:17.467277 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_segmento"
+[0m19:58:17.468185 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_segmento
+[0m19:58:17.477309 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_segmento"
+[0m19:58:17.479718 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_segmento"
+[0m19:58:17.480385 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: BEGIN
+[0m19:58:17.481119 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.483651 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:58:17.484260 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_segmento"
+[0m19:58:17.484961 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_segmento"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_segmento__dbt_tmp"
+  
+    
+    as (
+      
+
+with segmentos_unicos as (
+    select distinct
+        segmento,
+        tipo_compra
+    from 'data/silver/enerandes_ventas.parquet'
+    where segmento is not null
+)
+select
+    row_number() over (order by segmento, tipo_compra) as segmento_id,
+    segmento,
+    tipo_compra
+from segmentos_unicos
+    );
+    
+  
+[0m19:58:17.493507 [debug] [Thread-1 (]: SQL status: OK in 0.008 seconds
+[0m19:58:17.500040 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_segmento"
+[0m19:58:17.500698 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_segmento"} */
+alter table "observatorio"."main"."dim_segmento__dbt_tmp" rename to "dim_segmento"
+[0m19:58:17.501707 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.506679 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: COMMIT
+[0m19:58:17.507282 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_segmento"
+[0m19:58:17.507861 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: COMMIT
+[0m19:58:17.512426 [debug] [Thread-1 (]: SQL status: OK in 0.004 seconds
+[0m19:58:17.514992 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_segmento"
+[0m19:58:17.515694 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_segmento"} */
+
+      drop table if exists "observatorio"."main"."dim_segmento__dbt_backup" cascade
+    
+[0m19:58:17.516641 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.518697 [debug] [Thread-1 (]: On model.observatorio.dim_segmento: Close
+[0m19:58:17.519542 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e95ccb2b30>]}
+[0m19:58:17.520419 [info ] [Thread-1 (]: 5 of 10 OK created sql table model main.dim_segmento ........................... [[32mOK[0m in 0.06s]
+[0m19:58:17.522245 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_segmento
+[0m19:58:17.525235 [debug] [Thread-1 (]: Began running node model.observatorio.fact_generacion_recurso
+[0m19:58:17.526785 [info ] [Thread-1 (]: 6 of 10 START sql table model main.fact_generacion_recurso ..................... [RUN]
+[0m19:58:17.528067 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_segmento, now model.observatorio.fact_generacion_recurso)
+[0m19:58:17.528838 [debug] [Thread-1 (]: Began compiling node model.observatorio.fact_generacion_recurso
+[0m19:58:17.532413 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.fact_generacion_recurso"
+[0m19:58:17.533741 [debug] [Thread-1 (]: Began executing node model.observatorio.fact_generacion_recurso
+[0m19:58:17.538791 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.fact_generacion_recurso"
+[0m19:58:17.539756 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_generacion_recurso"
+[0m19:58:17.540722 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: BEGIN
+[0m19:58:17.541285 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.542284 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.543080 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_generacion_recurso"
+[0m19:58:17.543693 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_generacion_recurso"} */
+
+    
+
+    create  table
+      "observatorio"."main"."fact_generacion_recurso__dbt_tmp"
+  
+    
+    as (
+      
+
+select
+    cast(strftime(d.fecha, '%Y%m%d') as integer) as fecha_key,
+    1 as recurso_key,
+    d.fecha,
+    d.hora,
+    d.demanda_kwh as generacion_kwh
+from 'data/silver/xm_demanda.parquet' d
+    );
+    
+  
+[0m19:58:17.558891 [debug] [Thread-1 (]: SQL status: OK in 0.015 seconds
+[0m19:58:17.562315 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_generacion_recurso"
+[0m19:58:17.562980 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_generacion_recurso"} */
+alter table "observatorio"."main"."fact_generacion_recurso__dbt_tmp" rename to "fact_generacion_recurso"
+[0m19:58:17.564181 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.566985 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: COMMIT
+[0m19:58:17.567645 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_generacion_recurso"
+[0m19:58:17.568372 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: COMMIT
+[0m19:58:17.587532 [debug] [Thread-1 (]: SQL status: OK in 0.018 seconds
+[0m19:58:17.590087 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_generacion_recurso"
+[0m19:58:17.590771 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_generacion_recurso"} */
+
+      drop table if exists "observatorio"."main"."fact_generacion_recurso__dbt_backup" cascade
+    
+[0m19:58:17.592102 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.594389 [debug] [Thread-1 (]: On model.observatorio.fact_generacion_recurso: Close
+[0m19:58:17.595291 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e958140890>]}
+[0m19:58:17.596330 [info ] [Thread-1 (]: 6 of 10 OK created sql table model main.fact_generacion_recurso ................ [[32mOK[0m in 0.07s]
+[0m19:58:17.597570 [debug] [Thread-1 (]: Finished running node model.observatorio.fact_generacion_recurso
+[0m19:58:17.598363 [debug] [Thread-1 (]: Began running node model.observatorio.fact_mercado_horario
+[0m19:58:17.599263 [info ] [Thread-1 (]: 7 of 10 START sql table model main.fact_mercado_horario ........................ [RUN]
+[0m19:58:17.600206 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.fact_generacion_recurso, now model.observatorio.fact_mercado_horario)
+[0m19:58:17.600962 [debug] [Thread-1 (]: Began compiling node model.observatorio.fact_mercado_horario
+[0m19:58:17.605265 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.fact_mercado_horario"
+[0m19:58:17.606299 [debug] [Thread-1 (]: Began executing node model.observatorio.fact_mercado_horario
+[0m19:58:17.611233 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.fact_mercado_horario"
+[0m19:58:17.612384 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_mercado_horario"
+[0m19:58:17.613153 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: BEGIN
+[0m19:58:17.614125 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.615400 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.616148 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_mercado_horario"
+[0m19:58:17.616911 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_mercado_horario"} */
+
+    
+
+    create  table
+      "observatorio"."main"."fact_mercado_horario__dbt_tmp"
+  
+    
+    as (
+      
+
+select
+    cast(strftime(p.fecha, '%Y%m%d') as integer) as fecha_key,
+    p.fecha,
+    p.hora,
+    p.precio_bolsa_kwh,
+    d.demanda_kwh
+from 'data/silver/xm_precio_bolsa.parquet' p
+left join 'data/silver/xm_demanda.parquet' d 
+    on p.fecha = d.fecha and p.hora = d.hora
+    );
+    
+  
+[0m19:58:17.692906 [debug] [Thread-1 (]: SQL status: OK in 0.075 seconds
+[0m19:58:17.699183 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_mercado_horario"
+[0m19:58:17.700286 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_mercado_horario"} */
+alter table "observatorio"."main"."fact_mercado_horario__dbt_tmp" rename to "fact_mercado_horario"
+[0m19:58:17.701723 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.704375 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: COMMIT
+[0m19:58:17.706379 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_mercado_horario"
+[0m19:58:17.707083 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: COMMIT
+[0m19:58:17.727715 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m19:58:17.730136 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_mercado_horario"
+[0m19:58:17.730851 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_mercado_horario"} */
+
+      drop table if exists "observatorio"."main"."fact_mercado_horario__dbt_backup" cascade
+    
+[0m19:58:17.731937 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.734537 [debug] [Thread-1 (]: On model.observatorio.fact_mercado_horario: Close
+[0m19:58:17.735437 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e958142570>]}
+[0m19:58:17.736438 [info ] [Thread-1 (]: 7 of 10 OK created sql table model main.fact_mercado_horario ................... [[32mOK[0m in 0.14s]
+[0m19:58:17.737522 [debug] [Thread-1 (]: Finished running node model.observatorio.fact_mercado_horario
+[0m19:58:17.738183 [debug] [Thread-1 (]: Began running node model.observatorio.stg_ventas
+[0m19:58:17.738938 [info ] [Thread-1 (]: 8 of 10 START sql view model main.stg_ventas ................................... [RUN]
+[0m19:58:17.739684 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.fact_mercado_horario, now model.observatorio.stg_ventas)
+[0m19:58:17.740352 [debug] [Thread-1 (]: Began compiling node model.observatorio.stg_ventas
+[0m19:58:17.743355 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.stg_ventas"
+[0m19:58:17.747581 [debug] [Thread-1 (]: Began executing node model.observatorio.stg_ventas
+[0m19:58:17.786807 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.stg_ventas"
+[0m19:58:17.789871 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.stg_ventas"
+[0m19:58:17.791579 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: BEGIN
+[0m19:58:17.792193 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.794320 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:58:17.794952 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.stg_ventas"
+[0m19:58:17.797958 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.stg_ventas"} */
+
+  
+  create view "observatorio"."main"."stg_ventas__dbt_tmp" as (
+    -- Staging: lee la tabla de ventas de la capa plata, sin cambiarla.
+-- En SQL, lo que va despues de -- es un comentario.
+-- dbt reemplaza source('plata', 'enerandes_ventas') por la ruta
+-- data/silver/enerandes_ventas.parquet (la dice sources.yml).
+-- Se crea como VISTA (dbt_project.yml): los demas modelos leen de aqui.
+
+-- select * = traer todas las columnas
+select *
+-- from = de donde: la tabla de ventas de la capa plata
+from 'data/silver/enerandes_ventas.parquet'
+  );
+
+[0m19:58:17.800751 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:58:17.808952 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.stg_ventas"
+[0m19:58:17.811089 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.stg_ventas"} */
+alter view "observatorio"."main"."stg_ventas__dbt_tmp" rename to "stg_ventas"
+[0m19:58:17.813414 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m19:58:17.816987 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: COMMIT
+[0m19:58:17.817855 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.stg_ventas"
+[0m19:58:17.819571 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: COMMIT
+[0m19:58:17.823311 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m19:58:17.826206 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.stg_ventas"
+[0m19:58:17.827789 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.stg_ventas"} */
+
+      drop view if exists "observatorio"."main"."stg_ventas__dbt_backup" cascade
+    
+[0m19:58:17.830062 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.832803 [debug] [Thread-1 (]: On model.observatorio.stg_ventas: Close
+[0m19:58:17.833674 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e9581b4350>]}
+[0m19:58:17.835064 [info ] [Thread-1 (]: 8 of 10 OK created sql view model main.stg_ventas .............................. [[32mOK[0m in 0.09s]
+[0m19:58:17.838855 [debug] [Thread-1 (]: Finished running node model.observatorio.stg_ventas
+[0m19:58:17.843076 [debug] [Thread-1 (]: Began running node model.observatorio.dim_mes
+[0m19:58:17.843856 [info ] [Thread-1 (]: 9 of 10 START sql table model main.dim_mes ..................................... [RUN]
+[0m19:58:17.848066 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.stg_ventas, now model.observatorio.dim_mes)
+[0m19:58:17.848711 [debug] [Thread-1 (]: Began compiling node model.observatorio.dim_mes
+[0m19:58:17.857419 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.dim_mes"
+[0m19:58:17.859484 [debug] [Thread-1 (]: Began executing node model.observatorio.dim_mes
+[0m19:58:17.868347 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.dim_mes"
+[0m19:58:17.869440 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_mes"
+[0m19:58:17.870125 [debug] [Thread-1 (]: On model.observatorio.dim_mes: BEGIN
+[0m19:58:17.870793 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.871840 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.872546 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_mes"
+[0m19:58:17.873289 [debug] [Thread-1 (]: On model.observatorio.dim_mes: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_mes"} */
+
+    
+
+    create  table
+      "observatorio"."main"."dim_mes__dbt_tmp"
+  
+    
+    as (
+      -- Dimension MES: una fila por cada mes que tiene ventas.
+-- Grano: un mes.
+-- ref('stg_ventas') es el modelo stg_ventas.sql: dbt lo crea primero y luego este.
+
+-- select distinct = traer las filas SIN repetir: cada mes aparece una sola vez
+select distinct
+    -- replace quita el guion: '2023-04' -> '202304'; cast(... as integer) lo vuelve
+    -- numero: 202304. "as mes_id" le pone ese nombre a la columna (la llave)
+    cast(replace(periodo, '-', '') as integer)      as mes_id,
+    -- El periodo como texto: '2023-04'
+    periodo,
+    -- left(periodo, 4) toma los 4 primeros caracteres: '2023' -> 2023
+    cast(left(periodo, 4) as integer)               as anio,
+    -- right(periodo, 2) toma los 2 ultimos: '04' -> 4
+    cast(right(periodo, 2) as integer)              as mes,
+    -- El trimestre: (mes + 2) dividido 3, sin decimales (//).
+    -- Ejemplo: enero (1+2)//3 = 1; abril (4+2)//3 = 2; diciembre (12+2)//3 = 4
+    (cast(right(periodo, 2) as integer) + 2) // 3   as trimestre
+-- De donde: el modelo stg_ventas
+from "observatorio"."main"."stg_ventas"
+    );
+    
+  
+[0m19:58:17.908753 [debug] [Thread-1 (]: SQL status: OK in 0.035 seconds
+[0m19:58:17.914446 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_mes"
+[0m19:58:17.917749 [debug] [Thread-1 (]: On model.observatorio.dim_mes: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_mes"} */
+alter table "observatorio"."main"."dim_mes__dbt_tmp" rename to "dim_mes"
+[0m19:58:17.919702 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.923871 [debug] [Thread-1 (]: On model.observatorio.dim_mes: COMMIT
+[0m19:58:17.925007 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_mes"
+[0m19:58:17.925780 [debug] [Thread-1 (]: On model.observatorio.dim_mes: COMMIT
+[0m19:58:17.929416 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m19:58:17.931816 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.dim_mes"
+[0m19:58:17.932506 [debug] [Thread-1 (]: On model.observatorio.dim_mes: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.dim_mes"} */
+
+      drop table if exists "observatorio"."main"."dim_mes__dbt_backup" cascade
+    
+[0m19:58:17.933563 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.935438 [debug] [Thread-1 (]: On model.observatorio.dim_mes: Close
+[0m19:58:17.936340 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e9581b6150>]}
+[0m19:58:17.937371 [info ] [Thread-1 (]: 9 of 10 OK created sql table model main.dim_mes ................................ [[32mOK[0m in 0.09s]
+[0m19:58:17.938581 [debug] [Thread-1 (]: Finished running node model.observatorio.dim_mes
+[0m19:58:17.939701 [debug] [Thread-1 (]: Began running node model.observatorio.fact_ventas_mensual
+[0m19:58:17.940481 [info ] [Thread-1 (]: 10 of 10 START sql table model main.fact_ventas_mensual ........................ [RUN]
+[0m19:58:17.941234 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.observatorio.dim_mes, now model.observatorio.fact_ventas_mensual)
+[0m19:58:17.941895 [debug] [Thread-1 (]: Began compiling node model.observatorio.fact_ventas_mensual
+[0m19:58:17.946234 [debug] [Thread-1 (]: Writing injected SQL for node "model.observatorio.fact_ventas_mensual"
+[0m19:58:17.947280 [debug] [Thread-1 (]: Began executing node model.observatorio.fact_ventas_mensual
+[0m19:58:17.951993 [debug] [Thread-1 (]: Writing runtime sql for node "model.observatorio.fact_ventas_mensual"
+[0m19:58:17.952940 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_ventas_mensual"
+[0m19:58:17.953605 [debug] [Thread-1 (]: On model.observatorio.fact_ventas_mensual: BEGIN
+[0m19:58:17.954193 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:58:17.955678 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.956290 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_ventas_mensual"
+[0m19:58:17.956952 [debug] [Thread-1 (]: On model.observatorio.fact_ventas_mensual: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_ventas_mensual"} */
+
+    
+
+    create  table
+      "observatorio"."main"."fact_ventas_mensual__dbt_tmp"
+  
+    
+    as (
+      
+
+select
+    m_dim.mes_id,
+    mun.municipio_id,
+    seg.segmento_id,
+    v.periodo,
+    v.tipo_compra,
+    v.energia_kwh,
+    v.valor_cop,
+    v.clientes
+from 'data/silver/enerandes_ventas.parquet' v
+left join "observatorio"."main"."dim_mes" m_dim 
+    on v.periodo = m_dim.periodo
+left join "observatorio"."main"."dim_municipio" mun 
+    on v.divipola = mun.divipola
+left join "observatorio"."main"."dim_segmento" seg 
+    on v.segmento = seg.segmento and v.tipo_compra = seg.tipo_compra
+    );
+    
+  
+[0m19:58:17.963390 [debug] [Thread-1 (]: SQL status: OK in 0.006 seconds
+[0m19:58:17.966753 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_ventas_mensual"
+[0m19:58:17.967547 [debug] [Thread-1 (]: On model.observatorio.fact_ventas_mensual: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_ventas_mensual"} */
+alter table "observatorio"."main"."fact_ventas_mensual__dbt_tmp" rename to "fact_ventas_mensual"
+[0m19:58:17.968949 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m19:58:17.971710 [debug] [Thread-1 (]: On model.observatorio.fact_ventas_mensual: COMMIT
+[0m19:58:17.972377 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_ventas_mensual"
+[0m19:58:17.973036 [debug] [Thread-1 (]: On model.observatorio.fact_ventas_mensual: COMMIT
+[0m19:58:17.979250 [debug] [Thread-1 (]: SQL status: OK in 0.005 seconds
+[0m19:58:17.981819 [debug] [Thread-1 (]: Using duckdb connection "model.observatorio.fact_ventas_mensual"
+[0m19:58:17.982529 [debug] [Thread-1 (]: On model.observatorio.fact_ventas_mensual: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "observatorio", "target_name": "dev", "node_id": "model.observatorio.fact_ventas_mensual"} */
+
+      drop table if exists "observatorio"."main"."fact_ventas_mensual__dbt_backup" cascade
+    
+[0m19:58:17.983686 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m19:58:17.985635 [debug] [Thread-1 (]: On model.observatorio.fact_ventas_mensual: Close
+[0m19:58:17.986591 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1491454e-1949-4cea-8f98-95a6aff05b79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e952f2c350>]}
+[0m19:58:17.987627 [info ] [Thread-1 (]: 10 of 10 OK created sql table model main.fact_ventas_mensual ................... [[32mOK[0m in 0.05s]
+[0m19:58:17.988843 [debug] [Thread-1 (]: Finished running node model.observatorio.fact_ventas_mensual
+[0m19:58:17.991060 [debug] [MainThread]: Using duckdb connection "master"
+[0m19:58:17.991715 [debug] [MainThread]: On master: BEGIN
+[0m19:58:17.992262 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m19:58:17.993288 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m19:58:17.994034 [debug] [MainThread]: On master: COMMIT
+[0m19:58:17.994670 [debug] [MainThread]: Using duckdb connection "master"
+[0m19:58:17.995252 [debug] [MainThread]: On master: COMMIT
+[0m19:58:17.996222 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m19:58:17.996933 [debug] [MainThread]: On master: Close
+[0m19:58:17.997656 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m19:58:17.998178 [debug] [MainThread]: Connection 'model.observatorio.fact_ventas_mensual' was properly closed.
+[0m19:58:17.999007 [info ] [MainThread]: 
+[0m19:58:17.999733 [info ] [MainThread]: Finished running 9 table models, 1 view model in 0 hours 0 minutes and 1.38 seconds (1.38s).
+[0m19:58:18.003126 [debug] [MainThread]: Command end result
+[0m19:58:18.080017 [debug] [MainThread]: Wrote artifact WritableManifest to dbt/target/manifest.json
+[0m19:58:18.085281 [debug] [MainThread]: Wrote artifact SemanticManifest to dbt/target/semantic_manifest.json
+[0m19:58:18.090553 [debug] [MainThread]: Wrote artifact OsiDocument to dbt/target/osi_document.json
+[0m19:58:18.110318 [debug] [MainThread]: Wrote artifact RunExecutionResult to dbt/target/run_results.json
+[0m19:58:18.111140 [info ] [MainThread]: 
+[0m19:58:18.113354 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m19:58:18.114563 [info ] [MainThread]: 
+[0m19:58:18.116615 [info ] [MainThread]: Done. PASS=10 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=10
+[0m19:58:18.136866 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 3.5458083, "process_in_blocks": "74928", "process_kernel_time": 0.52817, "process_mem_max_rss": "200524", "process_out_blocks": "7048", "process_user_time": 4.219461}
+[0m19:58:18.138792 [debug] [MainThread]: Command `dbt run` succeeded at 19:58:18.138633 after 3.55 seconds
+[0m19:58:18.140523 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e961d39790>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e952f2e8d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x70e952f2e810>]}
+[0m19:58:18.142043 [debug] [MainThread]: Flushing usage events
+[0m19:58:18.281577 [debug] [MainThread]: An error was encountered while trying to flush usage events
