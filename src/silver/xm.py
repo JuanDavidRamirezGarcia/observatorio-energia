@@ -3,7 +3,11 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 from src import config
-from src.quality.esquemas import ESQUEMA_XM_HORARIO
+from src.quality.esquemas import (
+    ESQUEMA_XM_DEMANDA,
+    ESQUEMA_XM_EMBALSES,
+    ESQUEMA_XM_PRECIO_BOLSA,
+)
 from src.utils import log
 
 LINAJE = ["_fuente", "_origen", "_extraido_en"]
@@ -15,9 +19,13 @@ def unpivot_24_horas(df_raw: pd.DataFrame, nombre_valor: str) -> pd.DataFrame:
     
     df_melt = df.melt(id_vars=cols_id, value_vars=cols_horas, var_name="hora_str", value_name=nombre_valor)
     df_melt["hora"] = df_melt["hora_str"].str.extract(r"(\d+)").astype(int)
+    if "Date" in df_melt.columns:
+        df_melt["Date"] = pd.to_datetime(df_melt["Date"], errors="coerce")
     
     col_fecha = next((c for c in cols_id if "fecha" in str(c).lower()), cols_id[0])
     df_melt["fecha"] = pd.to_datetime(df_melt[col_fecha], errors="coerce")
+    if "Date" in df_melt.columns and df_melt["Date"].notna().any():
+        df_melt["fecha"] = df_melt["Date"]
     df_melt[nombre_valor] = pd.to_numeric(df_melt[nombre_valor], errors="coerce")
     
     llave_recurso = "code" if "code" in df_melt.columns else "Id"
@@ -32,8 +40,10 @@ def unpivot_24_horas(df_raw: pd.DataFrame, nombre_valor: str) -> pd.DataFrame:
 def limpiar_diario(df_raw: pd.DataFrame, nombre_valor: str) -> pd.DataFrame:
     df = df_raw.drop(columns=LINAJE, errors="ignore").copy()
     fecha = next((c for c in df.columns if str(c).lower() in {"date", "fecha"}), df.columns[0])
-    df["fecha"] = pd.to_datetime(df[fecha], errors="coerce")
-    df[nombre_valor] = pd.to_numeric(df.get("Value"), errors="coerce")
+    df[fecha] = pd.to_datetime(df[fecha], errors="coerce")
+    df["fecha"] = df[fecha]
+    df["Value"] = pd.to_numeric(df.get("Value"), errors="coerce")
+    df[nombre_valor] = df["Value"]
     return (
         df.dropna(subset=["fecha", nombre_valor])
         .drop_duplicates(subset=["fecha", "Id"])
@@ -83,6 +93,7 @@ def main():
     if ruta_precio.exists():
         df_precio = pd.read_parquet(ruta_precio)
         df_p_limpio = unpivot_24_horas(df_precio, "precio_bolsa_kwh")
+        ESQUEMA_XM_PRECIO_BOLSA.validate(df_p_limpio, lazy=True)
         df_p_limpio.to_parquet(config.DIR_SILVER / "xm_precio_bolsa.parquet", index=False)
         log(f"Plata XM Precio Bolsa: {len(df_p_limpio)} filas horarias.")
 
@@ -90,6 +101,7 @@ def main():
     if ruta_demanda.exists():
         df_demanda = pd.read_parquet(ruta_demanda)
         df_d_limpia = unpivot_24_horas(df_demanda, "demanda_kwh")
+        ESQUEMA_XM_DEMANDA.validate(df_d_limpia, lazy=True)
         df_d_limpia.to_parquet(config.DIR_SILVER / "xm_demanda.parquet", index=False)
         log(f"Plata XM Demanda: {len(df_d_limpia)} filas horarias.")
 
@@ -105,6 +117,7 @@ def main():
     ruta_embalses = config.DIR_BRONZE / "xm_embalses.parquet"
     if ruta_embalses.exists():
         df_emb = limpiar_diario(pd.read_parquet(ruta_embalses), "embalses_pct")
+        ESQUEMA_XM_EMBALSES.validate(df_emb, lazy=True)
         df_emb.to_parquet(config.DIR_SILVER / "xm_embalses.parquet", index=False)
         log(f"Plata XM Embalses: {len(df_emb)} registros.")
 

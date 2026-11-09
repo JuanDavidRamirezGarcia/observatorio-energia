@@ -159,7 +159,10 @@ def limpiar_hoja(df_raw: pd.DataFrame, anio: int) -> tuple[pd.DataFrame, pd.Data
     
     df["energia_kwh"] = pd.to_numeric(df["energia_kwh"], errors="coerce")
     unidades = df["unidad"].map(sin_tildes)
-    df.loc[unidades.str.contains("mwh", na=False), "energia_kwh"] *= 1000.0
+    es_mwh = unidades.str.contains("mwh", na=False)
+    if anio == 2024:
+        es_mwh |= unidades.eq("")
+    df.loc[es_mwh, "energia_kwh"] *= 1000.0
 
     df["valor_cop"] = pd.to_numeric(df["valor_cop"], errors="coerce")
     df["clientes"] = pd.to_numeric(df["clientes"], errors="coerce")
