@@ -4,7 +4,15 @@ Pruebas automáticas con pytest para las reglas de limpieza de la Capa Plata.
 import pandas as pd
 import pandera as pa
 import pytest
-from src.quality.esquemas import ESQUEMA_VENTAS
+from src.quality.esquemas import (
+    ESQUEMA_IDEAM_PRECIPITACION,
+    ESQUEMA_IDEAM_TEMPERATURA,
+    ESQUEMA_NOAA,
+    ESQUEMA_VENTAS,
+    ESQUEMA_XM_DEMANDA,
+    ESQUEMA_XM_EMBALSES,
+    ESQUEMA_XM_PRECIO_BOLSA,
+)
 from src.silver.enerandes import clave_municipio, estandarizar_fecha, sin_tildes
 
 def test_sin_tildes_quita_tildes_mayusculas_y_espacios():
@@ -76,3 +84,104 @@ def test_correccion_comas_ideam():
     valor_original = "22,5"
     valor_corregido = float(valor_original.replace(",", "."))
     assert valor_corregido == 22.5
+
+
+def test_esquemas_plata_cubren_todas_las_tablas():
+    """Cada tabla de la capa plata debe contar con un esquema pandera con validación real."""
+    assert ESQUEMA_VENTAS is not None
+    assert ESQUEMA_NOAA is not None
+    assert ESQUEMA_XM_PRECIO_BOLSA is not None
+    assert ESQUEMA_XM_DEMANDA is not None
+    assert ESQUEMA_XM_EMBALSES is not None
+    assert ESQUEMA_IDEAM_PRECIPITACION is not None
+    assert ESQUEMA_IDEAM_TEMPERATURA is not None
+
+    df_ventas_ok = pd.DataFrame({
+        "periodo": ["2024-01", "2024-02"],
+        "divipola": ["05001", "05001"],
+        "municipio": ["Medellín", "Medellín"],
+        "segmento": ["Residencial", "Comercial"],
+        "tipo_compra": ["Bolsa", "Contrato"],
+        "energia_kwh": [100.0, 220.5],
+        "valor_cop": [50000.0, 70000.0],
+        "clientes": [10, 13],
+    })
+    ESQUEMA_VENTAS.validate(df_ventas_ok, lazy=True)
+
+    df_noaa_ok = pd.DataFrame({
+        "periodo": ["2024-01", "2024-02"],
+        "oni": [0.6, -0.7],
+        "fase_enso": ["El Niño", "La Niña"],
+    })
+    ESQUEMA_NOAA.validate(df_noaa_ok, lazy=True)
+
+    df_prec_ok = pd.DataFrame({
+        "fecha": pd.to_datetime(["2024-01-01", "2024-01-02"]),
+        "codigoestacion": ["ABC", "ABC"],
+        "nombreestacion": ["Estación A", "Estación A"],
+        "municipio": ["Medellín", "Medellín"],
+        "latitud": [6.23, 6.23],
+        "longitud": [-75.57, -75.57],
+        "precipitacion_mm": [12.5, 0.0],
+        "n_obs": [24, 24],
+    })
+    ESQUEMA_IDEAM_PRECIPITACION.validate(df_prec_ok, lazy=True)
+
+    df_temp_ok = pd.DataFrame({
+        "fecha": pd.to_datetime(["2024-01-01", "2024-01-02"]),
+        "codigoestacion": ["ABC", "ABC"],
+        "nombreestacion": ["Estación A", "Estación A"],
+        "municipio": ["Medellín", "Medellín"],
+        "latitud": [6.23, 6.23],
+        "longitud": [-75.57, -75.57],
+        "temperatura_celsius": [22.5, 23.0],
+        "n_obs": [24, 24],
+    })
+    ESQUEMA_IDEAM_TEMPERATURA.validate(df_temp_ok, lazy=True)
+
+    df_precio_ok = pd.DataFrame({
+        "Date": pd.to_datetime(["2024-01-01", "2024-01-01"]),
+        "Id": ["A", "A"],
+        "code": ["XBTC", "XBTC"],
+        "hora_str": ["Hour01", "Hour02"],
+        "hora": [1, 2],
+        "fecha": pd.to_datetime(["2024-01-01", "2024-01-01"]),
+        "precio_bolsa_kwh": [120.0, 128.5],
+    })
+    ESQUEMA_XM_PRECIO_BOLSA.validate(df_precio_ok, lazy=True)
+
+    df_demanda_ok = pd.DataFrame({
+        "Date": pd.to_datetime(["2024-01-01", "2024-01-01"]),
+        "Id": ["A", "A"],
+        "code": ["DEM", "DEM"],
+        "hora_str": ["Hour01", "Hour02"],
+        "hora": [1, 2],
+        "fecha": pd.to_datetime(["2024-01-01", "2024-01-01"]),
+        "demanda_kwh": [50.0, 55.0],
+    })
+    ESQUEMA_XM_DEMANDA.validate(df_demanda_ok, lazy=True)
+
+    df_embalse_ok = pd.DataFrame({
+        "Date": pd.to_datetime(["2024-01-01", "2024-01-02"]),
+        "Id": ["E1", "E2"],
+        "Value": [12.5, 14.0],
+    })
+    ESQUEMA_XM_EMBALSES.validate(df_embalse_ok, lazy=True)
+
+    with pytest.raises((pa.errors.SchemaError, pa.errors.SchemaErrors)):
+        ESQUEMA_IDEAM_PRECIPITACION.validate(
+            df_prec_ok.assign(precipitacion_mm=[-1.0, 0.0]),
+            lazy=True,
+        )
+
+    with pytest.raises((pa.errors.SchemaError, pa.errors.SchemaErrors)):
+        ESQUEMA_XM_DEMANDA.validate(
+            df_demanda_ok.assign(hora=[0, 2]),
+            lazy=True,
+        )
+
+    with pytest.raises((pa.errors.SchemaError, pa.errors.SchemaErrors)):
+        ESQUEMA_XM_EMBALSES.validate(
+            pd.concat([df_embalse_ok, df_embalse_ok.iloc[[0]]], ignore_index=True),
+            lazy=True,
+        )

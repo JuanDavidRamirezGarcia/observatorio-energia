@@ -3,7 +3,11 @@ Capa PLATA: Limpia las fuentes de XM (Precio de bolsa, Demanda y Embalses).
 """
 import pandas as pd
 from src import config
-from src.quality.esquemas import ESQUEMA_XM_HORARIO
+from src.quality.esquemas import (
+    ESQUEMA_XM_DEMANDA,
+    ESQUEMA_XM_EMBALSES,
+    ESQUEMA_XM_PRECIO_BOLSA,
+)
 from src.utils import log
 
 LINAJE = ["_fuente", "_origen", "_extraido_en"]
@@ -31,6 +35,7 @@ def main():
     if ruta_precio.exists():
         df_precio = pd.read_parquet(ruta_precio)
         df_p_limpio = unpivot_24_horas(df_precio, "precio_bolsa_kwh")
+        ESQUEMA_XM_PRECIO_BOLSA.validate(df_p_limpio, lazy=True)
         df_p_limpio.to_parquet(config.DIR_SILVER / "xm_precio_bolsa.parquet", index=False)
         log(f"Plata XM Precio Bolsa: {len(df_p_limpio)} filas horarias.")
 
@@ -38,12 +43,14 @@ def main():
     if ruta_demanda.exists():
         df_demanda = pd.read_parquet(ruta_demanda)
         df_d_limpia = unpivot_24_horas(df_demanda, "demanda_kwh")
+        ESQUEMA_XM_DEMANDA.validate(df_d_limpia, lazy=True)
         df_d_limpia.to_parquet(config.DIR_SILVER / "xm_demanda.parquet", index=False)
         log(f"Plata XM Demanda: {len(df_d_limpia)} filas horarias.")
 
     ruta_embalses = config.DIR_BRONZE / "xm_embalses.parquet"
     if ruta_embalses.exists():
         df_emb = pd.read_parquet(ruta_embalses).drop(columns=LINAJE, errors="ignore").drop_duplicates()
+        ESQUEMA_XM_EMBALSES.validate(df_emb, lazy=True)
         df_emb.to_parquet(config.DIR_SILVER / "xm_embalses.parquet", index=False)
         log(f"Plata XM Embalses: {len(df_emb)} registros.")
 

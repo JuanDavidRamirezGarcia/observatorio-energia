@@ -3,6 +3,10 @@ Capa PLATA: Limpia las variables de precipitación y temperatura del IDEAM.
 """
 import pandas as pd
 from src import config
+from src.quality.esquemas import (
+    ESQUEMA_IDEAM_PRECIPITACION,
+    ESQUEMA_IDEAM_TEMPERATURA,
+)
 from src.utils import log
 
 LINAJE = ["_fuente", "_origen", "_extraido_en"]
@@ -45,11 +49,13 @@ def main():
     
     df_prep = limpiar_ideam_variable("precipitacion", "precipitacion_mm")
     if not df_prep.empty:
+        ESQUEMA_IDEAM_PRECIPITACION.validate(df_prep, lazy=True)
         df_prep.to_parquet(config.DIR_SILVER / "ideam_precipitacion.parquet", index=False)
         log(f"Plata IDEAM Precipitación: {len(df_prep)} registros guardados.")
 
     df_temp = limpiar_ideam_variable("temperatura", "temperatura_celsius")
     if not df_temp.empty:
+        ESQUEMA_IDEAM_TEMPERATURA.validate(df_temp, lazy=True)
         df_temp.to_parquet(config.DIR_SILVER / "ideam_temperatura.parquet", index=False)
         log(f"Plata IDEAM Temperatura: {len(df_temp)} registros guardados.")
 
