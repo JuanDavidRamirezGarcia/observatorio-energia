@@ -56,9 +56,21 @@ jobs:
       - name: Capa bronce (extraccion)
         run: python -m src.pipeline
 
-      # Paso 5: capa plata. Limpia la hoja 2023 y la valida con pandera
-      - name: Capa plata (limpieza y pandera)
+      # Paso 5: capa plata. Cada fuente genera los Parquet que consume dbt.
+      - name: Capa plata (XM)
+        run: python -m src.silver.xm
+
+      - name: Capa plata (IDEAM)
+        run: python -m src.silver.ideam
+
+      - name: Capa plata (NOAA)
+        run: python -m src.silver.noaa
+
+      - name: Capa plata (EnerAndes)
         run: python -m src.silver.enerandes
+
+      - name: Capa plata (TRM)
+        run: python -m src.silver.trm
 
       # Paso 6: capa oro. Crea el esquema estrella y ejecuta las pruebas de dbt
       - name: Capa oro (dbt build)
