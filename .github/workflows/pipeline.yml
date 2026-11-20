@@ -25,8 +25,8 @@ jobs:
     # runs-on: el computador donde corre. ubuntu-latest es un Linux nuevo y vacio
     # que GitHub presta para esta ejecucion y borra al terminar
     runs-on: ubuntu-latest
-    # Si algo se queda pegado (una API que no responde), GitHub lo cancela a los 30 minutos
-    timeout-minutes: 30
+    # La extraccion puede tardar mas de 30 minutos por las consultas a las APIs.
+    timeout-minutes: 60
     # steps: los pasos del trabajo, en orden. Cada paso empieza con "-".
     # Si un paso falla, los siguientes no se ejecutan
     steps:
