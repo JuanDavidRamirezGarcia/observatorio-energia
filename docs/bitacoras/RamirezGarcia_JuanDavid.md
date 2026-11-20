@@ -111,3 +111,21 @@ Se implementó un modelo estrella compuesto por 6 tablas de dimensión y 3 tabla
 - Se documentaron en el README los pasos de instalación y ejecución desde Windows, macOS y Linux, el requisito de conexión a Internet y la presencia del Excel de EnerAndes en el repositorio.
 - Se añadieron pruebas para verificar la generación de muestras de hasta 200 filas y el flujo del pipeline desde carpetas vacías con extractores aislados. La instalación de dependencias en un entorno virtual limpio y las **21 pruebas** finalizaron correctamente.
 - Los cambios se integraron en el commit `d70750f` (`Document reproducible pipeline setup and samples`).
+
+---
+
+## 8. Correcciones de GitHub Actions y pruebas de la Capa Oro (2026-11-20)
+
+**Rama de trabajo:** `feature/automatizacion-juandavid`
+
+### Corrección y diagnóstico del workflow
+- Se elevó el límite del job de GitHub Actions de 30 a 60 minutos tras observar que la ejecución se cancelaba durante la extracción de la Capa Bronce.
+- Se corrigieron las fuentes de dbt: se eliminaron las declaraciones duplicadas de `xm_demanda` y `noaa_oni`, y se agregó la fuente `enerandes_ventas` que faltaba.
+- Se actualizó el workflow para ejecutar las transformaciones de plata de XM, IDEAM, NOAA, EnerAndes y TRM antes de `dbt build`. Cada fuente quedó en un paso independiente para facilitar la identificación de errores y sus tiempos.
+- Tras ejecutar todas las transformaciones de plata, el pipeline de GitHub Actions completó correctamente la construcción de la Capa Oro.
+
+### Pruebas automatizadas de la evidencia
+- Se configuró el workflow para ejecutar explícitamente `python -m pytest tests/ -v` y mover las pruebas unitarias antes de las descargas largas, de modo que un fallo de pruebas detenga el proceso antes de consumir tiempo en las APIs.
+- Se agregaron tres pruebas de las consultas de Oro con datos de ejemplo: consumo por municipio en GWh, precio promedio por hora y fase ENSO, y diferencia horaria entre generación y demanda en MWh.
+- La prueba de exportación existente verifica que se genere un archivo Parquet por tabla y que los archivos contengan las filas esperadas.
+- Validación local: **35 pruebas aprobadas** con `python -m pytest tests/ -q`.
