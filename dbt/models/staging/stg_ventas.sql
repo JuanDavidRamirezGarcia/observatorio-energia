@@ -1,6 +1,6 @@
 -- Staging: lee la tabla de ventas de la capa plata, sin cambiarla.
 -- En SQL, lo que va despues de -- es un comentario.
--- dbt reemplaza source('plata', 'enerandes_ventas') por la ruta
+-- dbt reemplaza source('silver', 'enerandes_ventas') por la ruta
 -- data/silver/enerandes_ventas.parquet (la dice sources.yml).
 -- Se crea como VISTA (dbt_project.yml): los demas modelos leen de aqui.
 
