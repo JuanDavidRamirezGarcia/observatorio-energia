@@ -1,4 +1,4 @@
-# Bitácora de actividades — Extracción de datos IDEAM
+# Bitácora de actividades — Dashboard y extracción de datos IDEAM
 
 **Proyecto:** Observatorio de Energía (`observatorio-energia`)
 
@@ -214,3 +214,18 @@ se necesita reconstruir plata con los archivos ya descargados, se ejecuta
 La verificación final registró 19 pruebas aprobadas. Los archivos Parquet de
 `data/silver/` no se versionan; cada integrante debe generarlos localmente
 cuando los necesite. Esta bitácora documenta únicamente los puntos 1 y 2.
+
+## 5. Dashboard de inteligencia de negocios
+
+Se creó `dashboard/app.py` con Streamlit para presentar la información de la
+capa Oro de forma interactiva. El dashboard incluye filtros por periodo,
+fenómeno climático y tipo de compra, cuatro indicadores resumidos y seis
+gráficos: precio promedio de bolsa, demanda mensual, precio por fenómeno,
+relación temporal entre precio y clima, energía vendida por modalidad y valor
+mensual de las ventas.
+
+La aplicación lee `fact_mercado_mensual.parquet` y `fact_ventas_mensual.parquet`
+desde `data/gold/`, archivos que se generan localmente al ejecutar el pipeline.
+Se incorporaron `streamlit` y `plotly` a `requirements.txt`. La sintaxis de la
+aplicación fue validada con `py_compile` y el servidor local de Streamlit
+arrancó correctamente en el puerto 8502.
