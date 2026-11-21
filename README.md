@@ -245,17 +245,8 @@ capa Oro `fact_mercado_mensual` y `fact_ventas_mensual`. Incluye filtros por
 periodo, fenómeno climático y tipo de compra, cuatro KPIs y una lectura
 automática que cambia de acuerdo con los valores filtrados.
 
-#### Resumen, filtros y lectura automática
-
-![Resumen del dashboard](docs/dashboard_01_resumen.png)
-
-#### Mercado y relación con el clima
-
-![Análisis de clima y mercado](docs/dashboard_02_clima.png)
-
-#### Ventas por modalidad y valor comercial
-
-![Análisis de ventas](docs/dashboard_03_ventas.png)
+El dashboard se puede ejecutar localmente para consultar los filtros, KPIs,
+gráficas y lecturas automáticas descritas en la tabla siguiente.
 
 ### Relación con las preguntas de negocio
 
