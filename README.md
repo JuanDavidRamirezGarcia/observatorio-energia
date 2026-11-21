@@ -238,7 +238,9 @@ Nota: la consulta calcula el promedio de generación por recurso y lo compara
 con la demanda horaria total; por ello, la diferencia mostrada no debe
 interpretarse como el balance total de oferta y demanda del sistema.
 
-## 📊 Dashboard de BI
+## 👤 Oscar García García — BI Analyst (Visualización)
+
+### 📊 Dashboard de BI
 
 El dashboard se construyó con Streamlit y consume las tablas Parquet de la
 capa Oro `fact_mercado_mensual` y `fact_ventas_mensual`. Incluye filtros por
