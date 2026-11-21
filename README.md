@@ -248,6 +248,18 @@ automática que cambia de acuerdo con los valores filtrados.
 El dashboard se puede ejecutar localmente para consultar los filtros, KPIs,
 gráficas y lecturas automáticas descritas en la tabla siguiente.
 
+### Aporte de Oscar y orden de ejecución
+
+El aporte de Oscar corresponde a la construcción de `dashboard/app.py`, la
+integración con la capa Oro y la documentación de las preguntas de negocio.
+Para reproducirlo desde una instalación limpia, ejecutar en este orden:
+
+1. Instalar las dependencias del proyecto.
+2. Ejecutar `src.transformar` para extraer Bronce, limpiar Plata y construir
+  Oro con dbt.
+3. Ejecutar `src.exportar_oro` para crear los Parquet que consume el dashboard.
+4. Iniciar Streamlit y abrir la URL local que muestra la terminal.
+
 ### Relación con las preguntas de negocio
 
 | Visualización | Pregunta de negocio que responde | Evidencia mostrada |
@@ -263,13 +275,17 @@ Las tarjetas de lectura automática resumen los cambios observados en el
 periodo filtrado: variación del precio, variación de la demanda, fenómeno con
 mayor precio promedio y modalidad con mayor participación de energía vendida.
 
-Para ejecutarlo localmente:
+Comandos para ejecutar el dashboard:
 
 ```powershell
 .\.venv\Scripts\python.exe -m src.transformar
 .\.venv\Scripts\python.exe -m src.exportar_oro
 .\.venv\Scripts\python.exe -m streamlit run dashboard/app.py
 ```
+
+La aplicación se abre normalmente en `http://localhost:8501`. Si ese puerto
+está ocupado, Streamlit asigna otro puerto y lo informa en la terminal, por
+ejemplo `http://localhost:8502`.
 
 ## 🎥 **Videos Explicativos del Equipo**
 
