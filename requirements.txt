@@ -7,3 +7,5 @@ pytest>=8.0
 pytest-cov>=4.0
 pandera>=0.30
 dbt-duckdb>=1.9
+streamlit>=1.40
+plotly>=5.24

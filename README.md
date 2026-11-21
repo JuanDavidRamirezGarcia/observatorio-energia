@@ -9,7 +9,7 @@
 | [Juan David Ramírez García](docs/bitacoras/RamirezGarcia_JuanDavid.md) | Data Engineer | Amplió la extracción de XM con generación, aportes y catálogo de recursos; integró la TRM como fuente propia; configuró el modelo estrella en dbt/DuckDB y sus pruebas de calidad; documentó y probó la ejecución del pipeline. |
 | [Rober Castillo](docs/bitacoras/rober_castilllo_bitcora.md) | Data Quality Analyst | Perfiló los datos de Bronce y documentó problemas de calidad; contribuyó a la limpieza de EnerAndes y las demás fuentes; orquestó la construcción de Plata y Oro, verificó la exclusión de datos generados y añadió pruebas al flujo. |
 | [Juan Fernando Cataño Higuita](docs/bitacoras/catano_juan_fernando.md) | Analytics Engineer | Documentó el perfilamiento y los hallazgos de calidad; creó pruebas automatizadas del pipeline; documentó el modelo dimensional y el diccionario de datos; desarrolló las consultas analíticas y registró sus resultados en este README. |
-| [Oscar García García](docs/bitacoras/oscar_bitacora.md) | BI Analyst / Data Engineer | Desarrolló y optimizó la extracción de precipitación y temperatura del IDEAM con consultas SoQL agregadas; contribuyó a la limpieza de EnerAndes y de las fuentes XM, NOAA, IDEAM y TRM, y verificó sus salidas. |
+| [Oscar García García](docs/bitacoras/oscar_bitacora.md) | BI Analyst / Data Engineer | Desarrolló y optimizó la extracción de precipitación y temperatura del IDEAM; contribuyó a la limpieza de las fuentes y desarrolló un dashboard Streamlit con seis visualizaciones de la capa Oro. |
 
 ## 🎯 Objetivo
 
@@ -38,7 +38,7 @@ Nos permite convertir los precios spot del mercado eléctrico (COP/MWh) y las ve
 
 ## ⚙️ Cómo ejecutar
 
-Requisitos: Python 3.10 o posterior y acceso a Internet para consultar las
+Requisitos: Python 3.11 o posterior y acceso a Internet para consultar las
 fuentes públicas. El archivo interno
 `data/insumos/ventas_enerandes_2023_2026.xlsx` está incluido en el repositorio;
 no es necesario copiarlo aparte.
@@ -53,6 +53,12 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m src.transformar
 .\.venv\Scripts\python.exe -m src.consultar
 .\.venv\Scripts\python.exe -m pytest -q
+```
+
+Para visualizar el dashboard después de construir la capa Oro:
+
+```powershell
+.\.venv\Scripts\python.exe -m streamlit run dashboard/app.py
 ```
 
 En macOS o Linux, usa el intérprete del entorno virtual con estos comandos:
@@ -231,6 +237,38 @@ Consulta: [consulta_3_generacion_vs_demanda.sql](consultas/oro/consulta_3_genera
 Nota: la consulta calcula el promedio de generación por recurso y lo compara
 con la demanda horaria total; por ello, la diferencia mostrada no debe
 interpretarse como el balance total de oferta y demanda del sistema.
+
+## 📊 Dashboard de BI
+
+El dashboard se construyó con Streamlit y consume las tablas Parquet de la
+capa Oro `fact_mercado_mensual` y `fact_ventas_mensual`. Incluye filtros por
+periodo, fenómeno climático y tipo de compra, cuatro KPIs y una lectura
+automática que cambia de acuerdo con los valores filtrados.
+
+![Dashboard de Energía y Clima](docs/dashboard_overview.png)
+
+### Relación con las preguntas de negocio
+
+| Visualización | Pregunta de negocio que responde | Evidencia mostrada |
+|---|---|---|
+| Precio promedio de bolsa | ¿Cómo evoluciona el precio de la energía en el periodo analizado? | Tendencia mensual en COP/kWh. |
+| Demanda mensual del sistema | ¿En qué meses se concentra la mayor demanda? | Área mensual de demanda en kWh. |
+| Precio por fenómeno climático | ¿Qué fenómeno climático se asocia con precios más altos? | Distribución y mediana del precio por fase ENSO. |
+| Mercado y clima en el tiempo | ¿Cómo se relacionan precio, demanda y clima? | Puntos mensuales: color por fenómeno y tamaño por demanda. |
+| Energía vendida por modalidad | ¿Qué modalidad concentra la energía comercializada? | Comparación mensual entre Bolsa y Contrato. |
+| Valor mensual de ventas | ¿Cómo cambia el valor comercial y qué modalidad aporta más? | Barras apiladas del valor en COP. |
+
+Las tarjetas de lectura automática resumen los cambios observados en el
+periodo filtrado: variación del precio, variación de la demanda, fenómeno con
+mayor precio promedio y modalidad con mayor participación de energía vendida.
+
+Para ejecutarlo localmente:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.transformar
+.\.venv\Scripts\python.exe -m src.exportar_oro
+.\.venv\Scripts\python.exe -m streamlit run dashboard/app.py
+```
 
 ## 🎥 **Videos Explicativos del Equipo**
 
