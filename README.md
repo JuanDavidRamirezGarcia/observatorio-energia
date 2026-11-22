@@ -612,6 +612,11 @@ El informe completo se encuentra en [`docs/informe_final.pdf`](docs/informe_fina
 
 ---
 
+### 🌐 Acceso al Dashboard en Vivo
+* **Dashboard Interactivo (Streamlit):** [Ver Observatorio de Energía y Clima en línea](https://juandavidramirezgarcia-observatorio-energia-dashboardapp-4b9jvp.streamlit.app/)
+
+---
+
 ## 🖥️ Capturas del Dashboard
 
 <img width="952" height="872" alt="image" src="https://github.com/user-attachments/assets/3676b183-3add-4d1c-82e0-def4c94613d4" />
