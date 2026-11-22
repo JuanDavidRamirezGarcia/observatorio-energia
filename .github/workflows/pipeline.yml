@@ -5,18 +5,14 @@
 # El nombre del workflow: es el que aparece en la pestana Actions del repositorio
 name: pipeline-observatorio
 
-# on: cuando arranca el workflow (los "disparadores"). Aqui hay 3
+# on: cuando arranca el workflow (los "disparadores"). Se permite solo ejecucion diaria o manual.
 on:
-  # 1. schedule: arranca solo, a la hora que dice cron
+  # Ejecucion diaria programada.
   schedule:
     # "0 11 * * *" = minuto 0, hora 11 UTC, todos los dias. 11:00 UTC = 6:00 a. m. en Colombia
     - cron: "0 11 * * *"
-  # 2. workflow_dispatch: arranca a mano, con el boton "Run workflow" de la pestana Actions
+  # Ejecucion manual desde la pestana Actions.
   workflow_dispatch:
-  # 3. pull_request: arranca cada vez que se abre o se actualiza un Pull Request...
-  pull_request:
-    # ...que va hacia la rama main
-    branches: [main]
 
 # jobs: los trabajos del workflow
 jobs:
@@ -52,15 +48,11 @@ jobs:
         # run: ejecuta un comando, igual que en la terminal
         run: pip install -r requirements.txt
 
-      # Paso 4: ejecutar primero las pruebas unitarias, antes de las descargas largas.
-      - name: Pruebas (pytest)
-        run: python -m pytest tests/ -v
-
-      # Paso 5: capa bronce. Descarga las fuentes y lee el Excel de EnerAndes.
+      # Paso 4: capa bronce. Descarga las fuentes y lee el Excel de EnerAndes.
       - name: Capa bronce (extraccion)
         run: python -m src.pipeline
 
-      # Paso 6: capa plata. Cada fuente genera los Parquet que consume dbt.
+      # Paso 5: capa plata. Cada fuente genera los Parquet que consume dbt.
       - name: Capa plata (XM)
         run: python -m src.silver.xm
 
@@ -76,13 +68,17 @@ jobs:
       - name: Capa plata (TRM)
         run: python -m src.silver.trm
 
-      # Paso 7: capa oro. Crea el esquema estrella y ejecuta las pruebas de dbt.
+      # Paso 6: capa oro. Crea el esquema estrella y ejecuta las pruebas de dbt.
       - name: Capa oro (dbt build)
         run: dbt build --project-dir dbt --profiles-dir dbt
 
-      # Paso 8: guarda las tablas de la capa oro en data/gold/*.parquet
+      # Paso 7: guarda las tablas de la capa oro en data/gold/*.parquet
       - name: Exportar la capa oro
         run: python -m src.exportar_oro
+
+      # Paso 8: ejecuta todas las pruebas al final del pipeline.
+      - name: Pruebas (pytest)
+        run: python -m pytest tests/ -v
 
       # Paso 9: publica la carpeta data/gold/ como artefacto de la ejecucion
       - name: Publicar la capa oro

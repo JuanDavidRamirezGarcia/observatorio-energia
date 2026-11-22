@@ -4,6 +4,12 @@
 
 ## Objetivo
 
+Integrar datos del mercado eléctrico (XM), del clima (IDEAM y NOAA) y de
+ventas internas (EnerAndes) para evaluar el riesgo energético de Colombia
+ante El Niño 2026 y apoyar decisiones comerciales de EnerAndes.
+
+## Integrantes y roles
+
 | Integrante | Rol | Aportes (resumen de bitácora) |
 |---|---|---|
 | [Juan David Ramírez García](docs/bitacoras/RamirezGarcia_JuanDavid.md) | Data Engineer | Amplió la extracción de XM con generación, aportes y catálogo de recursos; integró la TRM como fuente propia; configuró el modelo estrella en dbt/DuckDB y sus pruebas de calidad; documentó y probó la ejecución del pipeline. |
@@ -13,16 +19,47 @@
 
 ## Equipo
 
-Integrar datos del mercado eléctrico (XM), del clima (IDEAM y NOAA) y de ventas internas (EnerAndes) para analizar el riesgo energético de Colombia ante El Niño 2026.
+Los roles se rotaron al iniciar la evidencia actual para que cada integrante
+trabajara en una responsabilidad distinta a las Evidencias 1 y 2.
+
+| Integrante | Rol en Evidencias 1 y 2 / semanas 1 a 4 | Rol en evidencia actual / semanas 5 a 7 |
+|---|---|---|
+| Juan Fernando Cataño Higuita | Analytics Engineer | Ingeniero de Datos (Capa Oro) |
+| Juan David Ramírez García | Data Engineer | Ingeniero de Automatización (DataOps) |
+| Oscar García García | BI Analyst / Data Engineer | Analista de BI (Visualización) |
+| Rober Castillo | Data Quality Analyst | Project Manager (Documentación y Cierre) |
+
+## Arquitectura
+
+```mermaid
+flowchart LR
+    A[Fuentes públicas y EnerAndes] --> B[Bronce: Parquet y linaje]
+    B --> C[Plata: limpieza con Pandera]
+    C --> D[Oro: dbt + DuckDB]
+    D --> E[Exportación Parquet]
+    E --> F[Dashboard Streamlit]
+    G[GitHub Actions] --> A
+    G --> B
+    G --> C
+    G --> D
+    G --> E
+```
+
+GitHub Actions ejecuta el flujo diario o manual desde
+`.github/workflows/pipeline.yml`. El artefacto `capa-oro` conserva las tablas
+exportadas para que puedan descargarse y utilizarse en la visualización.
 
 ## Contenido
 
 - [Objetivo](#objetivo)
 - [Equipo](#equipo)
+- [Integrantes y roles](#integrantes-y-roles)
+- [Arquitectura](#arquitectura)
 - [Ejecución](#pasos-para-ejecutar)
 - [Bronce: extraccion y fuentes](#bronce-extraccion-y-fuentes)
 - [Plata: limpieza y calidad](#plata-limpieza-y-calidad)
 - [Oro: modelo y analisis](#oro-modelo-y-analisis)
+- [Limitaciones](#limitaciones)
 - [Material complementario](#material-complementario)
 
 ### Pasos para ejecutar
@@ -501,6 +538,26 @@ Comandos para ejecutar el dashboard:
 La aplicación se abre normalmente en `http://localhost:8501`. Si ese puerto
 está ocupado, Streamlit asigna otro puerto y lo informa en la terminal, por
 ejemplo `http://localhost:8502`.
+
+Las capturas del dashboard deben guardarse en `docs/` y añadirse a esta sección
+con rutas relativas. La vista actual se puede capturar desde las siguientes
+secciones de la aplicación: resumen de KPIs y filtros, evolución de mercado,
+fenómeno climático y comparación de ventas por modalidad.
+
+## Limitaciones
+
+- El historial disponible depende de la periodicidad y del rango configurado
+  en las fuentes públicas; las ejecuciones pueden variar si una API modifica su
+  esquema o pierde disponibilidad.
+- La generación horaria de XM requiere descargas por ventanas y puede consumir
+  varios minutos y memoria.
+- La agregación mensual utilizada por el dashboard puede ocultar variaciones
+  horarias y operativas relevantes.
+- Los datos de ventas provienen de un archivo interno de EnerAndes y representan
+  el periodo incluido en ese insumo.
+- Las diferencias entre energía generada y demanda no se presentan como un
+  balance físico total del sistema; las consultas son comparaciones analíticas
+  sobre las fuentes disponibles.
 
 ## Material complementario
 
