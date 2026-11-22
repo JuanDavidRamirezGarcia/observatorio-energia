@@ -590,3 +590,46 @@ artificial como apoyo:
 
 Las respuestas y sugerencias se revisaron y validaron por el equipo antes de
 incorporarlas al proyecto.
+
+
+---
+
+## 📊 Hallazgos Principales e Informe Ejecutivo
+
+El informe completo se encuentra en [`docs/informe_final.pdf`](docs/informe_final.pdf)[cite: 6] y responde a las **6 preguntas de negocio** sobre el periodo observado (ventas: ene-2023 a sep-2026[cite: 6, 7]; mercado y clima: ene-2024 a sep-2026[cite: 6, 7]):
+
+1. **Evolución del precio de bolsa:** Promedio mensual de **COP 463,54/kWh** (+21,2% neto), con un máximo de **COP 1.529,14/kWh** (oct-2024) y un mínimo de **COP 112,51/kWh** (jun-2025)[cite: 9].
+2. **Estacionalidad y demanda:** Demanda media de **6.999,6 GWh**, con pico de **7.645,5 GWh** (ago-2026) y valle de **6.348,7 GWh** (feb-2025)[cite: 10].
+3. **Impacto climático (ENSO / ONI):** La fase **El Niño** registró el mayor precio promedio (**COP 660,44/kWh**), superando en ~60% a **Neutral** (**COP 412,75/kWh**) y triplicando a **La Niña** (**COP 222,79/kWh**)[cite: 11].
+4. **Correlaciones temporales:** Relación positiva modesta entre **Precio y ONI ($r = 0,322$)**, **Demanda y ONI ($r = 0,278$)** y **Precio y Demanda ($r = 0,129$)**[cite: 12].
+5. **Energía vendida por modalidad:** De **2.823,61 GWh** vendidos, **Contrato** representa el **77,84%** (**2.197,80 GWh**) y **Bolsa** el **22,16%** (**625,81 GWh**)[cite: 13].
+6. **Valor facturado:** Total acumulado de **COP 2,82 billones**, aportando **Contrato** el **77,89%** (**COP 2.199,7 mil millones**) y **Bolsa** el **22,11%** (**COP 624,6 mil millones**)[cite: 14].
+
+### Recomendaciones Clave
+* Modelar escenarios de estrés sobre el **22,16%** expuesto a Bolsa e implementar alertas tempranas de precio[cite: 13, 15].
+* Complementar el análisis de ventas con costos de compra y márgenes reales por segmento[cite: 15].
+* Exportar las tablas de la **Capa Oro** antes de iniciar Streamlit y manejar explícitamente los meses sin dato ONI (como sep-2026)[cite: 7, 8, 15].
+
+---
+
+## 🖥️ Capturas del Dashboard
+
+<img width="952" height="872" alt="image" src="https://github.com/user-attachments/assets/3676b183-3add-4d1c-82e0-def4c94613d4" />
+
+
+<img width="962" height="942" alt="image" src="https://github.com/user-attachments/assets/c4125920-979f-4a23-9948-5a9cb73d1801" />
+
+<img width="966" height="937" alt="image" src="https://github.com/user-attachments/assets/4621b600-0eab-4a4f-9b6b-d8eab4e23518" />
+
+<img width="975" height="957" alt="image" src="https://github.com/user-attachments/assets/94a75c28-5ce4-4f1e-8f62-8f9bdd2ddf3c" />
+
+<img width="981" height="857" alt="image" src="https://github.com/user-attachments/assets/4584577e-c922-4f9e-8d7f-8e80344218bf" />
+
+<img width="982" height="940" alt="image" src="https://github.com/user-attachments/assets/4e4ac9fb-3396-4514-a1a3-d4350923ced6" />
+
+<img width="947" height="846" alt="image" src="https://github.com/user-attachments/assets/a1045bf0-b1c8-4a7c-94f2-d566cfb54b9b" />
+
+
+
+
+
