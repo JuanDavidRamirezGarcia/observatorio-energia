@@ -4,7 +4,9 @@
 # Datos descargados: se regeneran con el pipeline, no se suben a GitHub
 data/bronze/
 data/silver/
-data/gold/
+data/gold/*
+!data/gold/fact_mercado_mensual.parquet
+!data/gold/fact_ventas_mensual.parquet
 *.duckdb
 
 # Secretos y configuracion local
