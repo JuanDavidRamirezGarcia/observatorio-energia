@@ -11,6 +11,15 @@
 | [Juan Fernando Cataño Higuita](docs/bitacoras/catano_juan_fernando.md) | Analytics Engineer | Documentó el perfilamiento y los hallazgos de calidad; creó pruebas automatizadas del pipeline; documentó el modelo dimensional y el diccionario de datos; desarrolló las consultas analíticas y registró sus resultados en este README. |
 | [Oscar García García](docs/bitacoras/oscar_bitacora.md) | BI Analyst / Data Engineer | Desarrolló y optimizó la extracción de precipitación y temperatura del IDEAM; contribuyó a la limpieza de las fuentes y desarrolló un dashboard Streamlit con seis visualizaciones de la capa Oro. |
 
+## Roles y responsabilidades
+
+| Integrante | Rol |
+|---|---|
+| Juan Fernando Cataño Higuita | Ingeniero de Datos (Capa Oro) |
+| Juan David Ramírez García | Ingeniero de Automatización (DataOps) |
+| Oscar García García | Analista de BI (Visualización) |
+| Rober Castillo | Project Manager (Documentación y Cierre) |
+
 ## 🎯 Objetivo
 
 Integrar datos del mercado eléctrico (XM), del clima (IDEAM y NOAA) y de ventas internas (EnerAndes) para analizar el riesgo energético de Colombia ante El Niño 2026.
