@@ -2,7 +2,7 @@
 
 > Proyecto Integrado IV – Integración de Información · IU Digital de Antioquia · 2026-2
 
-## 👥 Integrantes
+## Objetivo
 
 | Integrante | Rol | Aportes (resumen de bitácora) |
 |---|---|---|
@@ -11,41 +11,21 @@
 | [Juan Fernando Cataño Higuita](docs/bitacoras/catano_juan_fernando.md) | Analytics Engineer | Documentó el perfilamiento y los hallazgos de calidad; creó pruebas automatizadas del pipeline; documentó el modelo dimensional y el diccionario de datos; desarrolló las consultas analíticas y registró sus resultados en este README. |
 | [Oscar García García](docs/bitacoras/oscar_bitacora.md) | BI Analyst / Data Engineer | Desarrolló y optimizó la extracción de precipitación y temperatura del IDEAM; contribuyó a la limpieza de las fuentes y desarrolló un dashboard Streamlit con seis visualizaciones de la capa Oro. |
 
-## Roles y responsabilidades
-
-| Integrante | Rol |
-|---|---|
-| Juan Fernando Cataño Higuita | Ingeniero de Datos (Capa Oro) |
-| Juan David Ramírez García | Ingeniero de Automatización (DataOps) |
-| Oscar García García | Analista de BI (Visualización) |
-| Rober Castillo | Project Manager (Documentación y Cierre) |
-
-## 🎯 Objetivo
+## Equipo
 
 Integrar datos del mercado eléctrico (XM), del clima (IDEAM y NOAA) y de ventas internas (EnerAndes) para analizar el riesgo energético de Colombia ante El Niño 2026.
 
-## 📦 Fuentes de datos (capa bronce)
+## Contenido
 
-El pipeline conserva los datos extraídos en formato Parquet e incluye columnas
-de linaje (`_fuente`, `_origen` y `_extraido_en`). Las fuentes y sus archivos
-de salida son:
+- [Objetivo](#objetivo)
+- [Equipo](#equipo)
+- [Ejecución](#pasos-para-ejecutar)
+- [Bronce: extraccion y fuentes](#bronce-extraccion-y-fuentes)
+- [Plata: limpieza y calidad](#plata-limpieza-y-calidad)
+- [Oro: modelo y analisis](#oro-modelo-y-analisis)
+- [Material complementario](#material-complementario)
 
-| Fuente | Origen y método de extracción | Datos | Archivos Parquet en `data/bronze/` |
-|---|---|---|---|
-| XM – API Sinergox | API REST, respuestas JSON | Precio, demanda, generación, aportes, embalses y catálogo de plantas | `xm_precio_bolsa.parquet`, `xm_demanda.parquet`, `xm_generacion.parquet`, `xm_aportes.parquet`, `xm_embalses.parquet`, `xm_listado_recursos.parquet` |
-| IDEAM – datos.gov.co | API Socrata, consultas SoQL | Precipitación diaria y temperatura diaria por estación en Antioquia | `ideam_precipitacion_diaria.parquet`, `ideam_temperatura_diaria.parquet` |
-| NOAA – índice ONI | Archivo de texto descargado y tabulado | Índice Oceanic Niño (ONI) | `noaa_oni.parquet` |
-| EnerAndes | Excel interno (`data/insumos/ventas_enerandes_2023_2026.xlsx`) | Ventas anuales 2023–2026, una hoja por año | `enerandes_ventas_2023.parquet`, `enerandes_ventas_2024.parquet`, `enerandes_ventas_2025.parquet`, `enerandes_ventas_2026.parquet` |
-| TRM – Banco de la República, Datos Abiertos Colombia | API Socrata, solicitud GET con respuesta JSON | Tasa Representativa del Mercado para el rango configurado | `trm_colombia.parquet` |
-
-## Fuente Adicional Propia
-
-* **Nombre:** Tasa Representativa del Mercado (TRM).
-* **Origen:** Banco de la República vía Portal de Datos Abiertos de Colombia (`https://www.datos.gov.co/d/32sa-8pi3`).
-* **Uso y Propósito:**
-Nos permite convertir los precios spot del mercado eléctrico (COP/MWh) y las ventas de energía a USD, facilitando el análisis de correlación entre la Tasa de Cambio y las variaciones en los precios de energía durante el periodo estudiado.
-
-## ⚙️ Cómo ejecutar
+### Pasos para ejecutar
 
 Requisitos: Python 3.11 o posterior y acceso a Internet para consultar las
 fuentes públicas. El archivo interno
@@ -67,6 +47,7 @@ python -m venv .venv
 Para visualizar el dashboard después de construir la capa Oro:
 
 ```powershell
+.\.venv\Scripts\python.exe -m src.exportar_oro
 .\.venv\Scripts\python.exe -m streamlit run dashboard/app.py
 ```
 
@@ -91,251 +72,32 @@ insumos de Bronce, ignorando los archivos existentes, ejecuta
 `python -m src.pipeline --forzar`. El rango de fechas se configura en
 `src/config.py`.
 
-## 🏗️ Arquitectura
+## Bronce: extraccion y fuentes
 
-1. **Bronce:** conserva los datos obtenidos de XM, IDEAM, NOAA, EnerAndes y
-   TRM, con información de linaje.
-2. **Plata:** limpia, tipa, normaliza y deduplica las fuentes en archivos
-   Parquet; los registros no corregibles de EnerAndes se separan en cuarentena.
-3. **Oro:** dbt construye en DuckDB un modelo dimensional de seis dimensiones
-   y tres tablas de hechos para el análisis de ventas, mercado y generación.
+### Fuentes de datos
 
-El diagrama corresponde al modelo implementado en dbt. `dim_fuente` es un
-catálogo independiente; las relaciones mostradas son las llaves usadas por las
-tablas de hechos.
+El pipeline conserva los datos extraídos en formato Parquet e incluye columnas
+de linaje (`_fuente`, `_origen` y `_extraido_en`). Las fuentes y sus archivos
+de salida son:
 
-```mermaid
-erDiagram
-    dim_mes ||--o{ fact_ventas_mensual : "mes_id"
-    dim_municipio ||--o{ fact_ventas_mensual : "municipio_id"
-    dim_segmento ||--o{ fact_ventas_mensual : "segmento_id"
-    dim_fecha ||--o{ fact_mercado_horario : "fecha_key"
-    dim_fecha ||--o{ fact_generacion_recurso : "fecha_key"
-    dim_recurso ||--o{ fact_generacion_recurso : "recurso_key"
+| Fuente | Origen y método de extracción | Datos | Archivos Parquet en `data/bronze/` |
+|---|---|---|---|
+| XM – API Sinergox | API REST, respuestas JSON | Precio, demanda, generación, aportes, embalses y catálogo de plantas | `xm_precio_bolsa.parquet`, `xm_demanda.parquet`, `xm_generacion.parquet`, `xm_aportes.parquet`, `xm_embalses.parquet`, `xm_listado_recursos.parquet` |
+| IDEAM – datos.gov.co | API Socrata, consultas SoQL | Precipitación diaria y temperatura diaria por estación en Antioquia | `ideam_precipitacion_diaria.parquet`, `ideam_temperatura_diaria.parquet` |
+| NOAA – índice ONI | Archivo de texto descargado y tabulado | Índice Oceanic Niño (ONI) | `noaa_oni.parquet` |
+| EnerAndes | Excel interno (`data/insumos/ventas_enerandes_2023_2026.xlsx`) | Ventas anuales 2023–2026, una hoja por año | `enerandes_ventas_2023.parquet`, `enerandes_ventas_2024.parquet`, `enerandes_ventas_2025.parquet`, `enerandes_ventas_2026.parquet` |
+| TRM – Banco de la República, Datos Abiertos Colombia | API Socrata, solicitud GET con respuesta JSON | Tasa Representativa del Mercado para el rango configurado | `trm_colombia.parquet` |
 
-    dim_fecha {
-        int fecha_key PK
-        date fecha
-        int anio
-        int mes
-        string fase_enso
-    }
-    dim_mes {
-        int mes_id PK
-        string periodo
-    }
-    dim_municipio {
-        int municipio_id PK
-        string municipio
-        string divipola
-    }
-    dim_segmento {
-        int segmento_id PK
-        string segmento
-        string tipo_compra
-    }
-    dim_recurso {
-        int recurso_key PK
-        string codigo_recurso
-        string nombre_recurso
-    }
-    dim_fuente {
-        int fuente_key PK
-        string nombre_fuente
-    }
-    fact_ventas_mensual {
-        int mes_id FK
-        int municipio_id FK
-        int segmento_id FK
-        double energia_kwh
-        double valor_cop
-    }
-    fact_mercado_horario {
-        int fecha_key FK
-        int hora
-        double precio_bolsa_kwh
-        double demanda_kwh
-    }
-    fact_generacion_recurso {
-        int fecha_key FK
-        int recurso_key FK
-        int hora
-        double generacion_mwh
-    }
-```
+### Fuente adicional propia: TRM
 
-Consulta el [modelo dimensional](docs/modelo_dimensional.md) y el
-[diccionario de datos](docs/diccionario_datos.md) para el detalle de granos,
-campos y fuentes.
+* **Nombre:** Tasa Representativa del Mercado (TRM).
+* **Origen:** Banco de la República vía Portal de Datos Abiertos de Colombia (`https://www.datos.gov.co/d/32sa-8pi3`).
+* **Uso y Propósito:**
+Nos permite convertir los precios spot del mercado eléctrico (COP/MWh) y las ventas de energía a USD, facilitando el análisis de correlación entre la Tasa de Cambio y las variaciones en los precios de energía durante el periodo estudiado.
 
-## 🧪 Resumen del reporte de calidad
+## Plata: limpieza y calidad
 
-Las cifras siguientes corresponden al corte documentado en el
-[reporte de calidad](docs/reporte_calidad.md); pueden cambiar al volver a
-extraer y transformar los datos.
-
-| Fuente / control | Resultado de calidad |
-|---|---|
-| EnerAndes | 4.007 filas válidas en Plata; 118 duplicados válidos removidos y 45 filas en cuarentena: 27 con energía inválida o vacía y 18 con energía negativa. |
-| XM | 24.096 filas horarias para precio y demanda; 5.935.449 filas válidas de generación, tras descartar 2.473.215 celdas horarias nulas; 1.004 registros para embalses y aportes, y 2.500 recursos en el catálogo. |
-| IDEAM | 2.374 registros de precipitación y 1.477 de temperatura; sin fechas, valores inválidos ni llaves estación-fecha repetidas en el corte. |
-| NOAA (ONI) | 920 periodos interpretables y válidos: 234 clasificados como El Niño, 238 como La Niña y 448 como Neutral. |
-| TRM | 649 registros con fecha y valor válidos; sin fechas repetidas en el corte. |
-
-En XM se descartaron valores horarios nulos o fechas inválidas durante la
-limpieza de generación. El reporte detalla los controles, reglas y métricas
-antes/después por fuente.
-
-## 📊 Resultados de consultas de la capa oro
-
-Las consultas de negocio se almacenan en `consultas/oro/` y fueron ejecutadas
-en DuckDB sobre datos derivados del modelo analítico. Los resultados son una
-instantánea del conjunto de datos usado para ese corte.
-
-### 1) Municipios con mayor consumo en kWh
-
-Consulta: [consulta_1_ventas_por_municipio.sql](consultas/oro/consulta_1_ventas_por_municipio.sql); se muestran los diez municipios con mayor consumo.
-
-| Municipio | Consumo (GWh) |
-|---|---:|
-| Medellín | 173105.78 |
-| Bello | 55326.51 |
-| Itagüí | 37775.61 |
-| Envigado | 26613.45 |
-| Rionegro | 26011.43 |
-| Sabaneta | 19165.63 |
-| Apartadó | 18347.56 |
-| Turbo | 13721.23 |
-| La Estrella | 11329.72 |
-| Caldas | 11053.32 |
-
-### 2) Promedio de precio de bolsa por hora y fase ENSO
-
-Consulta: [consulta_2_comportamiento_precio_bolsa.sql](consultas/oro/consulta_2_comportamiento_precio_bolsa.sql). La tabla muestra las diez primeras filas documentadas del resultado para El Niño.
-
-| Hora | Fase ENSO | Precio promedio (COP/kWh) |
-|---:|---|---:|
-| 1 | El Niño | 619.39 |
-| 2 | El Niño | 615.51 |
-| 3 | El Niño | 606.36 |
-| 4 | El Niño | 602.41 |
-| 5 | El Niño | 613.39 |
-| 6 | El Niño | 630.27 |
-| 7 | El Niño | 616.46 |
-| 8 | El Niño | 593.46 |
-| 9 | El Niño | 581.85 |
-| 10 | El Niño | 577.50 |
-
-### 3) Comparativo horario de generación vs demanda
-
-Consulta: [consulta_3_generacion_vs_demanda.sql](consultas/oro/consulta_3_generacion_vs_demanda.sql). La tabla muestra las primeras diez horas documentadas.
-
-| Hora | Generación (MWh) | Demanda (MWh) | Diferencia (MWh) |
-|---:|---:|---:|---:|
-| 1 | 8.71 | 8.71 | 0.00 |
-| 2 | 8.42 | 8.42 | 0.00 |
-| 3 | 8.20 | 8.20 | 0.00 |
-| 4 | 8.08 | 8.08 | 0.00 |
-| 5 | 8.17 | 8.17 | 0.00 |
-| 6 | 8.40 | 8.40 | 0.00 |
-| 7 | 8.50 | 8.50 | 0.00 |
-| 8 | 8.91 | 8.91 | 0.00 |
-| 9 | 9.34 | 9.34 | 0.00 |
-| 10 | 9.63 | 9.63 | 0.00 |
-
-Nota: la consulta calcula el promedio de generación por recurso y lo compara
-con la demanda horaria total; por ello, la diferencia mostrada no debe
-interpretarse como el balance total de oferta y demanda del sistema.
-
-## 👤 Oscar García García — BI Analyst (Visualización)
-
-### 📊 Dashboard de BI
-
-El dashboard se construyó con Streamlit y consume las tablas Parquet de la
-capa Oro `fact_mercado_mensual` y `fact_ventas_mensual`. Incluye filtros por
-periodo, fenómeno climático y tipo de compra, cuatro KPIs y una lectura
-automática que cambia de acuerdo con los valores filtrados.
-
-El dashboard se puede ejecutar localmente para consultar los filtros, KPIs,
-gráficas y lecturas automáticas descritas en la tabla siguiente.
-
-### Aporte de Oscar y orden de ejecución
-
-El aporte de Oscar corresponde a la construcción de `dashboard/app.py`, la
-integración con la capa Oro y la documentación de las preguntas de negocio.
-Para reproducirlo desde una instalación limpia, ejecutar en este orden:
-
-1. Instalar las dependencias del proyecto.
-2. Ejecutar `src.transformar` para extraer Bronce, limpiar Plata y construir
-  Oro con dbt.
-3. Ejecutar `src.exportar_oro` para crear los Parquet que consume el dashboard.
-4. Iniciar Streamlit y abrir la URL local que muestra la terminal.
-
-### Relación con las preguntas de negocio
-
-| Visualización | Pregunta de negocio que responde | Evidencia mostrada |
-|---|---|---|
-| Precio promedio de bolsa | ¿Cómo evoluciona el precio de la energía en el periodo analizado? | Tendencia mensual en COP/kWh. |
-| Demanda mensual del sistema | ¿En qué meses se concentra la mayor demanda? | Área mensual de demanda en kWh. |
-| Precio por fenómeno climático | ¿Qué fenómeno climático se asocia con precios más altos? | Distribución y mediana del precio por fase ENSO. |
-| Mercado y clima en el tiempo | ¿Cómo se relacionan precio, demanda y clima? | Puntos mensuales: color por fenómeno y tamaño por demanda. |
-| Energía vendida por modalidad | ¿Qué modalidad concentra la energía comercializada? | Comparación mensual entre Bolsa y Contrato. |
-| Valor mensual de ventas | ¿Cómo cambia el valor comercial y qué modalidad aporta más? | Barras apiladas del valor en COP. |
-
-Las tarjetas de lectura automática resumen los cambios observados en el
-periodo filtrado: variación del precio, variación de la demanda, fenómeno con
-mayor precio promedio y modalidad con mayor participación de energía vendida.
-
-Comandos para ejecutar el dashboard:
-
-```powershell
-.\.venv\Scripts\python.exe -m src.transformar
-.\.venv\Scripts\python.exe -m src.exportar_oro
-.\.venv\Scripts\python.exe -m streamlit run dashboard/app.py
-```
-
-La aplicación se abre normalmente en `http://localhost:8501`. Si ese puerto
-está ocupado, Streamlit asigna otro puerto y lo informa en la terminal, por
-ejemplo `http://localhost:8502`.
-
-## 🎥 **Videos Explicativos del Equipo**
-
-Enlace a los videos: [Ver Videos](https://drive.google.com/drive/folders/1zofZjFRxsIK27Ge3yDA0Vbg2BPMILYhW?usp=drive_link)
-
-## Evidencias de ejecución de consola
-
-**Ejecución del Pipeline Bronce**
-
-<img width="876" height="500" alt="image" src="https://github.com/user-attachments/assets/3d4df93a-8883-4e32-8f28-9401c37f3e7e" />
-<img width="876" height="500" alt="image" src="https://github.com/user-attachments/assets/8037d274-0bf6-4341-beea-1f8c463decb3" />
-
-**Pruebas Automatizadas (Pytest)**
-
-<img width="857" height="381" alt="image" src="https://github.com/user-attachments/assets/c4316a7a-a6f0-495b-9001-34bd56e0c8e6" />
-
-
-
-
-## 🤖 Uso de IA
-
-Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia
-artificial como apoyo:
-
-- **Gemini:** apoyo para consultar conceptos y comprender las fuentes de datos
-  utilizadas en el proyecto.
-- **GitHub Copilot:** apoyo para organizar y estructurar el código.
-
-Las respuestas y sugerencias se revisaron y validaron por el equipo antes de
-incorporarlas al proyecto.
-
-## ⚡ Capa Plata (Evidencia 2)
-
-**Rama de trabajo:** `silver-oscar`
-
-**Alcance de esta documentación:** puntos 1 y 2 de la Capa Plata:
-limpieza de EnerAndes y limpieza de las fuentes XM, IDEAM, NOAA y TRM.
-
-**Entorno de ejecución:** Codespaces con Python 3.10+ y Pandas.
+### Transformación de fuentes
 
 La Capa Plata recibe los datos crudos de `data/bronze/`, aplica reglas de
 limpieza, deduplicación, tipado y validación de calidad, y genera archivos
@@ -394,7 +156,7 @@ inconsistentes o defectuosos se aíslan automáticamente en cuarentena.
   ENSO con los umbrales solicitados.
 - La TRM se incorporó a la capa plata como una fila numérica por fecha.
 
-## Guía de trabajo para los puntos 1 y 2
+### Reglas de limpieza por fuente
 
 Esta sección resume exactamente qué se hizo en los puntos 1 y 2. El flujo parte
 de `data/bronze/` y escribe
@@ -491,7 +253,7 @@ El módulo [src/silver/trm.py](src/silver/trm.py) convierte `vigenciadesde` a
 fecha y `valor` a número, conserva la unidad, elimina duplicados por fecha y
 genera `data/silver/trm_colombia.parquet`.
 
-### Cómo ejecutar
+### Reconstruir las capas
 
 El comando de punta a punta comprueba los insumos de Bronce, descarga los que
 falten sin repetir los existentes, limpia las fuentes y construye las capas
@@ -520,3 +282,254 @@ python -m pytest -q
 
 El número de pruebas aprobadas puede cambiar con futuras modificaciones; usa
 `python -m pytest -q` para obtener el resultado vigente.
+### Resultados de calidad
+
+Las cifras siguientes corresponden al corte documentado en el
+[reporte de calidad](docs/reporte_calidad.md); pueden cambiar al volver a
+extraer y transformar los datos.
+
+| Fuente / control | Resultado de calidad |
+|---|---|
+| EnerAndes | 4.007 filas válidas en Plata; 118 duplicados válidos removidos y 45 filas en cuarentena: 27 con energía inválida o vacía y 18 con energía negativa. |
+| XM | 24.096 filas horarias para precio y demanda; 5.935.449 filas válidas de generación, tras descartar 2.473.215 celdas horarias nulas; 1.004 registros para embalses y aportes, y 2.500 recursos en el catálogo. |
+| IDEAM | 2.374 registros de precipitación y 1.477 de temperatura; sin fechas, valores inválidos ni llaves estación-fecha repetidas en el corte. |
+| NOAA (ONI) | 920 periodos interpretables y válidos: 234 clasificados como El Niño, 238 como La Niña y 448 como Neutral. |
+| TRM | 649 registros con fecha y valor válidos; sin fechas repetidas en el corte. |
+
+En XM se descartaron valores horarios nulos o fechas inválidas durante la
+limpieza de generación. El reporte detalla los controles, reglas y métricas
+antes/después por fuente.
+
+## Oro: modelo y analisis
+
+### Flujo de las capas
+
+1. **Bronce:** conserva los datos obtenidos de XM, IDEAM, NOAA, EnerAndes y
+   TRM, con información de linaje.
+2. **Plata:** limpia, tipa, normaliza y deduplica las fuentes en archivos
+   Parquet; los registros no corregibles de EnerAndes se separan en cuarentena.
+3. **Oro:** dbt construye en DuckDB un modelo dimensional de seis dimensiones
+   y cuatro tablas de hechos para el análisis de ventas, mercado y generación.
+
+El diagrama muestra las dimensiones y relaciones del modelo estrella en dbt.
+`dim_fuente` es un catálogo independiente. `fact_mercado_mensual` es una tabla
+agregada sin llaves dimensionales, por eso se describe debajo del diagrama.
+
+```mermaid
+erDiagram
+    dim_mes ||--o{ fact_ventas_mensual : "mes_id"
+    dim_municipio ||--o{ fact_ventas_mensual : "municipio_id"
+    dim_segmento ||--o{ fact_ventas_mensual : "segmento_id"
+    dim_fecha ||--o{ fact_mercado_horario : "fecha_key"
+    dim_fecha ||--o{ fact_generacion_recurso : "fecha_key"
+    dim_recurso ||--o{ fact_generacion_recurso : "recurso_key"
+
+    dim_fecha {
+        int fecha_key PK
+        date fecha
+        int anio
+        int mes
+        string fase_enso
+    }
+    dim_mes {
+        int mes_id PK
+        string periodo
+    }
+    dim_municipio {
+        int municipio_id PK
+        string municipio
+        string divipola
+    }
+    dim_segmento {
+        int segmento_id PK
+        string segmento
+        string tipo_compra
+    }
+    dim_recurso {
+        int recurso_key PK
+        string codigo_recurso
+        string nombre_recurso
+    }
+    dim_fuente {
+        int fuente_key PK
+        string nombre_fuente
+    }
+    fact_ventas_mensual {
+        int mes_id FK
+        int municipio_id FK
+        int segmento_id FK
+        double energia_kwh
+        double valor_cop
+    }
+    fact_mercado_horario {
+        int fecha_key FK
+        int hora
+        double precio_bolsa_kwh
+        double demanda_kwh
+    }
+    fact_generacion_recurso {
+        int fecha_key FK
+        int recurso_key FK
+        int hora
+        double generacion_mwh
+    }
+    fact_mercado_mensual {
+        date mes
+        double precio_bolsa_promedio
+        double demanda_mensual_total
+        string fenomeno_climatologico
+    }
+```
+
+El modelo implementa seis dimensiones (`dim_fecha`, `dim_mes`, `dim_municipio`,
+`dim_segmento`, `dim_recurso` y `dim_fuente`) y cuatro tablas de hechos: ventas
+mensuales, mercado horario, generacion por recurso y mercado mensual.
+`fact_mercado_mensual` es una tabla agregada independiente consumida por el
+dashboard.
+
+Consulta el [modelo dimensional](docs/modelo_dimensional.md) y el
+[diccionario de datos](docs/diccionario_datos.md) para el detalle. Esos documentos
+contienen tambien propuestas de diseno; contrasta su alcance con los modelos dbt
+implementados en `dbt/models/marts/`.
+
+### Consultas de negocio
+
+Las consultas de negocio se almacenan en `consultas/oro/` y fueron ejecutadas
+en DuckDB sobre datos derivados del modelo analítico. Los resultados son una
+instantánea del conjunto de datos usado para ese corte.
+
+### 1) Municipios con mayor consumo (GWh)
+
+Consulta: [consulta_1_ventas_por_municipio.sql](consultas/oro/consulta_1_ventas_por_municipio.sql); se muestran los diez municipios con mayor consumo.
+
+| Municipio | Consumo (GWh) |
+|---|---:|
+| Medellín | 173105.78 |
+| Bello | 55326.51 |
+| Itagüí | 37775.61 |
+| Envigado | 26613.45 |
+| Rionegro | 26011.43 |
+| Sabaneta | 19165.63 |
+| Apartadó | 18347.56 |
+| Turbo | 13721.23 |
+| La Estrella | 11329.72 |
+| Caldas | 11053.32 |
+
+### 2) Promedio de precio de bolsa por hora y fase ENSO
+
+Consulta: [consulta_2_comportamiento_precio_bolsa.sql](consultas/oro/consulta_2_comportamiento_precio_bolsa.sql). La tabla muestra las diez primeras filas documentadas del resultado para El Niño.
+
+| Hora | Fase ENSO | Precio promedio (COP/kWh) |
+|---:|---|---:|
+| 1 | El Niño | 619.39 |
+| 2 | El Niño | 615.51 |
+| 3 | El Niño | 606.36 |
+| 4 | El Niño | 602.41 |
+| 5 | El Niño | 613.39 |
+| 6 | El Niño | 630.27 |
+| 7 | El Niño | 616.46 |
+| 8 | El Niño | 593.46 |
+| 9 | El Niño | 581.85 |
+| 10 | El Niño | 577.50 |
+
+### 3) Comparativo horario de generación vs demanda
+
+Consulta: [consulta_3_generacion_vs_demanda.sql](consultas/oro/consulta_3_generacion_vs_demanda.sql). La tabla muestra las primeras diez horas documentadas.
+
+| Hora | Generación (MWh) | Demanda (MWh) | Diferencia (MWh) |
+|---:|---:|---:|---:|
+| 1 | 8.71 | 8.71 | 0.00 |
+| 2 | 8.42 | 8.42 | 0.00 |
+| 3 | 8.20 | 8.20 | 0.00 |
+| 4 | 8.08 | 8.08 | 0.00 |
+| 5 | 8.17 | 8.17 | 0.00 |
+| 6 | 8.40 | 8.40 | 0.00 |
+| 7 | 8.50 | 8.50 | 0.00 |
+| 8 | 8.91 | 8.91 | 0.00 |
+| 9 | 9.34 | 9.34 | 0.00 |
+| 10 | 9.63 | 9.63 | 0.00 |
+
+Nota: la consulta calcula el promedio de generación por recurso y lo compara
+con la demanda horaria total; por ello, la diferencia mostrada no debe
+interpretarse como el balance total de oferta y demanda del sistema.
+
+### Dashboard de BI
+
+El dashboard se construyó con Streamlit y consume las tablas Parquet de la
+capa Oro `fact_mercado_mensual` y `fact_ventas_mensual`. Incluye filtros por
+periodo, fenómeno climático y tipo de compra, cuatro KPIs y una lectura
+automática que cambia de acuerdo con los valores filtrados.
+
+El dashboard se puede ejecutar localmente para consultar los filtros, KPIs,
+gráficas y lecturas automáticas descritas en la tabla siguiente.
+
+### Aporte de Oscar y orden de ejecución
+
+El aporte de Oscar corresponde a la construcción de `dashboard/app.py`, la
+integración con la capa Oro y la documentación de las preguntas de negocio.
+Para reproducirlo desde una instalación limpia, ejecutar en este orden:
+
+1. Instalar las dependencias del proyecto.
+2. Ejecutar `src.transformar` para extraer Bronce, limpiar Plata y construir
+  Oro con dbt.
+3. Ejecutar `src.exportar_oro` para crear los Parquet que consume el dashboard.
+4. Iniciar Streamlit y abrir la URL local que muestra la terminal.
+
+### Relación con las preguntas de negocio
+
+| Visualización | Pregunta de negocio que responde | Evidencia mostrada |
+|---|---|---|
+| Precio promedio de bolsa | ¿Cómo evoluciona el precio de la energía en el periodo analizado? | Tendencia mensual en COP/kWh. |
+| Demanda mensual del sistema | ¿En qué meses se concentra la mayor demanda? | Área mensual de demanda en kWh. |
+| Precio por fenómeno climático | ¿Qué fenómeno climático se asocia con precios más altos? | Distribución y mediana del precio por fase ENSO. |
+| Mercado y clima en el tiempo | ¿Cómo se relacionan precio, demanda y clima? | Puntos mensuales: color por fenómeno y tamaño por demanda. |
+| Energía vendida por modalidad | ¿Qué modalidad concentra la energía comercializada? | Comparación mensual entre Bolsa y Contrato. |
+| Valor mensual de ventas | ¿Cómo cambia el valor comercial y qué modalidad aporta más? | Barras apiladas del valor en COP. |
+
+Las tarjetas de lectura automática resumen los cambios observados en el
+periodo filtrado: variación del precio, variación de la demanda, fenómeno con
+mayor precio promedio y modalidad con mayor participación de energía vendida.
+
+Comandos para ejecutar el dashboard:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.transformar
+.\.venv\Scripts\python.exe -m src.exportar_oro
+.\.venv\Scripts\python.exe -m streamlit run dashboard/app.py
+```
+
+La aplicación se abre normalmente en `http://localhost:8501`. Si ese puerto
+está ocupado, Streamlit asigna otro puerto y lo informa en la terminal, por
+ejemplo `http://localhost:8502`.
+
+## Material complementario
+
+## 🎥 **Videos Explicativos del Equipo**
+
+Enlace a los videos: [Ver Videos](https://drive.google.com/drive/folders/1zofZjFRxsIK27Ge3yDA0Vbg2BPMILYhW?usp=drive_link)
+
+## Evidencias de ejecución de consola
+
+**Ejecución del Pipeline Bronce**
+
+<img width="876" height="500" alt="image" src="https://github.com/user-attachments/assets/3d4df93a-8883-4e32-8f28-9401c37f3e7e" />
+<img width="876" height="500" alt="image" src="https://github.com/user-attachments/assets/8037d274-0bf6-4341-beea-1f8c463decb3" />
+
+**Pruebas Automatizadas (Pytest)**
+
+<img width="857" height="381" alt="image" src="https://github.com/user-attachments/assets/c4316a7a-a6f0-495b-9001-34bd56e0c8e6" />
+
+
+
+
+## 🤖 Uso de IA
+
+Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia
+artificial como apoyo:
+
+- **Gemini:** apoyo para consultar conceptos y comprender las fuentes de datos
+  utilizadas en el proyecto.
+- **GitHub Copilot:** apoyo para organizar y estructurar el código.
+
+Las respuestas y sugerencias se revisaron y validaron por el equipo antes de
+incorporarlas al proyecto.
