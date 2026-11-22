@@ -178,11 +178,11 @@ else:
 market_filtered = market[
 	market["mes"].between(pd.Timestamp(start_date), pd.Timestamp(end_date))
 	& market["fenomeno_climatologico"].isin(selected_phenomena)
-].copy()
+].sort_values("mes").copy()
 sales_filtered = sales[
 	sales["periodo"].between(pd.Timestamp(start_date), pd.Timestamp(end_date))
 	& sales["tipo_compra"].isin(selected_purchase_types)
-].copy()
+].sort_values("periodo").copy()
 
 avg_price = market_filtered["precio_bolsa_promedio"].mean()
 total_demand = market_filtered["demanda_mensual_total"].sum()
